@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>UIBackgroundModes</key>
+<array>
+  <string>fetch</string>
+  <string>remote-notification</string>
+</array>
+<key>NSAppTransportSecurity</key>
+<dict>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+</dict>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>Your message for location usage</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Your message for location usage</string>
+<key>NSBluetoothAlwaysUsageDescription</key>
+<string>Your message for Bluetooth usage</string>
+<key>NSBluetoothPeripheralUsageDescription</key>
+<string>Your message for Bluetooth peripheral usage</string>
+<key>NSCalendarsUsageDescription</key>
+<string>Your message for calendar usage</string>
+<key>NSContactsUsageDescription</key>
+<string>Your message for contacts usage</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Your message for microphone usage</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Your message for photo library usage</string>
+<key>NSRemindersUsageDescription</key>
+<string>Your message for reminders usage</string>
+<key>NSSpeechRecognitionUsageDescription</key>
+<string>Your message for speech recognition usage</string>
+<key>NSUserTrackingUsageDescription</key>
+<string>Your message for user tracking usage</string>
+<key>NSPushNotificationsUsageDescription</key>
+<string>Your message for push notifications usage</string>
+
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Me App</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.training.me</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>me_app</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+</dict>
+</plist>
