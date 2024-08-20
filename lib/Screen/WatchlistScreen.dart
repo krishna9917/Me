@@ -5,9 +5,10 @@ import 'package:me_app/ApiService/ApiInterface.dart';
 import 'package:me_app/CommonWidget/TradeStock.dart';
 import 'package:me_app/Model/LiveRate.dart';
 import 'package:me_app/Resources/Styles.dart';
+import 'package:me_app/Screen/BuyScreen.dart';
 import 'package:me_app/Screen/SearchScreen.dart';
+import 'package:me_app/Screen/StockDetailScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
-import '../Model/GetLiveDataModel.dart';
 import '../Model/GetMCXModel.dart';
 import '../Resources/Strings.dart';
 import '../Utils/AppTheme.dart';
@@ -41,16 +42,15 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
   }
 
   void _startPeriodicRefresh() {
-    _refreshTimer = Timer.periodic(const Duration(seconds: 2), (timer) async {
-      if(mounted)
-        {
-          if (await HelperFunction.isInternetConnected(context) && initialData.isNotEmpty) {
-            fetchData();
-          }else if(await HelperFunction.isInternetConnected(context))
-          {
-            fetchCategoryList();
-          }
-        }else {
+    _refreshTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (mounted) {
+        if (await HelperFunction.isInternetConnected(context) &&
+            initialData.isNotEmpty) {
+          fetchData();
+        } else if (await HelperFunction.isInternetConnected(context)) {
+          fetchCategoryList();
+        }
+      } else {
         _refreshTimer?.cancel();
       }
     });
@@ -163,7 +163,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                 //_showDialog(context);
               },
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(
               icon: Image.asset('assets/theme.png'),
               onPressed: () {
@@ -177,9 +177,9 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
               color: Colors.grey.shade200,
               child: TabBar(
                 tabs: const [
-                  Tab(text: 'MCX Futures'),
-                  Tab(text: 'NSE Futures'),
-                  Tab(text: 'Others'),
+                  Tab(text: Strings.mcxFutures),
+                  Tab(text: Strings.nseFutures),
+                  Tab(text: Strings.others),
                 ],
                 labelStyle: Styles.normalText(fontSize: 12, isBold: true),
                 unselectedLabelStyle: Styles.normalText(fontSize: 12),
@@ -219,7 +219,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                               )).onTap(() {
                             Searchscreen(
                               type: "MCX",
-                            ).launch(context).then((data){
+                            ).launch(context).then((data) {
                               fetchCategoryList();
                             });
                           }),
@@ -237,7 +237,10 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                                           itemCount: mcxList.length,
                                           itemBuilder: (context, index) {
                                             final data = mcxList[index];
-                                            return Tradestock(data: data);
+                                            return Tradestock(data: data)
+                                                .onTap(() {
+                                                  StockDetailScreen(stockData: data).launch(context);
+                                            });
                                           },
                                         )
                                       : Center(
@@ -272,7 +275,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                               )).onTap(() {
                             Searchscreen(
                               type: "NSE",
-                            ).launch(context).then((data){
+                            ).launch(context).then((data) {
                               fetchCategoryList();
                             });
                           }),
@@ -290,7 +293,28 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                                           itemCount: nseList.length,
                                           itemBuilder: (context, index) {
                                             final data = nseList[index];
-                                            return Tradestock(data: data);
+                                            return Tradestock(data: data)
+                                                .onTap(() {
+                                              BuyScreen(
+                                                      categoryId: data
+                                                          .categoryId
+                                                          .toString(),
+                                                      title:
+                                                          data.title.toString(),
+                                                      expiryDate: data
+                                                          .expireDate
+                                                          .toString(),
+                                                      buyPrice: data.buyPrice
+                                                              ?.toDouble() ??
+                                                          0.0,
+                                                      sellPrice: data.salePrice
+                                                              ?.toDouble() ??
+                                                          0.0,
+                                                      identifier: data
+                                                          .instrumentToken
+                                                          .toString())
+                                                  .launch(context);
+                                            });
                                           },
                                         )
                                       : Center(

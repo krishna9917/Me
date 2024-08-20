@@ -311,9 +311,9 @@ class _TradehistoryState extends State<Tradehistory> {
                                   identifier: "${trade.token}",
                                   title: "${trade.categoryName}",
                                   expiryDate: "${trade.expireDate}",
-                                  buyprice: bidPrice ?? 0.0,
+                                  buyPrice: bidPrice ?? 0.0,
                                   // Provide default value if parsing fails
-                                  sellprice: sellPrice ??
+                                  sellPrice: sellPrice ??
                                       0.0, // Provide default value if parsing fails
                                 ),
                               ),

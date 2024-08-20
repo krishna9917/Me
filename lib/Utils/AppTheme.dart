@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_app/Resources/Styles.dart';
 
 import 'Colors.dart';
 
@@ -51,7 +52,7 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme
         backgroundColor: isGoldenTheme
             ? Colors.black
             : (isDarkTheme ? Colors.black : Colors.white),
-        iconTheme: IconThemeData(color: Colors.white)), // Set back icon color to white
+        iconTheme: const IconThemeData(color: Colors.white)), // Set back icon color to white
     tabBarTheme: TabBarTheme(
       labelColor: isGoldenTheme
           ? Colors.white
@@ -61,8 +62,8 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme
           : (isDarkTheme ? Colors.white54 : Colors.black54), // Unselected tab label color
     ),
     dialogTheme: DialogTheme(
-      titleTextStyle: TextStyle(color: Colors.black),
-      contentTextStyle: TextStyle(color: Colors.black),
+      titleTextStyle: Styles.normalText(color: Colors.black),
+      contentTextStyle: Styles.normalText(color: Colors.black),
     ),
   );
 }

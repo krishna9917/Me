@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -8,6 +9,7 @@ import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
 import '../Utils/AppBar.dart';
 import '../Utils/AppTheme.dart';
+import '../Utils/HelperFunction.dart';
 
 class PortfolioScreen extends ConsumerStatefulWidget {
   const PortfolioScreen({super.key});
@@ -16,16 +18,23 @@ class PortfolioScreen extends ConsumerStatefulWidget {
   _PortfolioScreenState createState() => _PortfolioScreenState();
 }
 
-class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
+class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
+    with SingleTickerProviderStateMixin {
+  Timer? _refreshTimer;
+  late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
-    // Call your provider methods in initState
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final notifier = ref.read(portfolioProvider.notifier);
-      notifier.getPortfolioData(context);
-      notifier.getClosePortfolioData(context);
-    });
+    _tabController = TabController(length: 3, vsync: this);
+    getData();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _refreshTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -39,6 +48,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
           children: [
             Container(
               child: TabBar(
+                controller: _tabController,
                 tabs: [
                   Tab(
                       child: Center(
@@ -60,6 +70,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
             ),
             Expanded(
               child: TabBarView(
+                controller: _tabController,
                 children: [
                   Container(
                     child: provider.isLoading
@@ -80,7 +91,8 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
     );
   }
 
-  TableCell _buildTableCell(String title, String value) {
+  TableCell _buildTableCell(String title, String value,
+      {Color valueColor = Colors.black}) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -108,7 +120,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                     color: Theme.of(context).extension<AppColors>()!.color1 ==
                             Colors.amber
                         ? Colors.amber
-                        : Colors.black),
+                        : valueColor),
               )),
             ],
           ),
@@ -131,7 +143,8 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
             child: Column(
               children: [
                 Table(
-                  border: TableBorder.symmetric(inside: BorderSide(width: 1)),
+                  border:
+                      const TableBorder.symmetric(inside: BorderSide(width: 1)),
                   columnWidths: const {
                     0: FlexColumnWidth(1),
                     1: FlexColumnWidth(1),
@@ -151,7 +164,13 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                       _buildTableCell(
                           Strings.activePl,
                           portfolioList.totalPlBalance?.toString() ??
-                              Strings.na),
+                              Strings.na,
+                          valueColor:
+                              (portfolioList.totalPlBalance?.toDouble() ??
+                                          0.0) >=
+                                      0
+                                  ? Colors.green
+                                  : Colors.red),
                       _buildTableCell(
                           Strings.m2m,
                           portfolioList.totalM2MBalance?.toString() ??
@@ -169,13 +188,13 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                     children: [
                       Expanded(
                           child: Text(
-                        "Require Holding Margin : ",
+                        Strings.requireHoldingMargin,
                         style: Styles.normalText(
                           isBold: true,
                         ),
                       )),
                       Text(
-                        "160000",
+                        portfolioList.totalPlBalance.toString(),
                         style: Styles.normalText(isBold: true),
                       )
                     ],
@@ -239,7 +258,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 7),
                                 child: Text(
-                                  'Close order',
+                                  Strings.closeOrder,
                                   style: Styles.normalText(
                                       fontSize: 10,
                                       isBold: true,
@@ -251,7 +270,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                         ),
                       ],
                     ),
-                    Divider()
+                    const Divider()
                   ],
                 );
               },
@@ -263,52 +282,48 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
   }
 
   Widget getCloseUi(PortfolioCloseList portfolioCloseList) {
-    return SingleChildScrollView(
+    return Padding(
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.black),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: Table(
-                  border: TableBorder.all(),
-                  columnWidths: const {
-                    0: FlexColumnWidth(1),
-                    1: FlexColumnWidth(1),
-                  },
-                  children: [
-                    TableRow(children: [
-                      _buildTableCell('Ledger Balance',
-                          portfolioCloseList.totalLedgerBalance ?? 'N/A'),
-                      _buildTableCell(
-                          'Profit Loss',
-                          portfolioCloseList.totalPlBalance?.toString() ??
-                              'N/A'),
-                    ]),
-                    TableRow(children: [
-                      _buildTableCell(
-                          'Total Brokrage',
-                          portfolioCloseList.totalBrokerage?.toString() ??
-                              'N/A'),
-                      _buildTableCell(
-                        'Net Profit/Loss',
-                        portfolioCloseList.netProfitLoss?.toString() ?? 'N/A',
-                      ),
-                    ]),
-                  ],
-                ),
-              ),
+            child: Table(
+              border: const TableBorder.symmetric(inside: BorderSide(width: 1)),
+              columnWidths: const {
+                0: FlexColumnWidth(1),
+                1: FlexColumnWidth(1),
+              },
+              children: [
+                TableRow(children: [
+                  _buildTableCell(Strings.ledgerBal,
+                      portfolioCloseList.totalLedgerBalance ?? Strings.na),
+                  _buildTableCell(
+                      Strings.profitLoss,
+                      portfolioCloseList.totalPlBalance?.toString() ??
+                          Strings.na),
+                ]),
+                TableRow(children: [
+                  _buildTableCell(
+                      Strings.totalBrokerage,
+                      portfolioCloseList.totalBrokerage?.toString() ??
+                          Strings.na),
+                  _buildTableCell(
+                    Strings.netProfitLoss,
+                    portfolioCloseList.netProfitLoss?.toString() ?? Strings.na,
+                  ),
+                ]),
+              ],
             ),
           ),
-          SizedBox(
-            height: 500,
+          15.height,
+          Expanded(
             child: ListView.builder(
-              itemCount: portfolioCloseList.data?.length,
+              itemCount: portfolioCloseList.data?.length ?? 0,
               itemBuilder: (context, index) {
                 final data = portfolioCloseList.data![index];
                 return Column(
@@ -324,19 +339,22 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                               Text(
                                   '${data.categoryName.toString()}_${data.expireDate.toString()}',
                                   style: Styles.normalText(isBold: true)),
-                              Text("Avg:${data.avgSellPrice.toString()}",
-                                  style: Styles.normalText(isBold: true)),
+                              5.height,
+                              Text("Avg sell: ${data.avgSellPrice.toString()}",
+                                  style: Styles.normalText(
+                                      isBold: true, fontSize: 11)),
                               Row(
                                 children: [
-                                  Text('Net Profit Loss:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12)),
-                                  Text("${data!.plBalance.toString()}",
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12)),
+                                  Text('Net Profit Loss : ',
+                                      style: Styles.normalText(
+                                          isBold: true, fontSize: 11)),
+                                  Text(data.plBalance!,
+                                      style: Styles.normalText(
+                                          isBold: true,
+                                          fontSize: 11,
+                                          color: data.plBalance.toDouble() >= 0
+                                              ? Colors.green
+                                              : Colors.red)),
                                 ],
                               )
                             ],
@@ -346,31 +364,24 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                             children: [
                               Row(
                                 children: [
-                                  Text('Qty:',
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.bold)),
-                                  Text('${data!.lot.toString()}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12)),
+                                  Text('Qty : ',
+                                      style: Styles.normalText(isBold: true)),
+                                  Text(data.lot.toString(),
+                                      style: Styles.normalText(isBold: true)),
                                 ],
                               ),
-                              Text("Avg Buy:${data!.avgSellPrice.toString()}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12)),
+                              5.height,
+                              Text("Avg Buy : ${data.avgSellPrice.toString()}",
+                                  style: Styles.normalText(
+                                      isBold: true, fontSize: 11)),
                               Row(
                                 children: [
-                                  Text('Brokerage:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12)),
-                                  Text("${data!.brokerage.toString()}",
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12)),
+                                  Text('Brokerage : ',
+                                      style: Styles.normalText(
+                                          isBold: true, fontSize: 11)),
+                                  Text(data.brokerage.toString(),
+                                      style: Styles.normalText(
+                                          isBold: true, fontSize: 11)),
                                 ],
                               )
                             ],
@@ -378,6 +389,9 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
                         ],
                       ),
                     ),
+                    const Divider(
+                      color: Colors.green,
+                    )
                   ],
                 );
               },
@@ -386,5 +400,25 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen> {
         ],
       ),
     );
+  }
+
+  void getData() {
+    // Call your provider methods in initState
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _refreshTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+        if (mounted) {
+          if (await HelperFunction.isInternetConnected(context)) {
+            final notifier = ref.read(portfolioProvider.notifier);
+            if (_tabController.index == 0) {
+              notifier.getPortfolioData(context);
+            } else {
+              notifier.getClosePortfolioData(context);
+            }
+          }
+        } else {
+          _refreshTimer?.cancel();
+        }
+      });
+    });
   }
 }

@@ -6,22 +6,23 @@ import 'package:nb_utils/nb_utils.dart';
 import '../Model/LiveRateTokenModel.dart';
 import '../Model/SellOrder.dart';
 import '../Services/Service_Api.dart';
+import '../Utils/Themepopup.dart';
 
 final exampleProvider = Provider<int>((ref) => 42);
 class BuyScreen extends ConsumerStatefulWidget  {
-  final double buyprice;
-  final double sellprice;
+  final double buyPrice;
+  final double sellPrice;
   final String categoryId;
   final String identifier;
   final String title;
   final String expiryDate;
 
-  BuyScreen({
+  const BuyScreen({super.key,
     required this.categoryId,
     required this.title,
     required this.expiryDate,
-    required this.buyprice,
-    required this.sellprice,
+    required this.buyPrice,
+    required this.sellPrice,
     required this.identifier,
   });
 
@@ -50,7 +51,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
           'exipreDate': widget.expiryDate,
           'orderType': ordertype ?? '',
           'bidType': Bidtype ?? '',
-          'bidPrice': bidprice ?? (Bidtype == '1' ? widget.buyprice.toString() : widget.sellprice.toString()),
+          'bidPrice': bidprice ?? (Bidtype == '1' ? widget.buyPrice.toString() : widget.sellPrice.toString()),
           'lotSize': lotsize,
         };
         var result = await ServicesApi().postApiWithData(
@@ -305,7 +306,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
           IconButton(
             icon: Image.asset('assets/theme.png'),
             onPressed: () {
-           //   showThemeSelectionDialog(context, ref);
+             showThemeSelectionDialog(context, ref);
             },
           ),
         ],
@@ -354,7 +355,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                             unselectedLabelColor: Colors.black,
                             labelStyle: TextStyle(fontSize: 11),
                             unselectedLabelStyle: TextStyle(fontSize: 11),
-                            tabs: [
+                            tabs: const [
                               Tab(text: 'Market'),
                               Tab(text: 'Limit'),
                               Tab(text: 'SL'),
@@ -564,7 +565,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                 onPressed: () {
                   ordertype = '2';
                   bidprice = _textEditingController.text.isEmpty
-                      ? "${widget.sellprice}"
+                      ? "${widget.sellPrice}"
                       : _textEditingController.text;
                   orderPlace();
                 },
@@ -582,7 +583,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                   children: [
                     Text("Sell@"),
                     Text("${_textEditingController.text.isEmpty
-                        ? "${widget.sellprice}"
+                        ? "${widget.sellPrice}"
                         : _textEditingController.text}"),
                   ],
                 ),
@@ -594,7 +595,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                 onPressed: () {
                   ordertype = '1';
                   bidprice = _textEditingController.text.isEmpty
-                      ? "${widget.buyprice}"
+                      ? "${widget.buyPrice}"
                       : _textEditingController.text;
                   orderPlace();
                 },
@@ -612,7 +613,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                   children: [
                     Text("Buy@"),
                     Text("${_textEditingController.text.isEmpty
-                        ? "${widget.buyprice}"
+                        ? "${widget.buyPrice}"
                         : _textEditingController.text}"),
                   ],
                 ),

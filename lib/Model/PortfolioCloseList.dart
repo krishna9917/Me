@@ -3,6 +3,7 @@
 //     final portfolioCloseList = portfolioCloseListFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:ffi';
 
 PortfolioCloseList portfolioCloseListFromJson(String str) => PortfolioCloseList.fromJson(json.decode(str));
 
@@ -62,14 +63,14 @@ class Datum {
   String? bidType;
   String? lot;
   int? intradayMargin;
-  int? holdingMargin;
+  double? holdingMargin;
   int? lotSize;
   double? bidPrice;
   double? avgBuyPrice;
   double? avgSellPrice;
   String? totalDebitAmount;
   String? ledgerBalance;
-  int? marginBalance;
+  double? marginBalance;
   String? m2MBalance;
   String? plBalance;
   String? brokerage;
@@ -108,15 +109,15 @@ class Datum {
     orderType: json["order_type"],
     bidType: json["bid_type"],
     lot: json["lot"],
-    intradayMargin: json["intradayMargin"],
-    holdingMargin: json["holdingMargin"],
+    intradayMargin: json["intradayMargin"].toInt(),
+    holdingMargin: json["holdingMargin"].toDouble(),
     lotSize: json["lotSize"],
     bidPrice: json["bid_price"].toDouble(),
     avgBuyPrice: json["avgBuyPrice"].toDouble(),
     avgSellPrice: json["avgSellPrice"].toDouble(),
     totalDebitAmount: json["total_debit_amount"],
     ledgerBalance: json["ledger_balance"],
-    marginBalance: json["margin_balance"],
+    marginBalance: json["margin_balance"].toDouble(),
     m2MBalance: json["m2m_balance"],
     plBalance: json["pl_balance"],
     brokerage: json["brokerage"],

@@ -13,7 +13,7 @@ class GetPortfolioList {
   String? message;
   String? totalLedgerBalance;
   double? totalMarginBalance;
-  int? totalPlBalance;
+  double? totalPlBalance;
   double? totalM2MBalance;
   List<Datum>? data;
 
@@ -32,7 +32,7 @@ class GetPortfolioList {
     message: json["message"],
     totalLedgerBalance: json["totalLedgerBalance"],
     totalMarginBalance: json["totalMarginBalance"].toDouble(),
-    totalPlBalance: json["totalPLBalance"],
+    totalPlBalance: json["totalPLBalance"].toDouble(),
     totalM2MBalance: json["totalM2MBalance"].toDouble(),
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
   );
@@ -61,7 +61,7 @@ class Datum {
   int? holdingMargin;
   String? totalReqHoldingMargin;
   int? lotSize;
-  int? bidPrice;
+  double? bidPrice;
   double? avrageBidPrice;
   String? totalDebitAmount;
   String? ledgerBalance;
