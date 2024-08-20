@@ -3,7 +3,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
 import '../Model/GetPortfolioList.dart';
+import '../Resources/Strings.dart';
 
 /// State provider to store the device ID
 final deviceIDProvider = StateProvider<String?>((ref) => null);
@@ -22,13 +24,14 @@ class ServicesApi {
     Map<String, String>? data,
     WidgetRef? ref,
   }) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // Retrieve the device ID from the provider
     String? deviceID = ref?.read(deviceIDProvider);
 
     // Define headers
     var headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Token': token ?? "",
+      'Token': sharedPreferences.getString(Strings.ACCESS_TOKEN).toString(),
       'Deviceid': deviceID ?? "12345678",
       'Cookie': 'PHPSESSID=40139577239b6f0b01085aba0f1490c2a8a630f2',
     };
@@ -88,18 +91,17 @@ class ServicesApi {
   /// Method to send a GET request with headers
   Future<dynamic> get_ApiwithHeader(
       dynamic url,
-      dynamic token,
       WidgetRef ref,
       ) async {
     try {
       var client = http.Client();
       var uri = Uri.parse(url);
-
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       // Retrieve the device ID from the provider
       String? deviceID = ref.read(deviceIDProvider);
 
       var headers = {
-        'Token': '$token',
+        'Token':  sharedPreferences.getString(Strings.ACCESS_TOKEN).toString(),
         'Content-Type': 'application/x-www-form-urlencoded',
         'Deviceid': deviceID ?? "12345678",
       };
@@ -118,17 +120,16 @@ class ServicesApi {
 
   /// Method to send a POST request with additional data fields
   Future<String> postApiWithData(
-      dynamic token,
       String url,
       Map<String, dynamic> bodyFields,
       WidgetRef ref,
       ) async {
     // Retrieve the device ID from the provider
     String? deviceID = ref.read(deviceIDProvider);
-
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Token': "$token",
+      'Token': sharedPreferences.getString(Strings.ACCESS_TOKEN).toString(),
       'Deviceid': deviceID ?? "12345678",
       'Cookie': 'PHPSESSID=2a5580a0916ea9b288295a1abbea3c6b6f23faca',
     };

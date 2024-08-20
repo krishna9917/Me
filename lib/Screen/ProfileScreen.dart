@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../Model/GetProfileData.dart';
+import '../Resources/Strings.dart';
 import '../Services/Service_Api.dart';
 
 
@@ -22,28 +23,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     });
 
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final stdata = prefs.getString('apiToken');
-      print("stdata: $stdata");
-      print("222");
-
-      if (stdata != null && stdata.isNotEmpty) {
-        // final loginModel = loginModelFromJson(stdata);
-        // final token = loginModel.token;
-        //
-        // if (token != null && token.isNotEmpty) {
         var bodyFields = {
-          'userID': '145',
+          'userID': sharedPreferences.getString(Strings.USER_ID).toString(),
           // 'type': '2'
         };
         var result = await ServicesApi().postApiWithData(
-          //token,
-            'bXdSSmNIOHFOS2RoQTNES0hJYndwNmxjS1ZzbkVzZzVNSWdOVHZqRm'
-                'h0MUFLNTJhSXZFYUdiQzVWS2Z3Z0V5TTNTejI1WWFoRm5MTWFJcTNlczJPajRlMk9qQ2dtZ3dYcExWVU1Laml4SlE9' ,
             'https://www.onlinetradelearn.com/mcx/authController/getProfileData',bodyFields,ref
         );
-
-        print("Result: $result");
 
         // Parse the result into GetPortfolioList
         Profiledata = getProfiledataFromJson(result);
@@ -51,12 +37,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         setState(() {
           isLoading = false;
         });
-      } else {
-        print('API token is not available or is empty');
-        setState(() {
-          isLoading = false;
-        });
-      }
     } catch (e) {
       setState(() {
         isLoading = false;

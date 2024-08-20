@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'Providerr/providers.dart';
 import 'Screen/Splashscreen.dart';
 import 'Utils/AppTheme.dart';
 import 'Utils/Themeprovider.dart';
@@ -23,8 +22,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Fetch the device ID when the app starts
-    fetchDeviceID(ref);
 
     final isDarkTheme = ref.watch(appThemeProvider);
     final isGoldenTheme = ref.watch(goldenThemeProvider);

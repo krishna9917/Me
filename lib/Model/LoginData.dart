@@ -117,7 +117,7 @@ class UserData {
     _name = json['name'];
     _token = json['token'];
     _walletBalance = json['wallet_balance'];
-    _marginBalance = json['margin_balance'];
+    _marginBalance = json['margin_balance'].toString();
     _m2mBalance = json['m2m_balance'];
     _mobile = json['mobile'];
     _isFirstTimeLogin = json['is_first_time_login'];

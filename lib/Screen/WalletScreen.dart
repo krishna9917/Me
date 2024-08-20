@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Model/GetWalletModel.dart';
-import '../Providerr/providers.dart';
+import '../Resources/Strings.dart';
 import '../Services/Service_Api.dart';
-import '../Utils/Colors.dart';
-import '../Utils/Images.dart';
-import 'LoginScreen.dart';
 
 
 class WalletScreen extends ConsumerStatefulWidget {
@@ -33,40 +30,20 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      final stdata = prefs.getString('apiToken');
-      print("stdata: $stdata");
-      print("222");
 
-      if (stdata != null && stdata.isNotEmpty) {
-        // final loginModel = loginModelFromJson(stdata);
-        // final token = loginModel.token;
-        //
-        // if (token != null && token.isNotEmpty) {
         var bodyFields = {
-          'userID': '145',
+          'userID': sharedPreferences.getString(Strings.USER_ID).toString(),
          // 'type': '2'
         };
         var result = await ServicesApi().postApiWithData(
-          //token,
-            'bXdSSmNIOHFOS2RoQTNES0hJYndwNmxjS1ZzbkVzZzVNSWdOVHZqRm'
-                'h0MUFLNTJhSXZFYUdiQzVWS2Z3Z0V5TTNTejI1WWFoRm5MTWFJcTNlczJPajRlMk9qQ2dtZ3dYcExWVU1Laml4SlE9',
             'https://www.onlinetradelearn.com/mcx/authController/getWalletHistory',bodyFields,ref
         );
 
-        print("Result: $result");
-
-        // Parse the result into GetPortfolioList
         wallet = getWalletFromJson(result);
 
         setState(() {
           isLoading = false;
         });
-      } else {
-        print('API token is not available or is empty');
-        setState(() {
-          isLoading = false;
-        });
-      }
     } catch (e) {
       setState(() {
         isLoading = false;
@@ -132,7 +109,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Settlement",
                                 style: TextStyle(fontSize: 11,color: Colors.white),
                               ),

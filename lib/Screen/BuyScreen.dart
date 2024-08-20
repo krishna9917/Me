@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../Model/LiveRateTokenModel.dart';
 import '../Model/SellOrder.dart';
 import '../Services/Service_Api.dart';
-import '../Utils/Themepopup.dart';
 
 final exampleProvider = Provider<int>((ref) => 42);
 class BuyScreen extends ConsumerStatefulWidget  {
@@ -47,16 +44,6 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
    //   isLoading = true;
     });
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final stdata = prefs.getString('apiToken');
-      print("stdata: $stdata");
-      print("222");
-
-      if (stdata != null && stdata.isNotEmpty) {
-        // final loginModel = loginModelFromJson(stdata);
-        // final token = loginModel.token;
-        //
-        // if (token != null && token.isNotEmpty) {
         var bodyFields = {
           'userID': '145',
           'catID': widget.categoryId,
@@ -66,20 +53,11 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
           'bidPrice': bidprice ?? (Bidtype == '1' ? widget.buyprice.toString() : widget.sellprice.toString()),
           'lotSize': lotsize,
         };
-        print("body data:$bodyFields");
-
         var result = await ServicesApi().postApiWithData(
-          'bXdSSmNIOHFOS2RoQTNES0hJYndwNmxjS1ZzbkVzZzVNSWdOVHZqRm'
-              'h0MUFLNTJhSXZFYUdiQzVWS2Z3Z0V5TTNTejI1WWFoRm5MTWFJcTNlczJPajRlMk9qQ2dtZ3dYcExWVU1Laml4SlE9',
           'https://www.onlinetradelearn.com/mcx/authController/orderAuth',
           bodyFields, ref
         );
 
-        print("Resulttt: $result");
-
-        if (result != null) {
-          print("Status Code: ${result}");
-        }
 
         Map<String, dynamic> jsonResponse;
         try {
@@ -179,12 +157,6 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
         setState(() {
         //  isLoading = false;
         });
-      } else {
-        print('API token is not available or is empty');
-        setState(() {
-         // isLoading = false;
-        });
-      }
     } catch (e) {
       setState(() {
        // isLoading = false;
@@ -199,9 +171,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
       //
       // if (token != null && token.isNotEmpty) {
       var responseString = await ServicesApi().get_ApiwithHeader(
-        "https://www.onlinetradelearn.com/mcx/authController/getLiveRate?userID=145&token=${widget.identifier}",
-        "bXdSSmNIOHFOS2RoQTNES0hJYndwNmxjS1ZzbkVzZzVNSWdOVHZqRmh0MUFLNTJhSXZFYUdiQzVWS2Z3Z0V5TTNTejI1WWFoRm5MTWF"
-            "JcTNlczJPajRlMk9qQ2dtZ3dYcExWVU1Laml4SlE9", ref
+        "https://www.onlinetradelearn.com/mcx/authController/getLiveRate?userID=145&token=${widget.identifier}",ref
       );
 
       final jsonResponse = jsonDecode(responseString);

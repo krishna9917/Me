@@ -32,6 +32,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> checkLoginStatus() async {
     var userLoginData = await LoginData.getData();
+    print("DATA----->$userLoginData");
     if (userLoginData != null) {
       setState(() {
         isLoading = true;

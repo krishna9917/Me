@@ -41,8 +41,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           await ApiInterface.login(context, username!, pswd!);
       if (loginResponse?.status == 1) {
         LoginData.saveData(loginResponse!);
-        if (loginResponse.userData!.isFirstTimeLogin == 1)
-        {
+        if (loginResponse.userData!.isFirstTimeLogin == 1) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => Changepassword()),
@@ -111,7 +110,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       10.0, 20.0, 10.0, 20.0),
                                   hintText: 'Enter your user id',
-                                  hintStyle: Styles.normalText(),
+                                  hintStyle:
+                                      Styles.normalText(color: Colors.white),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide: BorderSide(
@@ -140,7 +140,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         color: Colors.white, width: 2.0),
                                   ),
                                 ),
-                                style: TextStyle(color: Colors.white),
+                                style: Styles.normalText(color: Colors.white),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
                                     return '';
@@ -157,15 +157,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   }
                                 },
                               ),
-                              const Positioned(
+                              Positioned(
                                 left: 12,
                                 top: 4,
                                 child: Text(
                                   'User ID',
-                                  style: TextStyle(
+                                  style: Styles.normalText(
                                     color: Colors.amber,
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ),
@@ -185,7 +184,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       10.0, 20.0, 10.0, 20.0),
                                   hintText: 'Enter your password',
-                                  hintStyle: Styles.normalText(),
+                                  hintStyle:
+                                      Styles.normalText(color: Colors.white),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide: BorderSide(
@@ -214,7 +214,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         color: Colors.white, width: 2.0),
                                   ),
                                 ),
-                                style: Styles.normalText(),
+                                style: Styles.normalText(color: Colors.white),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
                                     return '';
@@ -231,21 +231,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   }
                                 },
                               ),
-                              const Positioned(
+                              Positioned(
                                 left: 12,
                                 top: 4,
                                 child: Text(
                                   'Password',
-                                  style: TextStyle(
+                                  style: Styles.normalText(
                                     color: Colors.amber,
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          10.height,
+                          40.height,
                           Center(
                             child: SizedBox(
                               height: 45,

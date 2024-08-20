@@ -2,10 +2,16 @@ import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:me_app/Model/GetMCXModel.dart';
+import 'package:me_app/Model/GetPortfolioList.dart';
+import 'package:me_app/Model/LiveRate.dart';
 import 'package:me_app/Model/LoginData.dart';
+import 'package:me_app/Model/StatusMessage.dart';
+import 'package:me_app/Model/TradeData.dart';
 import 'package:me_app/Resources/Strings.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
+import '../Model/PortfolioCloseList.dart';
 import '../Utils/HelperFunction.dart';
 
 class ApiInterface {
@@ -30,9 +36,66 @@ class ApiInterface {
     return status ? LoginData.fromJson(jsonDecode(response!.body)) : null;
   }
 
+  static Future<GetMcx?> getStockList(BuildContext context) async {
+    var (bool status, Response? response) =
+        await _getApiCall(context, "getMcxCategoryList");
+    return status ? GetMcx.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+  static Future<LiveRate?> getLiveRate(BuildContext context) async {
+    var (bool status, Response? response) =
+        await _getApiCall(context, "getLiveRate");
+    return status ? LiveRate.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+  static Future<StatusMessage?> addToWatchList(
+      BuildContext context, String categoryId, num isChecked) async {
+    var (bool status, Response? response) = await _getApiCall(
+        context, "addUserWatchList", requestParams: {
+      "category_id": categoryId,
+      "ischecked": isChecked.toString()
+    });
+    return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+  static Future<TradeData?> tradeList(
+      BuildContext context, int tradeStatus) async {
+    var (bool status, Response? response) = await _postApiCall(
+        context, "getTradeList",
+        requestParams: {"status": tradeStatus.toString()});
+    return status ? TradeData.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+  static Future<StatusMessage?> updateTradeStatus(
+      BuildContext context, String orderId, String type) async {
+    var (bool status, Response? response) = await _postApiCall(
+        context, "closeCancelTrade",
+        requestParams: {"orderID": orderId, "type": type});
+    return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+
+  static Future<PortfolioCloseList?> getPortfolioClose(BuildContext? context) async
+  {
+    var (bool status, Response? response) = await _postApiCall(
+        context!, "getClosePortfolioList");
+      return status ? PortfolioCloseList.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+  static Future<GetPortfolioList?> getPortfolio(BuildContext? context) async
+  {
+    var (bool status, Response? response) = await _postApiCall(
+        context!, "getPortfolioList");
+    return status ? GetPortfolioList.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+
+
+
+
   static Future<(bool, Response?)> _getApiCall(
       BuildContext context, String endPoint,
-      {Map<String, String>? requestParams}) async {
+      {Map<String, dynamic>? requestParams}) async {
     if (await HelperFunction.isInternetConnected(context)) {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
@@ -45,7 +108,7 @@ class ApiInterface {
       final response = await httpClient.get(
           Uri.parse(BASE_URL + endPoint)
               .replace(queryParameters: requestParams),
-          headers: getHeader());
+          headers: await getHeader());
       return (
         (response.statusCode == 200 && response.body.isNotEmpty),
         response
@@ -68,10 +131,10 @@ class ApiInterface {
       requestParams.addAll({
         "userID": sharedPreferences.getString(Strings.USER_ID).toString(),
         "fcm_id": "",
-        "deviceName": deviceInfo.display+" "+deviceInfo.model
+        "deviceName": deviceInfo.display + " " + deviceInfo.model
       });
       final response = await httpClient.post(Uri.parse(BASE_URL + endPoint),
-          headers: await getHeader(), body: jsonEncode(requestParams));
+          headers: await getHeader(), body: requestParams);
       return (
         (response.statusCode == 200 && response.body.isNotEmpty),
         response
