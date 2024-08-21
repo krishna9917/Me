@@ -20,6 +20,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: Image.asset(
+              width: showBackButton ? 25 : 60,
+              height: showBackButton ? 25 : 60,
               showBackButton ? ImagePaths.backBtn : ImagePaths.logo),
           // Replace with your logo image
           onPressed: () {

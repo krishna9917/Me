@@ -41,16 +41,61 @@ class Strings {
   static const String nseFutures = "NSE Futures";
   static const String others = "Others";
   static const String requireHoldingMargin = "Require Holding Margin :";
-  static const String profitLoss="Profit Loss";
-  static const String totalBrokerage="Total Brokerage";
-  static const String netProfitLoss="Net Profit/Loss";
-  static const String selectTheme="Select Theme";
-  static const String lightTheme="Light Theme";
-  static const String darkTheme="Dark Theme";
-  static const String goldenTheme="Golden Theme";
-  static const String areYouSureToClose="Are you surely to close the application?";
-  static const String enterLotSize="Enter the Lots you want to buy : ";
-  static const String enterPrice="Enter the price you want to buy : ";
+  static const String profitLoss = "Profit Loss";
+  static const String totalBrokerage = "Total Brokerage";
+  static const String netProfitLoss = "Net Profit/Loss";
+  static const String selectTheme = "Select Theme";
+  static const String lightTheme = "Light Theme";
+  static const String darkTheme = "Dark Theme";
+  static const String goldenTheme = "Golden Theme";
+  static const String areYouSureToClose =
+      "Are you surely to close the application?";
+  static const String enterLotSize = "Enter the Lots you want to buy : ";
+  static const String enterPrice = "Enter the price you want to buy : ";
+  static const String bid = "Bid";
+  static const String ask = "Ask";
+  static const String lastP = "Last P";
+  static const String open = "Open";
+  static const String _close = "Close";
+  static const String volume = "Volume";
+  static const String high = "High";
+  static const String low = "Low";
+  static const String change = "Change";
+  static const String buyers = "Buyers";
+  static const String sellers = "Sellers";
+  static const String openInterest = "Open Interest";
+  static const String upperCkt = "Upper CKT";
+  static const String lowerCkt = "Lower CKT";
+  static const String atp = "ATP";
+  static const String lastBuy = "Last Buy";
+  static const String lastSell = "Last Sell";
+  static const String lotSize = "Lot Size";
+  static const String walletHistory = "Wallet History";
+  static const String settlement = "Settlement";
+  static const String beforePoint = "Before Point : ";
+  static const String afterPoint = "After Point : ";
+  static const String profile = "Profile";
+  static const String nse = "NSE";
+  static const String tradingEnabled = "Trading Enabled";
+  static const String brokerage = "Brokerage";
+  static const String marginIntraday = "Margin Intraday";
+  static const String marginHolding = "Margin Holding";
+  static const String turnOver = "Turnover /";
+  static const String mcx = "MCX";
+  static const String changePassword = "Change Password";
+  static const String existingPassword = "Existing Password";
+  static const String existingPasswordRequired =
+      "Existing password is required";
+  static const String passwordMustBeValid =
+      "Password must be at least 6 characters in length";
+  static const String newPassword = "New Password";
+  static const String newPasswordRequired = "New Password is required";
+  static const String confirmPassword = "Confirm Password";
+  static const String confirmPasswordRequired = "Confirm password is required";
+
+
+
+
 
 
   //sharedPreferences key

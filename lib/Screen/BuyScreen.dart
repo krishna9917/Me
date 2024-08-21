@@ -9,7 +9,8 @@ import '../Services/Service_Api.dart';
 import '../Utils/Themepopup.dart';
 
 final exampleProvider = Provider<int>((ref) => 42);
-class BuyScreen extends ConsumerStatefulWidget  {
+
+class BuyScreen extends ConsumerStatefulWidget {
   final double buyPrice;
   final double sellPrice;
   final String categoryId;
@@ -17,7 +18,8 @@ class BuyScreen extends ConsumerStatefulWidget  {
   final String title;
   final String expiryDate;
 
-  const BuyScreen({super.key,
+  const BuyScreen({
+    super.key,
     required this.categoryId,
     required this.title,
     required this.expiryDate,
@@ -30,8 +32,9 @@ class BuyScreen extends ConsumerStatefulWidget  {
   _BuyScreenState createState() => _BuyScreenState();
 }
 
-class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProviderStateMixin {
- // late AnimationController _controller;
+class _BuyScreenState extends ConsumerState<BuyScreen>
+    with SingleTickerProviderStateMixin {
+  // late AnimationController _controller;
 
   double containerHeight = 260.0;
   String lotsize = '1';
@@ -40,131 +43,136 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
   List<LiveRateToken> liveRateTokens = [];
   bool hasError = false;
   Timer? _refreshTimer;
+
   Future<void> orderPlace() async {
     setState(() {
-   //   isLoading = true;
+      //   isLoading = true;
     });
     try {
-        var bodyFields = {
-          'userID': '145',
-          'catID': widget.categoryId,
-          'exipreDate': widget.expiryDate,
-          'orderType': ordertype ?? '',
-          'bidType': Bidtype ?? '',
-          'bidPrice': bidprice ?? (Bidtype == '1' ? widget.buyPrice.toString() : widget.sellPrice.toString()),
-          'lotSize': lotsize,
-        };
-        var result = await ServicesApi().postApiWithData(
+      var bodyFields = {
+        'userID': '145',
+        'catID': widget.categoryId,
+        'exipreDate': widget.expiryDate,
+        'orderType': ordertype ?? '',
+        'bidType': Bidtype ?? '',
+        'bidPrice': bidprice ??
+            (Bidtype == '1'
+                ? widget.buyPrice.toString()
+                : widget.sellPrice.toString()),
+        'lotSize': lotsize,
+      };
+      var result = await ServicesApi().postApiWithData(
           'https://www.onlinetradelearn.com/mcx/authController/orderAuth',
-          bodyFields, ref
+          bodyFields,
+          ref);
+
+      Map<String, dynamic> jsonResponse;
+      try {
+        jsonResponse = json.decode(result);
+      } catch (e) {
+        print("Error parsing JSON: $e");
+        return;
+      }
+
+      print("Parsed JSON Response: $jsonResponse");
+
+      final status = jsonResponse['status']?.toString() ?? '';
+      final message = jsonResponse['message'] ?? '';
+
+      if (status == '0') {
+        print("Status is 0, showing popup.");
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => SizedBox(
+            height: 100,
+            child: AlertDialog(
+              title: Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.cancel_outlined, color: Colors.red, size: 40),
+                    Text('Failed'),
+                  ],
+                ),
+              ),
+              content: Text(message),
+              actions: <Widget>[
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.black,
+                      shadowColor: Colors.black,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('Close'),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
-
-
-        Map<String, dynamic> jsonResponse;
-        try {
-          jsonResponse = json.decode(result);
-        } catch (e) {
-          print("Error parsing JSON: $e");
-          return;
-        }
-
-        print("Parsed JSON Response: $jsonResponse");
-
-        final status = jsonResponse['status']?.toString() ?? '';
-        final message = jsonResponse['message'] ?? '';
-
-          if (status == '0') {
-            print("Status is 0, showing popup.");
-            showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => SizedBox(
-                height: 100,
-                child: AlertDialog(
-                  title: Center(
-                    child: Column(
-                      children: [
-                        Icon(Icons.cancel_outlined, color: Colors.red, size: 40),
-                        Text('Failed'),
-                      ],
-                    ),
-                  ),
-                  content: Text(message),
-                  actions: <Widget>[
-                    Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.black,
-                          shadowColor: Colors.black,
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text('Close'),
-                      ),
-                    ),
+      } else if (status == '1') {
+        print("Status is 1, showing popup.");
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => SizedBox(
+            height: 100,
+            child: AlertDialog(
+              title: Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.check_circle_outline,
+                        color: Colors.green, size: 40),
+                    Text('Success'),
                   ],
                 ),
               ),
-            );
-          } else if (status == '1') {
-            print("Status is 1, showing popup.");
-            showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => SizedBox(
-                height: 100,
-                child: AlertDialog(
-                  title: Center(
-                    child: Column(
-                      children: [
-                        Icon(Icons.check_circle_outline, color: Colors.green, size: 40),
-                        Text('Success'),
-                      ],
-                    ),
-                  ),
-                  content: Text(message),
-                  actions: <Widget>[
-                    Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.black,
-                          shadowColor: Colors.black,
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
+              content: Text(message),
+              actions: <Widget>[
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.black,
+                      shadowColor: Colors.black,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                          color: Colors.black,
+                          width: 1,
                         ),
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text('Close'),
                       ),
                     ),
-                  ],
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('Close'),
+                  ),
                 ),
-              ),
-            );
-          }
+              ],
+            ),
+          ),
+        );
+      }
 
-        setState(() {
+      setState(() {
         //  isLoading = false;
-        });
+      });
     } catch (e) {
       setState(() {
-       // isLoading = false;
+        // isLoading = false;
       });
       print('Error occurred: $e');
     }
   }
+
   fetchLiveData() async {
     try {
       // final loginModel = loginModelFromJson(stdata);
@@ -172,8 +180,8 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
       //
       // if (token != null && token.isNotEmpty) {
       var responseString = await ServicesApi().get_ApiwithHeader(
-        "https://www.onlinetradelearn.com/mcx/authController/getLiveRate?userID=145&token=${widget.identifier}",ref
-      );
+          "https://www.onlinetradelearn.com/mcx/authController/getLiveRate?userID=145&token=${widget.identifier}",
+          ref);
 
       final jsonResponse = jsonDecode(responseString);
       final List<dynamic> dataList = jsonResponse['livedata'];
@@ -185,27 +193,38 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
           'AverageTradedPrice': _parseDouble(json['AverageTradedPrice']),
           'BuyPrice': _parseDouble(json['BuyPrice']),
           'Close': _parseDouble(json['Close']),
-          'High': _parseInt(json['High']),  // Convert to int if expected as int
+          'High': _parseInt(json['High']),
+          // Convert to int if expected as int
           'Low': _parseDouble(json['Low']),
           'LastTradePrice': _parseDouble(json['LastTradePrice']),
           'Open': _parseDouble(json['Open']),
-          'OpenInterest': _parseInt(json['OpenInterest']),  // Safely parse as int
-          'QuotationLot': _parseInt(json['QuotationLot']),  // Safely parse as int
+          'OpenInterest': _parseInt(json['OpenInterest']),
+          // Safely parse as int
+          'QuotationLot': _parseInt(json['QuotationLot']),
+          // Safely parse as int
           'SellPrice': _parseDouble(json['SellPrice']),
           'PriceChange': _parseDouble(json['PriceChange']),
           'PriceChangePercentage': _parseDouble(json['PriceChangePercentage']),
           'LowerCircuit': _parseDouble(json['LowerCircuit']),
           'UpperCircuit': _parseDouble(json['UpperCircuit']),
-          'LastTradeTime': _parseInt(json['LastTradeTime']),  // Safely parse as int
-          'ServerTime': _parseInt(json['ServerTime']),  // Safely parse as int
-          'BuyQty': _parseInt(json['BuyQty']),  // Safely parse as int
-          'LastTradeQty': _parseInt(json['LastTradeQty']),  // Safely parse as int
-          'SellQty': _parseInt(json['SellQty']),  // Safely parse as int
-          'TotalQtyTraded': _parseInt(json['TotalQtyTraded']),  // Safely parse as int
-          'Value': _parseInt(json['Value']),  // Safely parse as int
+          'LastTradeTime': _parseInt(json['LastTradeTime']),
+          // Safely parse as int
+          'ServerTime': _parseInt(json['ServerTime']),
+          // Safely parse as int
+          'BuyQty': _parseInt(json['BuyQty']),
+          // Safely parse as int
+          'LastTradeQty': _parseInt(json['LastTradeQty']),
+          // Safely parse as int
+          'SellQty': _parseInt(json['SellQty']),
+          // Safely parse as int
+          'TotalQtyTraded': _parseInt(json['TotalQtyTraded']),
+          // Safely parse as int
+          'Value': _parseInt(json['Value']),
+          // Safely parse as int
           'PreOpen': json['PreOpen'] == null ? null : (json['PreOpen'] as bool),
           'MessageType': json['MessageType'] ?? '',
-          'OpenInterestChange': _parseInt(json['OpenInterestChange']),  // Safely parse as int
+          'OpenInterestChange': _parseInt(json['OpenInterestChange']),
+          // Safely parse as int
         });
       }).toList();
 
@@ -240,8 +259,6 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
     if (value is String) return int.tryParse(value) ?? 0;
     return 0;
   }
-
-
 
   late TabController _tabController;
   String Bidtype = '1';
@@ -280,6 +297,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
       });
     });
   }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -296,6 +314,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
   }
 
   bool _isTextFieldValid = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -306,18 +325,18 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
           IconButton(
             icon: Image.asset('assets/theme.png'),
             onPressed: () {
-             showThemeSelectionDialog(context, ref);
+              showThemeSelectionDialog(context, ref);
             },
           ),
         ],
       ),
       body: SingleChildScrollView(
         child: Container(
-         // height: MediaQuery.of(context).size.height*0.8,
+          // height: MediaQuery.of(context).size.height*0.8,
           child: Column(
             children: [
               Container(
-                height:containerHeight,
+                height: containerHeight,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Card(
@@ -328,8 +347,9 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("${widget.title}_${widget.expiryDate}",
-                          style: TextStyle(fontSize: 15,color: Colors.black ),
+                        Text(
+                          "${widget.title}_${widget.expiryDate}",
+                          style: TextStyle(fontSize: 15, color: Colors.black),
                         ),
                         10.height,
                         Container(
@@ -343,8 +363,12 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                             controller: _tabController,
                             indicator: BoxDecoration(
                               borderRadius: BorderRadius.horizontal(
-                                left: _tabController.index == 0 ? Radius.circular(10) : Radius.zero,
-                                right: _tabController.index == 2 ? Radius.circular(10) : Radius.zero,
+                                left: _tabController.index == 0
+                                    ? Radius.circular(10)
+                                    : Radius.zero,
+                                right: _tabController.index == 2
+                                    ? Radius.circular(10)
+                                    : Radius.zero,
                               ),
                               color: Colors.black,
                             ),
@@ -373,15 +397,13 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                           ),
                         ),
                         Expanded(
-                          child: TabBarView(
-                              controller: _tabController,
-                              children: [
+                          child:
+                              TabBarView(controller: _tabController, children: [
                             buildTabContent(showBidPrice: false),
                             buildTabContent(showBidPrice: true),
                             buildTabContent(showBidPrice: true),
                           ]),
                         ),
-
                       ],
                     ),
                   ),
@@ -389,88 +411,232 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
               ),
               50.height,
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.7,
+                height: MediaQuery.of(context).size.height * 0.7,
                 child: ListView.builder(
                   itemCount: liveRateTokens.length,
                   itemBuilder: (context, index) {
                     final data = liveRateTokens[index];
-                    return  Card(
-                      color:Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left:8.0, right:35,top:10,bottom:10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                    return Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 35, top: 10, bottom: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
                               children: [
-                                Row(
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Bid", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.buyPrice.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Open", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.open.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("High", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.high.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Buyers", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.quotationLot.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Upper CKT", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.upperCircuit.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Last Buy", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.quotationLot.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Ask", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.sellPrice.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Close", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.close.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Low", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.low.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Sellers", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.sellQty.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Lower CKT", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.lowerCircuit.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Last Sell", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.sellQty.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Last P.", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.lastTradePrice.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Volume", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.totalQtyTraded.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Change", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.priceChange.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Open Interest", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.openInterest.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("ATP", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.averageTradedPrice.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text("Lot Size", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                        Text(data.sellQty.toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10)),
-                                      ],
-                                    ),
+                                    Text("Bid",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.buyPrice.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Open",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.open.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("High",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.high.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Buyers",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.quotationLot.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Upper CKT",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.upperCircuit.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Last Buy",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.quotationLot.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
                                   ],
                                 ),
                               ],
                             ),
-                          ),
-                        );
-
+                            Spacer(),
+                            Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Ask",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.sellPrice.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Close",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.close.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Low",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.low.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Sellers",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.sellQty.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Lower CKT",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.lowerCircuit.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Last Sell",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.sellQty.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Last P.",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.lastTradePrice.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Volume",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.totalQtyTraded.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Change",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.priceChange.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Open Interest",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.openInterest.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("ATP",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.averageTradedPrice.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text("Lot Size",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                    Text(data.sellQty.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 10)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -480,6 +646,7 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
       ),
     );
   }
+
   Widget buildTabContent({required bool showBidPrice}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -488,7 +655,8 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
           child: Column(
             children: [
               SizedBox(height: 10),
-              Text("Enter the Lots you want to buy:", style: TextStyle(fontSize: 10,color: Colors.black)),
+              Text("Enter the Lots you want to buy:",
+                  style: TextStyle(fontSize: 10, color: Colors.black)),
               Container(
                 width: 300,
                 height: 38,
@@ -508,13 +676,15 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   ),
                 ),
               ),
               if (showBidPrice) ...[
                 SizedBox(height: 10),
-                Text("Enter the price you want to buy", style: TextStyle(color: Colors.black, fontSize: 10.0)),
+                Text("Enter the price you want to buy",
+                    style: TextStyle(color: Colors.black, fontSize: 10.0)),
                 Container(
                   width: 300,
                   height: 38,
@@ -529,13 +699,15 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                     onChanged: (value) {
                       setState(() {
                         _textFieldValue2 = value;
-                        _isTextFieldValid = true; // Reset the error state when user types
+                        _isTextFieldValid =
+                            true; // Reset the error state when user types
                       });
                     },
                     style: TextStyle(color: Colors.black),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       error: _isTextFieldValid
                           ? null
                           : Icon(Icons.error, color: Colors.red),
@@ -573,7 +745,8 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                   backgroundColor: Colors.red,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(15), // Match the card's border radius
+                      bottomLeft:
+                          Radius.circular(15), // Match the card's border radius
                     ),
                   ),
                   fixedSize: Size(170, 50),
@@ -581,9 +754,8 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                 child: Column(
                   children: [
                     Text("Sell@"),
-                    Text("${_textEditingController.text.isEmpty
-                        ? "${widget.sellPrice}"
-                        : _textEditingController.text}"),
+                    Text(
+                        "${_textEditingController.text.isEmpty ? "${widget.sellPrice}" : _textEditingController.text}"),
                   ],
                 ),
               ),
@@ -603,7 +775,8 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                   backgroundColor: Colors.green[700],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(15), // Match the card's border radius
+                      bottomRight:
+                          Radius.circular(15), // Match the card's border radius
                     ),
                   ),
                   fixedSize: Size(170, 50),
@@ -611,19 +784,15 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
                 child: Column(
                   children: [
                     Text("Buy@"),
-                    Text("${_textEditingController.text.isEmpty
-                        ? "${widget.buyPrice}"
-                        : _textEditingController.text}"),
+                    Text(
+                        "${_textEditingController.text.isEmpty ? "${widget.buyPrice}" : _textEditingController.text}"),
                   ],
                 ),
               ),
             ),
           ],
         ),
-
       ],
     );
   }
 }
-
-

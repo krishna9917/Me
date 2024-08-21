@@ -22,14 +22,13 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final isDarkTheme = ref.watch(appThemeProvider);
     final isGoldenTheme = ref.watch(goldenThemeProvider);
     return MaterialApp(
       title: 'ME',
       debugShowCheckedModeBanner: false,
       theme: getAppTheme(context, isDarkTheme, isGoldenTheme),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

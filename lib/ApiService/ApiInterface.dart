@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:me_app/Model/GetMCXModel.dart';
 import 'package:me_app/Model/GetPortfolioList.dart';
+import 'package:me_app/Model/GetProfileData.dart';
+import 'package:me_app/Model/GetWalletModel.dart';
 import 'package:me_app/Model/LiveRate.dart';
 import 'package:me_app/Model/LoginData.dart';
 import 'package:me_app/Model/StatusMessage.dart';
@@ -74,20 +76,48 @@ class ApiInterface {
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
 
-
-  static Future<PortfolioCloseList?> getPortfolioClose(BuildContext? context) async
-  {
-    var (bool status, Response? response) = await _postApiCall(
-        context!, "getClosePortfolioList");
-      return status ? PortfolioCloseList.fromJson(jsonDecode(response!.body)) : null;
+  static Future<PortfolioCloseList?> getPortfolioClose(
+      BuildContext? context) async {
+    var (bool status, Response? response) =
+        await _postApiCall(context!, "getClosePortfolioList");
+    return status
+        ? PortfolioCloseList.fromJson(jsonDecode(response!.body))
+        : null;
   }
 
-  static Future<GetPortfolioList?> getPortfolio(BuildContext? context) async
-  {
-    var (bool status, Response? response) = await _postApiCall(
-        context!, "getPortfolioList");
-    return status ? GetPortfolioList.fromJson(jsonDecode(response!.body)) : null;
+  static Future<GetPortfolioList?> getPortfolio(BuildContext? context) async {
+    var (bool status, Response? response) =
+        await _postApiCall(context!, "getPortfolioList");
+    return status
+        ? GetPortfolioList.fromJson(jsonDecode(response!.body))
+        : null;
   }
+
+  static Future<GetWallet?> getWalletHistory(BuildContext? context) async {
+    var (bool status, Response? response) =
+        await _postApiCall(context!, "getWalletHistory");
+    return status ? GetWallet.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+  static Future<GetProfiledata?> getProfile(BuildContext? context) async {
+    var (bool status, Response? response) =
+        await _postApiCall(context!, "getProfileData");
+    return status ? GetProfiledata.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+  static Future<StatusMessage?> changePassword(
+      BuildContext? context, String newPassword, String oldPassword) async {
+    var (bool status, Response? response) = await _postApiCall(
+        context!, "changePassword",
+        requestParams: {"opw": oldPassword, "npw": newPassword});
+    return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+
+
+
+
+
 
 
 
