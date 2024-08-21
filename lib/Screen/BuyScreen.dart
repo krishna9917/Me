@@ -318,7 +318,6 @@ class _BuyScreenState extends ConsumerState<BuyScreen> with SingleTickerProvider
             children: [
               Container(
                 height:containerHeight,
-
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Card(

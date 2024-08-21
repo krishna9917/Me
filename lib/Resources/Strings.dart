@@ -22,6 +22,7 @@ class Strings {
   static const String closeMcxOrder = "Close all MCX orders";
   static const String closeNseOrder = "Close all NSE orders";
   static const String market = "Market";
+  static const String limit = "Limit";
   static const String order = "Order";
   static const String sl = "SL";
   static const String admin = "admin";
@@ -48,6 +49,8 @@ class Strings {
   static const String darkTheme="Dark Theme";
   static const String goldenTheme="Golden Theme";
   static const String areYouSureToClose="Are you surely to close the application?";
+  static const String enterLotSize="Enter the Lots you want to buy : ";
+  static const String enterPrice="Enter the price you want to buy : ";
 
 
   //sharedPreferences key
