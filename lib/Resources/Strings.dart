@@ -92,11 +92,8 @@ class Strings {
   static const String newPasswordRequired = "New Password is required";
   static const String confirmPassword = "Confirm Password";
   static const String confirmPasswordRequired = "Confirm password is required";
-
-
-
-
-
+  static const String passwordDoNotMatch = "Passwords do not match";
+  static const String updatePassword = "Update Password";
 
   //sharedPreferences key
   static const String ACCESS_TOKEN = "access_token";

@@ -44,9 +44,11 @@ class ApiInterface {
     return status ? GetMcx.fromJson(jsonDecode(response!.body)) : null;
   }
 
-  static Future<LiveRate?> getLiveRate(BuildContext context) async {
-    var (bool status, Response? response) =
-        await _getApiCall(context, "getLiveRate");
+  static Future<LiveRate?> getLiveRate(BuildContext context,
+      {String token = ""}) async {
+    var (bool status, Response? response) = await _getApiCall(
+        context, "getLiveRate",
+        requestParams: {"token": token});
     return status ? LiveRate.fromJson(jsonDecode(response!.body)) : null;
   }
 
@@ -113,15 +115,25 @@ class ApiInterface {
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
 
-
-
-
-
-
-
-
-
-
+  static Future<StatusMessage?> placeOrder(
+      BuildContext? context,
+      String catId,
+      String expireDate,
+      String orderType,
+      String bidType,
+      String bidPrice,
+      String lotSize) async {
+    var (bool status, Response? response) =
+        await _postApiCall(context!, "orderAuth", requestParams: {
+      "catID": catId,
+      "exipreDate": expireDate,
+      "orderType": orderType,
+      "bidType": bidType,
+      "bidPrice": bidPrice,
+      "lotSize": lotSize
+    });
+    return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
+  }
 
   static Future<(bool, Response?)> _getApiCall(
       BuildContext context, String endPoint,

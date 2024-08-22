@@ -155,33 +155,34 @@ class _ChangePasswordState extends State<ChangePassword> {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   hintText: Strings.confirmPassword,
-                                  hintStyle: TextStyle(color: Colors.white),
-                                  prefixIcon:
-                                      Icon(Icons.lock, color: Colors.white),
+                                  hintStyle:
+                                      Styles.normalText(color: Colors.white),
+                                  prefixIcon: const Icon(Icons.lock,
+                                      color: Colors.white),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         color: Colors.white, width: 2.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         color: Colors.white, width: 1.0),
                                   ),
                                 ),
-                                style: TextStyle(color: Colors.white),
+                                style: Styles.normalText(color: Colors.white),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
-                                    return 'This field is required';
+                                    return Strings.confirmPasswordRequired;
                                   }
                                   if (value.trim().length < 6) {
-                                    return 'Password must be at least 6 characters in length';
+                                    return Strings.passwordMustBeValid;
                                   }
                                   if (value.trim() != npw?.trim()) {
-                                    return 'Passwords do not match';
+                                    return Strings.passwordDoNotMatch;
                                   }
                                   return null;
                                 },
@@ -194,7 +195,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 padding: const EdgeInsets.all(12.0),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    print("button is pressed");
                                     changePassword();
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -203,10 +203,13 @@ class _ChangePasswordState extends State<ChangePassword> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                     ),
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 12),
                                   ),
-                                  child: Text("UPDATE PASSWORD"),
+                                  child: Text(
+                                    Strings.updatePassword,
+                                    style: Styles.normalText(isBold: true),
+                                  ),
                                 ),
                               ),
                             ),

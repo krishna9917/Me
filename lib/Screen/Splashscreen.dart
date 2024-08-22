@@ -4,12 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:me_app/ApiService/ApiInterface.dart';
 import 'package:me_app/Model/LoginData.dart';
 import 'package:nb_utils/nb_utils.dart';
-import '../Model/LoginModel.dart';
-import '../Model/UpdateLogin.dart';
-import '../Services/Service_Api.dart';
 import '../Utils/Bottom_navigation.dart';
-import '../Utils/Colors.dart';
-import '../Utils/Images.dart';
 import 'ChangePassword.dart';
 import 'LoginScreen.dart';
 
@@ -32,7 +27,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> checkLoginStatus() async {
     var userLoginData = await LoginData.getData();
-    print("DATA----->$userLoginData");
     if (userLoginData != null) {
       setState(() {
         isLoading = true;
@@ -42,7 +36,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         if (data.userData!.isFirstTimeLogin == 1) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Changepassword()),
+            MaterialPageRoute(builder: (context) => ChangePassword(isComingFromAccount: false,)),
           );
         } else {
           Navigator.pushReplacement(

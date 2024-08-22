@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:me_app/ApiService/ApiInterface.dart';
 import 'package:me_app/CommonWidget/TradeStock.dart';
 import 'package:me_app/Model/LiveRate.dart';
+import 'package:me_app/Resources/ImagePaths.dart';
 import 'package:me_app/Resources/Styles.dart';
-import 'package:me_app/Screen/BuyScreen.dart';
 import 'package:me_app/Screen/SearchScreen.dart';
 import 'package:me_app/Screen/StockDetailScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -230,7 +230,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                               height: MediaQuery.of(context).size.height * 0.7,
                               child: _isLoading
                                   ? Center(
-                                      child: Image.asset('assets/loader.png'),
+                                      child: Image.asset(ImagePaths.loader),
                                     )
                                   : mcxList.isNotEmpty
                                       ? ListView.builder(
@@ -239,7 +239,8 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                                             final data = mcxList[index];
                                             return Tradestock(data: data)
                                                 .onTap(() {
-                                                  StockDetailScreen(stockData: data).launch(context);
+                                              StockDetailScreen(stockData: data)
+                                                  .launch(context);
                                             });
                                           },
                                         )
@@ -295,25 +296,25 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                                             final data = nseList[index];
                                             return Tradestock(data: data)
                                                 .onTap(() {
-                                              BuyScreen(
-                                                      categoryId: data
-                                                          .categoryId
-                                                          .toString(),
-                                                      title:
-                                                          data.title.toString(),
-                                                      expiryDate: data
-                                                          .expireDate
-                                                          .toString(),
-                                                      buyPrice: data.buyPrice
-                                                              ?.toDouble() ??
-                                                          0.0,
-                                                      sellPrice: data.salePrice
-                                                              ?.toDouble() ??
-                                                          0.0,
-                                                      identifier: data
-                                                          .instrumentToken
-                                                          .toString())
-                                                  .launch(context);
+                                              // BuyScreen(
+                                              //         categoryId: data
+                                              //             .categoryId
+                                              //             .toString(),
+                                              //         title:
+                                              //             data.title.toString(),
+                                              //         expiryDate: data
+                                              //             .expireDate
+                                              //             .toString(),
+                                              //         buyPrice: data.buyPrice
+                                              //                 ?.toDouble() ??
+                                              //             0.0,
+                                              //         sellPrice: data.salePrice
+                                              //                 ?.toDouble() ??
+                                              //             0.0,
+                                              //         identifier: data
+                                              //             .instrumentToken
+                                              //             .toString())
+                                              //     .launch(context);
                                             });
                                           },
                                         )

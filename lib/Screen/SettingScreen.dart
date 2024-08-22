@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:me_app/Screen/ChangePassword.dart';
 import 'package:me_app/Screen/WalletScreen.dart';
-import 'package:me_app/Screen/NotificationScreen.dart';
 import 'package:me_app/Screen/ProfileScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Utils/AppBar.dart';
+import 'ChangePassword.dart';
 import 'LoginScreen.dart';
 
 class SettingScreen extends ConsumerStatefulWidget {
@@ -199,7 +198,7 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                       ),
                       trailing: Icon(Icons.arrow_forward_ios, size: 18, color:Colors.black),
                       onTap: () {
-                        Changepassword().launch(context);
+                        ChangePassword(isComingFromAccount: true,).launch(context);
                       },
                     ),
                   ),
