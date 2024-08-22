@@ -1,8 +1,8 @@
-
 import 'package:nb_utils/nb_utils.dart';
 import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) => LoginModel.fromJson(json.decode(str));
+LoginModel loginModelFromJson(String str) =>
+    LoginModel.fromJson(json.decode(str));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
@@ -32,30 +32,30 @@ class LoginModel {
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    userId: json["user_id"],
-    uniqueId: json["unique_id"],
-    name: json["name"],
-    token: json["token"],
-    walletBalance: json["wallet_balance"],
-    marginBalance: json["margin_balance"],
-    m2MBalance: json["m2m_balance"],
-    mobile: json["mobile"],
-    isFirstTimeLogin: json["is_first_time_login"],
-    profilePhoto: json["profile_photo"],
-  );
+        userId: json["user_id"],
+        uniqueId: json["unique_id"],
+        name: json["name"],
+        token: json["token"],
+        walletBalance: json["wallet_balance"],
+        marginBalance: json["margin_balance"],
+        m2MBalance: json["m2m_balance"],
+        mobile: json["mobile"],
+        isFirstTimeLogin: json["is_first_time_login"],
+        profilePhoto: json["profile_photo"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "user_id": userId,
-    "unique_id": uniqueId,
-    "name": name,
-    "token": token,
-    "wallet_balance": walletBalance,
-    "margin_balance": marginBalance,
-    "m2m_balance": m2MBalance,
-    "mobile": mobile,
-    "is_first_time_login": isFirstTimeLogin,
-    "profile_photo": profilePhoto,
-  };
+        "user_id": userId,
+        "unique_id": uniqueId,
+        "name": name,
+        "token": token,
+        "wallet_balance": walletBalance,
+        "margin_balance": marginBalance,
+        "m2m_balance": m2MBalance,
+        "mobile": mobile,
+        "is_first_time_login": isFirstTimeLogin,
+        "profile_photo": profilePhoto,
+      };
 
   Future<void> saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -72,4 +72,3 @@ class LoginModel {
     return null;
   }
 }
-

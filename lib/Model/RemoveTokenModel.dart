@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-RemoveCheck removeCheckFromJson(String str) => RemoveCheck.fromJson(json.decode(str));
+RemoveCheck removeCheckFromJson(String str) =>
+    RemoveCheck.fromJson(json.decode(str));
 
 String removeCheckToJson(RemoveCheck data) => json.encode(data.toJson());
 
@@ -18,12 +19,12 @@ class RemoveCheck {
   });
 
   factory RemoveCheck.fromJson(Map<String, dynamic> json) => RemoveCheck(
-    status: json["status"],
-    message: json["message"],
-  );
+        status: json["status"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-  };
+        "status": status,
+        "message": message,
+      };
 }

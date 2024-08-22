@@ -239,7 +239,8 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                                             final data = mcxList[index];
                                             return Tradestock(data: data)
                                                 .onTap(() {
-                                                  StockDetailScreen(stockData: data).launch(context);
+                                              StockDetailScreen(stockData: data)
+                                                  .launch(context);
                                             });
                                           },
                                         )

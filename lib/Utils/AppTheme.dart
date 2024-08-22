@@ -3,25 +3,26 @@ import 'package:me_app/Resources/Styles.dart';
 
 import 'Colors.dart';
 
-ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme) {
+ThemeData getAppTheme(
+    BuildContext context, bool isDarkTheme, bool isGoldenTheme) {
   return ThemeData(
     extensions: <ThemeExtension<AppColors>>[
       AppColors(
         color1: isGoldenTheme
             ? goldencolor
             : isDarkTheme
-            ? Colors.blue
-            : Colors.green,
+                ? Colors.blue
+                : Colors.green,
         color2: isGoldenTheme
             ? Colors.black
             : isDarkTheme
-            ? Colors.pink
-            : Colors.blue,
+                ? Colors.pink
+                : Colors.blue,
         color3: isGoldenTheme
             ? Colors.green
             : isDarkTheme
-            ? Colors.yellow
-            : Colors.red,
+                ? Colors.yellow
+                : Colors.red,
       ),
     ],
     scaffoldBackgroundColor: isGoldenTheme
@@ -30,19 +31,19 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme
     textTheme: Theme.of(context)
         .textTheme
         .copyWith(
-      titleSmall: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
-    )
+          titleSmall:
+              Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
+        )
         .apply(
-      bodyColor: isGoldenTheme
-          ? goldencolor
-          : (isDarkTheme ? Colors.white : Colors.black),
-      displayColor: Colors.grey,
-    ),
+          bodyColor: isGoldenTheme
+              ? goldencolor
+              : (isDarkTheme ? Colors.white : Colors.black),
+          displayColor: Colors.grey,
+        ),
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.all(
-          isGoldenTheme
-              ? Colors.red
-              : (isDarkTheme ? Colors.orange : Colors.white)),
+      thumbColor: MaterialStateProperty.all(isGoldenTheme
+          ? Colors.red
+          : (isDarkTheme ? Colors.orange : Colors.white)),
     ),
     listTileTheme: ListTileThemeData(
         iconColor: isGoldenTheme
@@ -52,14 +53,18 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme
         backgroundColor: isGoldenTheme
             ? Colors.black
             : (isDarkTheme ? Colors.black : Colors.white),
-        iconTheme: const IconThemeData(color: Colors.white)), // Set back icon color to white
+        iconTheme: const IconThemeData(color: Colors.white)),
+    // Set back icon color to white
     tabBarTheme: TabBarTheme(
       labelColor: isGoldenTheme
           ? Colors.white
-          : (isDarkTheme ? Colors.white : Colors.black), // Selected tab label color
+          : (isDarkTheme ? Colors.white : Colors.black),
+      // Selected tab label color
       unselectedLabelColor: isGoldenTheme
           ? Colors.grey // You can set a different color for unselected tabs
-          : (isDarkTheme ? Colors.white54 : Colors.black54), // Unselected tab label color
+          : (isDarkTheme
+              ? Colors.white54
+              : Colors.black54), // Unselected tab label color
     ),
     dialogTheme: DialogTheme(
       titleTextStyle: Styles.normalText(color: Colors.black),

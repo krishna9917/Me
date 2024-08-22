@@ -8,7 +8,6 @@ class NotificationScreen extends ConsumerStatefulWidget {
 }
 
 class _NotificationScreenState extends ConsumerState<NotificationScreen> {
-
   @override
   Widget build(BuildContext context) {
     final getNotification = ref.watch(notificationProvider);
@@ -21,14 +20,15 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
       body: getNotification == null
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-        itemCount: getNotification.data?.length ?? 0,
-        itemBuilder: (context, index) {
-          final notification = getNotification.data![index];
-          return ListTile(
-            title: Text(notification.toString()), // Modify this to display relevant info
-          );
-        },
-      ),
+              itemCount: getNotification.data?.length ?? 0,
+              itemBuilder: (context, index) {
+                final notification = getNotification.data![index];
+                return ListTile(
+                  title: Text(notification
+                      .toString()), // Modify this to display relevant info
+                );
+              },
+            ),
     );
   }
 }

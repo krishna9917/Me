@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-UpdateLogin updateLoginFromJson(String str) => UpdateLogin.fromJson(json.decode(str));
+UpdateLogin updateLoginFromJson(String str) =>
+    UpdateLogin.fromJson(json.decode(str));
 
 String updateLoginToJson(UpdateLogin data) => json.encode(data.toJson());
 
@@ -20,16 +21,16 @@ class UpdateLogin {
   });
 
   factory UpdateLogin.fromJson(Map<String, dynamic> json) => UpdateLogin(
-    status: json["status"],
-    message: json["message"],
-    userData: UserData.fromJson(json["user_data"]),
-  );
+        status: json["status"],
+        message: json["message"],
+        userData: UserData.fromJson(json["user_data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "user_data": userData!.toJson(),
-  };
+        "status": status,
+        "message": message,
+        "user_data": userData!.toJson(),
+      };
 }
 
 class UserData {
@@ -56,26 +57,26 @@ class UserData {
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
-    uniqueId: json["unique_id"],
-    name: json["name"],
-    mobile: json["mobile"],
-    isFirstTimeLogin: json["is_first_time_login"],
-    walletBalance: json["wallet_balance"],
-    marginBalance: json["margin_balance"].toDouble(),
-    m2MBalance: json["m2m_balance"],
-    profilePhoto: json["profile_photo"],
-    token: json["token"],
-  );
+        uniqueId: json["unique_id"],
+        name: json["name"],
+        mobile: json["mobile"],
+        isFirstTimeLogin: json["is_first_time_login"],
+        walletBalance: json["wallet_balance"],
+        marginBalance: json["margin_balance"].toDouble(),
+        m2MBalance: json["m2m_balance"],
+        profilePhoto: json["profile_photo"],
+        token: json["token"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "unique_id": uniqueId,
-    "name": name,
-    "mobile": mobile,
-    "is_first_time_login": isFirstTimeLogin,
-    "wallet_balance": walletBalance,
-    "margin_balance": marginBalance,
-    "m2m_balance": m2MBalance,
-    "profile_photo": profilePhoto,
-    "token": token,
-  };
+        "unique_id": uniqueId,
+        "name": name,
+        "mobile": mobile,
+        "is_first_time_login": isFirstTimeLogin,
+        "wallet_balance": walletBalance,
+        "margin_balance": marginBalance,
+        "m2m_balance": m2MBalance,
+        "profile_photo": profilePhoto,
+        "token": token,
+      };
 }

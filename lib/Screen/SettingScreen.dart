@@ -20,7 +20,7 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_data'); // Replace with your actual key if needed
     await prefs.setBool('isFirstLogin', true);
-      LoginScreen().launch(context);
+    LoginScreen().launch(context);
     // Navigate to login screen
     // Navigator.pushReplacement(
     //   context,
@@ -35,7 +35,8 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
         return AlertDialog(
           contentPadding: EdgeInsets.all(16.0),
           content: Container(
-            constraints: BoxConstraints(maxWidth: 300, maxHeight: 300), // Define a max width and height to keep it square-like
+            constraints: BoxConstraints(maxWidth: 300, maxHeight: 300),
+            // Define a max width and height to keep it square-like
             child: Column(
               //  crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -61,11 +62,14 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Colors.black, // Color of the text and icon
+                        backgroundColor: Colors.black,
+                        // Color of the text and icon
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0), // No border radius to keep the button square
+                          borderRadius: BorderRadius.circular(
+                              0), // No border radius to keep the button square
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       ),
                       onPressed: () {
                         logout(); // Close the dialog
@@ -85,9 +89,9 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
     );
   }
 
-
   void _launchPrivacyPolicyURL() async {
-    final Uri url = Uri.parse('https://www.onlinetradelearn.com/privacy-policy/');
+    final Uri url =
+        Uri.parse('https://www.onlinetradelearn.com/privacy-policy/');
 
     try {
       if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
@@ -98,12 +102,10 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(ref: ref),  // Pass ref here
+      appBar: CustomAppBar(ref: ref), // Pass ref here
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -147,21 +149,23 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
               ),
             ),
             Container(
-              color:Colors.white,
+              color: Colors.white,
               child: Column(
                 children: [
                   SizedBox(
-                    height:60,
+                    height: 60,
                     child: ListTile(
                       title: Text(
                         "Wallet",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       subtitle: Text(
                         "See amount add and deduct from your wallet",
                         style: TextStyle(fontSize: 12),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18, color:Colors.black),
+                      trailing: Icon(Icons.arrow_forward_ios,
+                          size: 18, color: Colors.black),
                       onTap: () {
                         WalletScreen().launch(context);
                       },
@@ -169,17 +173,21 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                   ),
                   Divider(),
                   SizedBox(
-                    height:60,
+                    height: 60,
                     child: ListTile(
                       title: Text(
                         "Profile",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14,),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
                       subtitle: Text(
                         "See/Edit your profile detail",
                         style: TextStyle(fontSize: 12),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18, color:Colors.black),
+                      trailing: Icon(Icons.arrow_forward_ios,
+                          size: 18, color: Colors.black),
                       onTap: () {
                         ProfileScreen().launch(context);
                       },
@@ -187,17 +195,19 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                   ),
                   Divider(),
                   SizedBox(
-                    height:60,
+                    height: 60,
                     child: ListTile(
                       title: Text(
                         "Change Password",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       subtitle: Text(
                         "Change password of your account",
                         style: TextStyle(fontSize: 12),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18, color:Colors.black),
+                      trailing: Icon(Icons.arrow_forward_ios,
+                          size: 18, color: Colors.black),
                       onTap: () {
                         Changepassword().launch(context);
                       },
@@ -205,17 +215,19 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                   ),
                   Divider(),
                   SizedBox(
-                    height:60,
+                    height: 60,
                     child: ListTile(
                       title: Text(
                         "Notification",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       subtitle: Text(
                         "See important notification history",
                         style: TextStyle(fontSize: 12),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 15, color:Colors.black),
+                      trailing: Icon(Icons.arrow_forward_ios,
+                          size: 15, color: Colors.black),
                       onTap: () {
                         //NotificationScreen().launch(context);
                       },
@@ -223,35 +235,39 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                   ),
                   Divider(),
                   SizedBox(
-                    height:60,
+                    height: 60,
                     child: ListTile(
                       title: Text(
                         "Privacy Policy",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       subtitle: Text(
                         "Know your privacy policy",
                         style: TextStyle(fontSize: 12),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18, color:Colors.black),
-                      onTap: () =>_launchPrivacyPolicyURL(),
-
+                      trailing: Icon(Icons.arrow_forward_ios,
+                          size: 18, color: Colors.black),
+                      onTap: () => _launchPrivacyPolicyURL(),
                     ),
                   ),
                   Divider(),
                   SizedBox(
-                    height:60,
+                    height: 60,
                     child: ListTile(
                       title: Text(
                         "Logout",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       subtitle: Text(
                         "Logout your account",
                         style: TextStyle(fontSize: 12),
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18, color:Colors.black),
-                      onTap: (){  _showDialog(context);
+                      trailing: Icon(Icons.arrow_forward_ios,
+                          size: 18, color: Colors.black),
+                      onTap: () {
+                        _showDialog(context);
                       },
                     ),
                   ),

@@ -57,10 +57,10 @@ class ServicesApi {
 
   /// Method to send a POST request using Multipart for login
   Future<String?> post_Api_Login(
-      String url,
-      Map<String, dynamic> data,
-      WidgetRef ref,
-      ) async {
+    String url,
+    Map<String, dynamic> data,
+    WidgetRef ref,
+  ) async {
     try {
       // Retrieve the device ID from the provider
       String? deviceID = ref.read(deviceIDProvider);
@@ -90,18 +90,19 @@ class ServicesApi {
 
   /// Method to send a GET request with headers
   Future<dynamic> get_ApiwithHeader(
-      dynamic url,
-      WidgetRef ref,
-      ) async {
+    dynamic url,
+    WidgetRef ref,
+  ) async {
     try {
       var client = http.Client();
       var uri = Uri.parse(url);
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
       // Retrieve the device ID from the provider
       String? deviceID = ref.read(deviceIDProvider);
 
       var headers = {
-        'Token':  sharedPreferences.getString(Strings.ACCESS_TOKEN).toString(),
+        'Token': sharedPreferences.getString(Strings.ACCESS_TOKEN).toString(),
         'Content-Type': 'application/x-www-form-urlencoded',
         'Deviceid': deviceID ?? "12345678",
       };
@@ -120,10 +121,10 @@ class ServicesApi {
 
   /// Method to send a POST request with additional data fields
   Future<String> postApiWithData(
-      String url,
-      Map<String, dynamic> bodyFields,
-      WidgetRef ref,
-      ) async {
+    String url,
+    Map<String, dynamic> bodyFields,
+    WidgetRef ref,
+  ) async {
     // Retrieve the device ID from the provider
     String? deviceID = ref.read(deviceIDProvider);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -135,7 +136,7 @@ class ServicesApi {
     };
 
     Map<String, String> bodyFieldsString = bodyFields.map(
-          (key, value) => MapEntry(key, value.toString()),
+      (key, value) => MapEntry(key, value.toString()),
     );
 
     var request = http.Request('POST', Uri.parse(url));
@@ -158,10 +159,10 @@ class ServicesApi {
 
   /// Method to get portfolio data with headers
   Future<GetPortfolioList?> getPortfolio(
-      String url,
-      String token,
-      WidgetRef ref,
-      ) async {
+    String url,
+    String token,
+    WidgetRef ref,
+  ) async {
     // Retrieve the device ID from the provider
     String? deviceID = ref.read(deviceIDProvider);
 

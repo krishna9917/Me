@@ -93,11 +93,6 @@ class Strings {
   static const String confirmPassword = "Confirm Password";
   static const String confirmPasswordRequired = "Confirm password is required";
 
-
-
-
-
-
   //sharedPreferences key
   static const String ACCESS_TOKEN = "access_token";
   static const String USER_ID = "user_id";

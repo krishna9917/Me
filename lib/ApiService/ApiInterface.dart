@@ -113,16 +113,6 @@ class ApiInterface {
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
 
-
-
-
-
-
-
-
-
-
-
   static Future<(bool, Response?)> _getApiCall(
       BuildContext context, String endPoint,
       {Map<String, dynamic>? requestParams}) async {

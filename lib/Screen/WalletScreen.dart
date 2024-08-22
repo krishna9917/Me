@@ -39,10 +39,11 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
         backgroundColor: black,
         appBar: AppBar(
             backgroundColor: black,
-            title:  Row(
+            title: Row(
               children: [
                 Text(Strings.walletHistory,
-                    style: Styles.normalText(isBold: true,color: Colors.white,fontSize: 17)),
+                    style: Styles.normalText(
+                        isBold: true, color: Colors.white, fontSize: 17)),
               ],
             )),
         body: Column(

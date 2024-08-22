@@ -66,7 +66,9 @@ class Datum {
       this.buyPrice = 0,
       this.low = 0,
       this.buyPriceColor = Colors.transparent,
-      this.salePriceColor = Colors.transparent,this.salePrice=0,this.lastTradePrice=0});
+      this.salePriceColor = Colors.transparent,
+      this.salePrice = 0,
+      this.lastTradePrice = 0});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         categoryId: json["category_id"],

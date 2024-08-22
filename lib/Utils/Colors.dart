@@ -1,14 +1,13 @@
 import 'dart:ui';
 
-
-const goldenn =   Color(0xFFBF993F);
-const golden =   Color(0xFFE3C52A);
+const goldenn = Color(0xFFBF993F);
+const golden = Color(0xFFE3C52A);
 const goldencolor = Color(0xffc2a024); // Banana Yellow
 const Amber = Color(0xFFFFC107); //
 const green = Color(0xFF54DE2D);
 const lightgreen = Color(0xFFCFFF8C);
 const green2 = Color(0xFF3EC127);
-const green3 = Color(0xFF2A8719);// Amber
+const green3 = Color(0xFF2A8719); // Amber
 const Moccasin = Color(0xFFFFE4B5); // Moccasin
 const Peach = Color(0xFFFFDAB9); // Peach Puff
 const Papaya = Color(0xFFFFEFD5); // Papaya Whip
@@ -111,7 +110,3 @@ const charcoalGrey = Color(0xFF36454F);
 const gunmetal = Color(0xFF2A3439);
 const ebony = Color(0xFF555D50);
 const trolleyGrey = Color(0xFF808080);
-
-
-
-

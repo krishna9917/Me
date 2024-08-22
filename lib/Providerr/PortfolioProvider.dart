@@ -20,10 +20,10 @@ class PortfolioState {
 class PortfolioNotifier extends StateNotifier<PortfolioState> {
   PortfolioNotifier()
       : super(PortfolioState(
-    isLoading: true,
-    portfolioList: GetPortfolioList(),
-    portfolioCloseList: PortfolioCloseList(),
-  ));
+          isLoading: true,
+          portfolioList: GetPortfolioList(),
+          portfolioCloseList: PortfolioCloseList(),
+        ));
 
   Future<void> getPortfolioData(BuildContext context) async {
     final response = await ApiInterface.getPortfolio(context);
@@ -34,7 +34,9 @@ class PortfolioNotifier extends StateNotifier<PortfolioState> {
         portfolioCloseList: state.portfolioCloseList,
       );
     } else {
-      HelperFunction.showMessage(context, response?.message.toString() ?? 'Error', type: 3);
+      HelperFunction.showMessage(
+          context, response?.message.toString() ?? 'Error',
+          type: 3);
       state = PortfolioState(
         isLoading: false,
         portfolioList: state.portfolioList,
@@ -52,7 +54,9 @@ class PortfolioNotifier extends StateNotifier<PortfolioState> {
         portfolioCloseList: response!,
       );
     } else {
-      HelperFunction.showMessage(context, response?.message.toString() ?? 'Error', type: 3);
+      HelperFunction.showMessage(
+          context, response?.message.toString() ?? 'Error',
+          type: 3);
       state = PortfolioState(
         isLoading: false,
         portfolioList: state.portfolioList,
@@ -62,6 +66,7 @@ class PortfolioNotifier extends StateNotifier<PortfolioState> {
   }
 }
 
-final portfolioProvider = StateNotifierProvider<PortfolioNotifier, PortfolioState>(
-      (ref) => PortfolioNotifier(),
+final portfolioProvider =
+    StateNotifierProvider<PortfolioNotifier, PortfolioState>(
+  (ref) => PortfolioNotifier(),
 );

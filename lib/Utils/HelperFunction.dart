@@ -61,13 +61,10 @@ class HelperFunction {
     return text.isEmpty;
   }
 
-
-  static String formattedDate(String dateTimeString)
-  {
+  static String formattedDate(String dateTimeString) {
     DateFormat inputFormat = DateFormat("dd-MM-yyyy HH:mm:ss");
     DateTime dateTime = inputFormat.parse(dateTimeString);
     DateFormat outputFormat = DateFormat("dd MMM HH:mm");
     return outputFormat.format(dateTime);
   }
-
 }

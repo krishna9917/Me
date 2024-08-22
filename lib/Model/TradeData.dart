@@ -4,13 +4,14 @@
 
 class TradeData {
   TradeData({
-      num? status, 
-      String? message, 
-      List<Data>? data,}){
+    num? status,
+    String? message,
+    List<Data>? data,
+  }) {
     _status = status;
     _message = message;
     _data = data;
-}
+  }
 
   TradeData.fromJson(dynamic json) {
     _status = json['status'];
@@ -22,18 +23,26 @@ class TradeData {
       });
     }
   }
+
   num? _status;
   String? _message;
   List<Data>? _data;
-TradeData copyWith({  num? status,
-  String? message,
-  List<Data>? data,
-}) => TradeData(  status: status ?? _status,
-  message: message ?? _message,
-  data: data ?? _data,
-);
+
+  TradeData copyWith({
+    num? status,
+    String? message,
+    List<Data>? data,
+  }) =>
+      TradeData(
+        status: status ?? _status,
+        message: message ?? _message,
+        data: data ?? _data,
+      );
+
   num? get status => _status;
+
   String? get message => _message;
+
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -45,7 +54,6 @@ TradeData copyWith({  num? status,
     }
     return map;
   }
-
 }
 
 /// orderID : "145093"
@@ -73,28 +81,29 @@ TradeData copyWith({  num? status,
 
 class Data {
   Data({
-      String? orderID, 
-      String? categoryId, 
-      String? token, 
-      String? categoryName, 
-      String? expireDate, 
-      String? orderType, 
-      String? bidType, 
-      String? lot, 
-      String? intradayMargin, 
-      num? holdingMargin, 
-      String? bidPrice, 
-      String? sellPrice, 
-      String? totalDebitAmount, 
-      String? ledgerBalance, 
-      String? marginBalance, 
-      String? m2mBalance, 
-      String? totalProfit, 
-      String? brokerage, 
-      String? status, 
-      String? closeOrderType, 
-      String? orderDateTime, 
-      String? orderUpdateDateTime,}){
+    String? orderID,
+    String? categoryId,
+    String? token,
+    String? categoryName,
+    String? expireDate,
+    String? orderType,
+    String? bidType,
+    String? lot,
+    String? intradayMargin,
+    num? holdingMargin,
+    String? bidPrice,
+    String? sellPrice,
+    String? totalDebitAmount,
+    String? ledgerBalance,
+    String? marginBalance,
+    String? m2mBalance,
+    String? totalProfit,
+    String? brokerage,
+    String? status,
+    String? closeOrderType,
+    String? orderDateTime,
+    String? orderUpdateDateTime,
+  }) {
     _orderID = orderID;
     _categoryId = categoryId;
     _token = token;
@@ -117,7 +126,7 @@ class Data {
     _closeOrderType = closeOrderType;
     _orderDateTime = orderDateTime;
     _orderUpdateDateTime = orderUpdateDateTime;
-}
+  }
 
   Data.fromJson(dynamic json) {
     _orderID = json['orderID'];
@@ -143,6 +152,7 @@ class Data {
     _orderDateTime = json['orderDateTime'];
     _orderUpdateDateTime = json['orderUpdateDateTime'];
   }
+
   String? _orderID;
   String? _categoryId;
   String? _token;
@@ -165,72 +175,98 @@ class Data {
   String? _closeOrderType;
   String? _orderDateTime;
   String? _orderUpdateDateTime;
-Data copyWith({  String? orderID,
-  String? categoryId,
-  String? token,
-  String? categoryName,
-  String? expireDate,
-  String? orderType,
-  String? bidType,
-  String? lot,
-  String? intradayMargin,
-  num? holdingMargin,
-  String? bidPrice,
-  String? sellPrice,
-  String? totalDebitAmount,
-  String? ledgerBalance,
-  String? marginBalance,
-  String? m2mBalance,
-  String? totalProfit,
-  String? brokerage,
-  String? status,
-  String? closeOrderType,
-  String? orderDateTime,
-  String? orderUpdateDateTime,
-}) => Data(  orderID: orderID ?? _orderID,
-  categoryId: categoryId ?? _categoryId,
-  token: token ?? _token,
-  categoryName: categoryName ?? _categoryName,
-  expireDate: expireDate ?? _expireDate,
-  orderType: orderType ?? _orderType,
-  bidType: bidType ?? _bidType,
-  lot: lot ?? _lot,
-  intradayMargin: intradayMargin ?? _intradayMargin,
-  holdingMargin: holdingMargin ?? _holdingMargin,
-  bidPrice: bidPrice ?? _bidPrice,
-  sellPrice: sellPrice ?? _sellPrice,
-  totalDebitAmount: totalDebitAmount ?? _totalDebitAmount,
-  ledgerBalance: ledgerBalance ?? _ledgerBalance,
-  marginBalance: marginBalance ?? _marginBalance,
-  m2mBalance: m2mBalance ?? _m2mBalance,
-  totalProfit: totalProfit ?? _totalProfit,
-  brokerage: brokerage ?? _brokerage,
-  status: status ?? _status,
-  closeOrderType: closeOrderType ?? _closeOrderType,
-  orderDateTime: orderDateTime ?? _orderDateTime,
-  orderUpdateDateTime: orderUpdateDateTime ?? _orderUpdateDateTime,
-);
+
+  Data copyWith({
+    String? orderID,
+    String? categoryId,
+    String? token,
+    String? categoryName,
+    String? expireDate,
+    String? orderType,
+    String? bidType,
+    String? lot,
+    String? intradayMargin,
+    num? holdingMargin,
+    String? bidPrice,
+    String? sellPrice,
+    String? totalDebitAmount,
+    String? ledgerBalance,
+    String? marginBalance,
+    String? m2mBalance,
+    String? totalProfit,
+    String? brokerage,
+    String? status,
+    String? closeOrderType,
+    String? orderDateTime,
+    String? orderUpdateDateTime,
+  }) =>
+      Data(
+        orderID: orderID ?? _orderID,
+        categoryId: categoryId ?? _categoryId,
+        token: token ?? _token,
+        categoryName: categoryName ?? _categoryName,
+        expireDate: expireDate ?? _expireDate,
+        orderType: orderType ?? _orderType,
+        bidType: bidType ?? _bidType,
+        lot: lot ?? _lot,
+        intradayMargin: intradayMargin ?? _intradayMargin,
+        holdingMargin: holdingMargin ?? _holdingMargin,
+        bidPrice: bidPrice ?? _bidPrice,
+        sellPrice: sellPrice ?? _sellPrice,
+        totalDebitAmount: totalDebitAmount ?? _totalDebitAmount,
+        ledgerBalance: ledgerBalance ?? _ledgerBalance,
+        marginBalance: marginBalance ?? _marginBalance,
+        m2mBalance: m2mBalance ?? _m2mBalance,
+        totalProfit: totalProfit ?? _totalProfit,
+        brokerage: brokerage ?? _brokerage,
+        status: status ?? _status,
+        closeOrderType: closeOrderType ?? _closeOrderType,
+        orderDateTime: orderDateTime ?? _orderDateTime,
+        orderUpdateDateTime: orderUpdateDateTime ?? _orderUpdateDateTime,
+      );
+
   String? get orderID => _orderID;
+
   String? get categoryId => _categoryId;
+
   String? get token => _token;
+
   String? get categoryName => _categoryName;
+
   String? get expireDate => _expireDate;
+
   String? get orderType => _orderType;
+
   String? get bidType => _bidType;
+
   String? get lot => _lot;
+
   String? get intradayMargin => _intradayMargin;
+
   num? get holdingMargin => _holdingMargin;
+
   String? get bidPrice => _bidPrice;
+
   String? get sellPrice => _sellPrice;
+
   String? get totalDebitAmount => _totalDebitAmount;
+
   String? get ledgerBalance => _ledgerBalance;
+
   String? get marginBalance => _marginBalance;
+
   String? get m2mBalance => _m2mBalance;
+
   String? get totalProfit => _totalProfit;
+
   String? get brokerage => _brokerage;
+
   String? get status => _status;
+
   String? get closeOrderType => _closeOrderType;
+
   String? get orderDateTime => _orderDateTime;
+
   String? get orderUpdateDateTime => _orderUpdateDateTime;
 
   Map<String, dynamic> toJson() {
@@ -259,5 +295,4 @@ Data copyWith({  String? orderID,
     map['orderUpdateDateTime'] = _orderUpdateDateTime;
     return map;
   }
-
 }

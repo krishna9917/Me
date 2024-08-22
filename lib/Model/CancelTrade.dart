@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-CancelTrade cancelTradeFromJson(String str) => CancelTrade.fromJson(json.decode(str));
+CancelTrade cancelTradeFromJson(String str) =>
+    CancelTrade.fromJson(json.decode(str));
 
 String cancelTradeToJson(CancelTrade data) => json.encode(data.toJson());
 
@@ -18,12 +19,12 @@ class CancelTrade {
   });
 
   factory CancelTrade.fromJson(Map<String, dynamic> json) => CancelTrade(
-    status: json["status"],
-    message: json["message"],
-  );
+        status: json["status"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-  };
+        "status": status,
+        "message": message,
+      };
 }

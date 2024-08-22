@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-List<GetLiveData> getLiveDataFromJson(String str) => List<GetLiveData>.from(json.decode(str).map((x) => GetLiveData.fromJson(x)));
+List<GetLiveData> getLiveDataFromJson(String str) => List<GetLiveData>.from(
+    json.decode(str).map((x) => GetLiveData.fromJson(x)));
 
-String getLiveDataToJson(List<GetLiveData> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String getLiveDataToJson(List<GetLiveData> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class GetLiveData {
   String? exchange;
@@ -38,32 +40,32 @@ class GetLiveData {
   });
 
   factory GetLiveData.fromJson(Map<String, dynamic> json) => GetLiveData(
-    exchange: json["Exchange"],
-    instrumentIdentifier: json["InstrumentIdentifier"],
-    lastTradePrice: json["LastTradePrice"].toDouble(),
-    buyPrice: json["BuyPrice"].toDouble(),
-    high: json["High"].toDouble(),
-    low: json["Low"].toDouble(),
-    sellPrice: json["SellPrice"].toDouble(),
-    priceChange: json["PriceChange"].toDouble(),
-    priceChangePercentage: json["PriceChangePercentage"].toDouble(),
-    lowerCircuit: json["LowerCircuit"].toDouble(),
-    upperCircuit: json["UpperCircuit"].toDouble(),
-    quotationLot: json["QuotationLot"],
-  );
+        exchange: json["Exchange"],
+        instrumentIdentifier: json["InstrumentIdentifier"],
+        lastTradePrice: json["LastTradePrice"].toDouble(),
+        buyPrice: json["BuyPrice"].toDouble(),
+        high: json["High"].toDouble(),
+        low: json["Low"].toDouble(),
+        sellPrice: json["SellPrice"].toDouble(),
+        priceChange: json["PriceChange"].toDouble(),
+        priceChangePercentage: json["PriceChangePercentage"].toDouble(),
+        lowerCircuit: json["LowerCircuit"].toDouble(),
+        upperCircuit: json["UpperCircuit"].toDouble(),
+        quotationLot: json["QuotationLot"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "Exchange": exchange,
-    "InstrumentIdentifier": instrumentIdentifier,
-    "LastTradePrice": lastTradePrice,
-    "BuyPrice": buyPrice,
-    "High": high,
-    "Low": low,
-    "SellPrice": sellPrice,
-    "PriceChange": priceChange,
-    "PriceChangePercentage": priceChangePercentage,
-    "LowerCircuit": lowerCircuit,
-    "UpperCircuit": upperCircuit,
-    "QuotationLot": quotationLot,
-  };
+        "Exchange": exchange,
+        "InstrumentIdentifier": instrumentIdentifier,
+        "LastTradePrice": lastTradePrice,
+        "BuyPrice": buyPrice,
+        "High": high,
+        "Low": low,
+        "SellPrice": sellPrice,
+        "PriceChange": priceChange,
+        "PriceChangePercentage": priceChangePercentage,
+        "LowerCircuit": lowerCircuit,
+        "UpperCircuit": upperCircuit,
+        "QuotationLot": quotationLot,
+      };
 }

@@ -40,7 +40,10 @@ void showThemeSelectionDialog(BuildContext context, WidgetRef ref) {
                 },
               ),
               ListTile(
-                title: Text(Strings.goldenTheme, style: Styles.normalText(isBold: true),),
+                title: Text(
+                  Strings.goldenTheme,
+                  style: Styles.normalText(isBold: true),
+                ),
                 onTap: () {
                   ref.read(appThemeProvider.notifier).state = false;
                   ref.read(goldenThemeProvider.notifier).state = true;

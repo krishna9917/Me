@@ -2,9 +2,10 @@
 
 class LiveRate {
   LiveRate({
-      List<Livedata>? livedata,}){
+    List<Livedata>? livedata,
+  }) {
     _livedata = livedata;
-}
+  }
 
   LiveRate.fromJson(dynamic json) {
     if (json['livedata'] != null) {
@@ -14,10 +15,16 @@ class LiveRate {
       });
     }
   }
+
   List<Livedata>? _livedata;
-LiveRate copyWith({  List<Livedata>? livedata,
-}) => LiveRate(  livedata: livedata ?? _livedata,
-);
+
+  LiveRate copyWith({
+    List<Livedata>? livedata,
+  }) =>
+      LiveRate(
+        livedata: livedata ?? _livedata,
+      );
+
   List<Livedata>? get livedata => _livedata;
 
   Map<String, dynamic> toJson() {
@@ -27,7 +34,6 @@ LiveRate copyWith({  List<Livedata>? livedata,
     }
     return map;
   }
-
 }
 
 /// Exchange : "MCX"
@@ -45,18 +51,19 @@ LiveRate copyWith({  List<Livedata>? livedata,
 
 class Livedata {
   Livedata({
-      String? exchange, 
-      String? instrumentIdentifier, 
-      num? lastTradePrice, 
-      num? buyPrice, 
-      num? high, 
-      num? low, 
-      num? sellPrice, 
-      num? priceChange, 
-      num? priceChangePercentage, 
-      num? lowerCircuit, 
-      num? upperCircuit, 
-      num? quotationLot,}){
+    String? exchange,
+    String? instrumentIdentifier,
+    num? lastTradePrice,
+    num? buyPrice,
+    num? high,
+    num? low,
+    num? sellPrice,
+    num? priceChange,
+    num? priceChangePercentage,
+    num? lowerCircuit,
+    num? upperCircuit,
+    num? quotationLot,
+  }) {
     _exchange = exchange;
     _instrumentIdentifier = instrumentIdentifier;
     _lastTradePrice = lastTradePrice;
@@ -69,7 +76,7 @@ class Livedata {
     _lowerCircuit = lowerCircuit;
     _upperCircuit = upperCircuit;
     _quotationLot = quotationLot;
-}
+  }
 
   Livedata.fromJson(dynamic json) {
     _exchange = json['Exchange'];
@@ -85,6 +92,7 @@ class Livedata {
     _upperCircuit = json['UpperCircuit'];
     _quotationLot = json['QuotationLot'];
   }
+
   String? _exchange;
   String? _instrumentIdentifier;
   num? _lastTradePrice;
@@ -97,42 +105,58 @@ class Livedata {
   num? _lowerCircuit;
   num? _upperCircuit;
   num? _quotationLot;
-Livedata copyWith({  String? exchange,
-  String? instrumentIdentifier,
-  num? lastTradePrice,
-  num? buyPrice,
-  num? high,
-  num? low,
-  num? sellPrice,
-  num? priceChange,
-  num? priceChangePercentage,
-  num? lowerCircuit,
-  num? upperCircuit,
-  num? quotationLot,
-}) => Livedata(  exchange: exchange ?? _exchange,
-  instrumentIdentifier: instrumentIdentifier ?? _instrumentIdentifier,
-  lastTradePrice: lastTradePrice ?? _lastTradePrice,
-  buyPrice: buyPrice ?? _buyPrice,
-  high: high ?? _high,
-  low: low ?? _low,
-  sellPrice: sellPrice ?? _sellPrice,
-  priceChange: priceChange ?? _priceChange,
-  priceChangePercentage: priceChangePercentage ?? _priceChangePercentage,
-  lowerCircuit: lowerCircuit ?? _lowerCircuit,
-  upperCircuit: upperCircuit ?? _upperCircuit,
-  quotationLot: quotationLot ?? _quotationLot,
-);
+
+  Livedata copyWith({
+    String? exchange,
+    String? instrumentIdentifier,
+    num? lastTradePrice,
+    num? buyPrice,
+    num? high,
+    num? low,
+    num? sellPrice,
+    num? priceChange,
+    num? priceChangePercentage,
+    num? lowerCircuit,
+    num? upperCircuit,
+    num? quotationLot,
+  }) =>
+      Livedata(
+        exchange: exchange ?? _exchange,
+        instrumentIdentifier: instrumentIdentifier ?? _instrumentIdentifier,
+        lastTradePrice: lastTradePrice ?? _lastTradePrice,
+        buyPrice: buyPrice ?? _buyPrice,
+        high: high ?? _high,
+        low: low ?? _low,
+        sellPrice: sellPrice ?? _sellPrice,
+        priceChange: priceChange ?? _priceChange,
+        priceChangePercentage: priceChangePercentage ?? _priceChangePercentage,
+        lowerCircuit: lowerCircuit ?? _lowerCircuit,
+        upperCircuit: upperCircuit ?? _upperCircuit,
+        quotationLot: quotationLot ?? _quotationLot,
+      );
+
   String? get exchange => _exchange;
+
   String? get instrumentIdentifier => _instrumentIdentifier;
+
   num? get lastTradePrice => _lastTradePrice;
+
   num? get buyPrice => _buyPrice;
+
   num? get high => _high;
+
   num? get low => _low;
+
   num? get sellPrice => _sellPrice;
+
   num? get priceChange => _priceChange;
+
   num? get priceChangePercentage => _priceChangePercentage;
+
   num? get lowerCircuit => _lowerCircuit;
+
   num? get upperCircuit => _upperCircuit;
+
   num? get quotationLot => _quotationLot;
 
   Map<String, dynamic> toJson() {
@@ -151,5 +175,4 @@ Livedata copyWith({  String? exchange,
     map['QuotationLot'] = _quotationLot;
     return map;
   }
-
 }

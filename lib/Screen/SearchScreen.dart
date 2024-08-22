@@ -138,7 +138,7 @@ class _SearchscreenState extends State<Searchscreen> {
                     return Tradestock(
                       data: data,
                       showCheckUncheck: true,
-                    ).onTap((){
+                    ).onTap(() {
                       addToWatchList(
                           data.categoryId.toString(), data.isChecked!, index);
                     });

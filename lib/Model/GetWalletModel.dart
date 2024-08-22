@@ -20,16 +20,16 @@ class GetWallet {
   });
 
   factory GetWallet.fromJson(Map<String, dynamic> json) => GetWallet(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -50,20 +50,20 @@ class Datum {
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    type: json["type"],
-    beforePoint: json["before_point"],
-    affectPoint: json["affect_point"],
-    afterPoint: json["after_point"],
-    description: json["description"],
-    created: json["created"],
-  );
+        type: json["type"],
+        beforePoint: json["before_point"],
+        affectPoint: json["affect_point"],
+        afterPoint: json["after_point"],
+        description: json["description"],
+        created: json["created"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "type": type,
-    "before_point": beforePoint,
-    "affect_point": affectPoint,
-    "after_point": afterPoint,
-    "description": description,
-    "created": created,
-  };
+        "type": type,
+        "before_point": beforePoint,
+        "affect_point": affectPoint,
+        "after_point": afterPoint,
+        "description": description,
+        "created": created,
+      };
 }
