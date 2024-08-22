@@ -5,7 +5,6 @@ import '../Dialogs/AlertBox.dart';
 import '../Model/TradeData.dart';
 import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
-import '../Screen/BuyScreen.dart';
 
 class Tradehistory extends StatefulWidget {
   bool isLoading = true;
@@ -299,25 +298,27 @@ class _TradehistoryState extends State<Tradehistory> {
                               Divider(),
                             ],
                           ).onTap(() async {
-                            final double? bidPrice =
-                                double.tryParse(trade.bidPrice ?? '0');
-                            final double? sellPrice =
-                                double.tryParse(trade.sellPrice ?? '0');
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BuyScreen(
-                                  categoryId: '${trade.categoryName}',
-                                  identifier: "${trade.token}",
-                                  title: "${trade.categoryName}",
-                                  expiryDate: "${trade.expireDate}",
-                                  buyPrice: bidPrice ?? 0.0,
-                                  // Provide default value if parsing fails
-                                  sellPrice: sellPrice ??
-                                      0.0, // Provide default value if parsing fails
-                                ),
-                              ),
-                            );
+                            //
+                            //
+                            // final double? bidPrice =
+                            //     double.tryParse(trade.bidPrice ?? '0');
+                            // final double? sellPrice =
+                            //     double.tryParse(trade.sellPrice ?? '0');
+                            // await Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => BuyScreen(
+                            //       categoryId: '${trade.categoryName}',
+                            //       identifier: "${trade.token}",
+                            //       title: "${trade.categoryName}",
+                            //       expiryDate: "${trade.expireDate}",
+                            //       buyPrice: bidPrice ?? 0.0,
+                            //       // Provide default value if parsing fails
+                            //       sellPrice: sellPrice ??
+                            //           0.0, // Provide default value if parsing fails
+                            //     ),
+                            //   ),
+                            // );
                           });
                         },
                       ),

@@ -55,8 +55,8 @@ class AlertBox {
                   children: [
                     Image.asset(
                       isErrorMessage
-                          ? "assets/img_error.png"
-                          : "assets/img_success.png",
+                          ? ImagePaths.circleCross
+                          : ImagePaths.circleTick,
                       width: 100,
                       height: 100,
                     ),
@@ -64,6 +64,7 @@ class AlertBox {
                     Text(
                       message,
                       style: Styles.normalText(isBold: true),
+                      textAlign: TextAlign.center,
                     )
                   ],
                 ),

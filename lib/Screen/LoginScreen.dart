@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:me_app/ApiService/ApiInterface.dart';
@@ -7,11 +5,6 @@ import 'package:me_app/Model/LoginData.dart';
 import 'package:me_app/Resources/Styles.dart';
 import 'package:me_app/Utils/HelperFunction.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../Model/LoginModel.dart';
-import '../Model/UpdateLogin.dart';
-import '../Resources/Strings.dart';
-import '../Services/Service_Api.dart';
 import '../Utils/Bottom_navigation.dart';
 import '../Utils/Colors.dart';
 import 'ChangePassword.dart';
@@ -44,7 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         if (loginResponse.userData!.isFirstTimeLogin == 1) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Changepassword()),
+            MaterialPageRoute(builder: (context) => ChangePassword(isComingFromAccount: false,)),
           );
         } else {
           Navigator.pushReplacement(
