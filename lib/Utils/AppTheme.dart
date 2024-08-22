@@ -27,7 +27,7 @@ ThemeData getAppTheme(
     ],
     scaffoldBackgroundColor: isGoldenTheme
         ? Colors.black
-        : (isDarkTheme ? Colors.black : Colors.white),
+        : (isDarkTheme ? Colors.black : Colors.white12),
     textTheme: Theme.of(context)
         .textTheme
         .copyWith(
@@ -54,17 +54,13 @@ ThemeData getAppTheme(
             ? Colors.black
             : (isDarkTheme ? Colors.black : Colors.white),
         iconTheme: const IconThemeData(color: Colors.white)),
-    // Set back icon color to white
     tabBarTheme: TabBarTheme(
       labelColor: isGoldenTheme
           ? Colors.white
           : (isDarkTheme ? Colors.white : Colors.black),
-      // Selected tab label color
       unselectedLabelColor: isGoldenTheme
-          ? Colors.grey // You can set a different color for unselected tabs
-          : (isDarkTheme
-              ? Colors.white54
-              : Colors.black54), // Unselected tab label color
+          ? Colors.grey
+          : (isDarkTheme ? Colors.white54 : Colors.black54),
     ),
     dialogTheme: DialogTheme(
       titleTextStyle: Styles.normalText(color: Colors.black),

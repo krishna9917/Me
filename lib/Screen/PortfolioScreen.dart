@@ -73,14 +73,24 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                 controller: _tabController,
                 children: [
                   Container(
-                    child: provider.isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : getUi(provider.portfolioList),
+                    child: provider.portfolioList.data != null
+                        ? getUi(provider.portfolioList)
+                        : Center(
+                            child: Text(
+                              Strings.dataNotAvailable,
+                              style: Styles.normalText(),
+                            ),
+                          ),
                   ),
                   Container(
-                    child: provider.isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : getCloseUi(provider.portfolioCloseList),
+                    child: provider.portfolioCloseList.data != null
+                        ? getCloseUi(provider.portfolioCloseList)
+                        : Center(
+                            child: Text(
+                              Strings.dataNotAvailable,
+                              style: Styles.normalText(),
+                            ),
+                          ),
                   )
                 ],
               ),

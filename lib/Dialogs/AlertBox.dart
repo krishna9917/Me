@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../Resources/ImagePaths.dart';
 import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
 
@@ -89,5 +91,24 @@ class AlertBox {
                     ],
                   ),
                 ]));
+  }
+
+  static void showLoader(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Dialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0, // Removes the shadow
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          children: [SpinKitSpinningLines(color: Colors.blue)],
+        ),
+      ),
+    );
+  }
+
+  static void dismissLoader(BuildContext context) {
+    Navigator.of(context, rootNavigator: true).pop();
   }
 }

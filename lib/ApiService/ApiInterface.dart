@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:me_app/Dialogs/AlertBox.dart';
 import 'package:me_app/Model/GetMCXModel.dart';
 import 'package:me_app/Model/GetPortfolioList.dart';
 import 'package:me_app/Model/GetProfileData.dart';
@@ -24,93 +25,102 @@ class ApiInterface {
     HttpLogger(logLevel: LogLevel.BODY),
   ]);
 
-  static Future<LoginData?> userDetails(BuildContext context) async {
+  static Future<LoginData?> userDetails(BuildContext context,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _postApiCall(context, "userDetail");
+        await _postApiCall(context, "userDetail", showLoading);
     return status ? LoginData.fromJson(jsonDecode(response!.body)) : null;
   }
 
   static Future<LoginData?> login(
-      BuildContext context, String userName, String password) async {
+      BuildContext context, String userName, String password,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) = await _postApiCall(
-        context, "loginAuth",
+        context, "loginAuth", showLoading,
         requestParams: {"username": userName, "password": password});
     return status ? LoginData.fromJson(jsonDecode(response!.body)) : null;
   }
 
-  static Future<GetMcx?> getStockList(BuildContext context) async {
+  static Future<GetMcx?> getStockList(BuildContext context,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _getApiCall(context, "getMcxCategoryList");
+        await _getApiCall(context, "getMcxCategoryList", showLoading);
     return status ? GetMcx.fromJson(jsonDecode(response!.body)) : null;
   }
 
   static Future<LiveRate?> getLiveRate(BuildContext context,
-      {String token = ""}) async {
+      {String token = "", bool showLoading = false}) async {
     var (bool status, Response? response) = await _getApiCall(
-        context, "getLiveRate",
-        requestParams: {"token": token});
+        context, "getLiveRate", showLoading,
+        requestParams: token != "" ? {"token": token} : {});
     return status ? LiveRate.fromJson(jsonDecode(response!.body)) : null;
   }
 
   static Future<StatusMessage?> addToWatchList(
-      BuildContext context, String categoryId, num isChecked) async {
+      BuildContext context, String categoryId, num isChecked,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) = await _getApiCall(
-        context, "addUserWatchList", requestParams: {
+        context, "addUserWatchList", showLoading, requestParams: {
       "category_id": categoryId,
       "ischecked": isChecked.toString()
     });
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
 
-  static Future<TradeData?> tradeList(
-      BuildContext context, int tradeStatus) async {
+  static Future<TradeData?> tradeList(BuildContext context, int tradeStatus,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) = await _postApiCall(
-        context, "getTradeList",
+        context, "getTradeList", showLoading,
         requestParams: {"status": tradeStatus.toString()});
     return status ? TradeData.fromJson(jsonDecode(response!.body)) : null;
   }
 
   static Future<StatusMessage?> updateTradeStatus(
-      BuildContext context, String orderId, String type) async {
+      BuildContext context, String orderId, String type,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) = await _postApiCall(
-        context, "closeCancelTrade",
+        context, "closeCancelTrade", showLoading,
         requestParams: {"orderID": orderId, "type": type});
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
 
-  static Future<PortfolioCloseList?> getPortfolioClose(
-      BuildContext? context) async {
+  static Future<PortfolioCloseList?> getPortfolioClose(BuildContext? context,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _postApiCall(context!, "getClosePortfolioList");
+        await _postApiCall(context!, "getClosePortfolioList", showLoading);
     return status
         ? PortfolioCloseList.fromJson(jsonDecode(response!.body))
         : null;
   }
 
-  static Future<GetPortfolioList?> getPortfolio(BuildContext? context) async {
+  static Future<GetPortfolioList?> getPortfolio(BuildContext? context,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _postApiCall(context!, "getPortfolioList");
+        await _postApiCall(context!, "getPortfolioList", showLoading);
     return status
         ? GetPortfolioList.fromJson(jsonDecode(response!.body))
         : null;
   }
 
-  static Future<GetWallet?> getWalletHistory(BuildContext? context) async {
+  static Future<GetWallet?> getWalletHistory(BuildContext? context,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _postApiCall(context!, "getWalletHistory");
+        await _postApiCall(context!, "getWalletHistory", showLoading);
     return status ? GetWallet.fromJson(jsonDecode(response!.body)) : null;
   }
 
-  static Future<GetProfiledata?> getProfile(BuildContext? context) async {
+  static Future<GetProfiledata?> getProfile(BuildContext? context,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _postApiCall(context!, "getProfileData");
+        await _postApiCall(context!, "getProfileData", showLoading);
     return status ? GetProfiledata.fromJson(jsonDecode(response!.body)) : null;
   }
 
   static Future<StatusMessage?> changePassword(
-      BuildContext? context, String newPassword, String oldPassword) async {
+      BuildContext? context, String newPassword, String oldPassword,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) = await _postApiCall(
-        context!, "changePassword",
+        context!, "changePassword", showLoading,
         requestParams: {"opw": oldPassword, "npw": newPassword});
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
@@ -122,9 +132,10 @@ class ApiInterface {
       String orderType,
       String bidType,
       String bidPrice,
-      String lotSize) async {
+      String lotSize,
+      {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _postApiCall(context!, "orderAuth", requestParams: {
+        await _postApiCall(context!, "orderAuth", showLoading, requestParams: {
       "catID": catId,
       "exipreDate": expireDate,
       "orderType": orderType,
@@ -136,9 +147,12 @@ class ApiInterface {
   }
 
   static Future<(bool, Response?)> _getApiCall(
-      BuildContext context, String endPoint,
+      BuildContext context, String endPoint, bool showLoading,
       {Map<String, dynamic>? requestParams}) async {
     if (await HelperFunction.isInternetConnected(context)) {
+      if (showLoading) {
+        AlertBox.showLoader(context);
+      }
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       requestParams ??= {};
@@ -151,6 +165,10 @@ class ApiInterface {
           Uri.parse(BASE_URL + endPoint)
               .replace(queryParameters: requestParams),
           headers: await getHeader());
+      if (showLoading) {
+        AlertBox.dismissLoader(context);
+      }
+
       return (
         (response.statusCode == 200 && response.body.isNotEmpty),
         response
@@ -162,9 +180,12 @@ class ApiInterface {
   }
 
   static Future<(bool status, Response? response)> _postApiCall(
-      BuildContext context, String endPoint,
+      BuildContext context, String endPoint, bool showLoading,
       {Map<String, dynamic>? requestParams}) async {
     if (await HelperFunction.isInternetConnected(context)) {
+      if (showLoading) {
+        AlertBox.showLoader(context);
+      }
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       final deviceInfoPlugin = DeviceInfoPlugin();
@@ -173,10 +194,13 @@ class ApiInterface {
       requestParams.addAll({
         "userID": sharedPreferences.getString(Strings.USER_ID).toString(),
         "fcm_id": "",
-        "deviceName": deviceInfo.display + " " + deviceInfo.model
+        "deviceName": "${deviceInfo.display} ${deviceInfo.model}"
       });
       final response = await httpClient.post(Uri.parse(BASE_URL + endPoint),
           headers: await getHeader(), body: requestParams);
+      if (showLoading) {
+        AlertBox.dismissLoader(context);
+      }
       return (
         (response.statusCode == 200 && response.body.isNotEmpty),
         response

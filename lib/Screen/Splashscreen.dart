@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:me_app/ApiService/ApiInterface.dart';
 import 'package:me_app/Model/LoginData.dart';
+import 'package:me_app/Resources/ImagePaths.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Utils/Bottom_navigation.dart';
 import 'ChangePassword.dart';
@@ -36,7 +37,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         if (data.userData!.isFirstTimeLogin == 1) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => ChangePassword(isComingFromAccount: false,)),
+            MaterialPageRoute(
+                builder: (context) => ChangePassword(
+                      isComingFromAccount: false,
+                    )),
           );
         } else {
           Navigator.pushReplacement(
@@ -91,7 +95,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     children: <Widget>[
                       Center(
                         child: Image.asset(
-                          'assets/logo.png',
+                          ImagePaths.appLogo,
                           // Replace with your actual file path
                           gaplessPlayback: true, // Ensures smooth playback
                         ),

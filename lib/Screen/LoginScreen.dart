@@ -5,6 +5,9 @@ import 'package:me_app/Model/LoginData.dart';
 import 'package:me_app/Resources/Styles.dart';
 import 'package:me_app/Utils/HelperFunction.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '../Resources/ImagePaths.dart';
+import '../Resources/Strings.dart';
 import '../Utils/Bottom_navigation.dart';
 import '../Utils/Colors.dart';
 import 'ChangePassword.dart';
@@ -19,6 +22,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool isLoading = false;
   String? username;
   String? password;
+  bool _isObscure = true;
   String? pswd;
   var userdata;
   bool _showErrorIcon = false; // Track if the form was submitted
@@ -37,7 +41,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         if (loginResponse.userData!.isFirstTimeLogin == 1) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => ChangePassword(isComingFromAccount: false,)),
+            MaterialPageRoute(
+                builder: (context) => ChangePassword(
+                      isComingFromAccount: false,
+                    )),
           );
         } else {
           Navigator.pushReplacement(
@@ -59,6 +66,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   @override
+  void initState() {
+    _requestNotificationPermission();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -77,8 +90,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 children: [
                   40.height,
                   Center(
-                    child:
-                        Image.asset('assets/logo.png', height: 250, width: 250),
+                    child: Image.asset(ImagePaths.appLogo,
+                        height: 250, width: 250),
                   ),
                   0.height,
                   Padding(
@@ -154,7 +167,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 left: 12,
                                 top: 4,
                                 child: Text(
-                                  'User ID',
+                                  Strings.userId,
                                   style: Styles.normalText(
                                     color: Colors.amber,
                                     fontSize: 10,
@@ -167,16 +180,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           Stack(
                             children: [
                               TextFormField(
+                                obscureText: _isObscure,
                                 decoration: InputDecoration(
                                   suffixIcon: _showErrorIcon &&
                                           _formKey.currentState?.validate() !=
                                               true
                                       ? const Icon(Icons.error,
                                           color: Colors.red)
-                                      : null,
+                                      : IconButton(
+                                          icon: Icon(
+                                            _isObscure
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _isObscure =
+                                                  !_isObscure; // Toggle visibility
+                                            });
+                                          },
+                                        ),
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       10.0, 20.0, 10.0, 20.0),
-                                  hintText: 'Enter your password',
+                                  hintText: Strings.enterYourPassword,
                                   hintStyle:
                                       Styles.normalText(color: Colors.white),
                                   border: OutlineInputBorder(
@@ -210,10 +237,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 style: Styles.normalText(color: Colors.white),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
-                                    return '';
+                                    return Strings.pleaseEnterPassword;
                                   }
                                   if (value.trim().length < 3) {
-                                    return '';
+                                    return Strings.passwordMustBeValid;
                                   }
                                   return null;
                                 },
@@ -228,7 +255,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 left: 12,
                                 top: 4,
                                 child: Text(
-                                  'Password',
+                                  Strings.password,
                                   style: Styles.normalText(
                                     color: Colors.amber,
                                     fontSize: 10,
@@ -256,28 +283,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     ? const CircularProgressIndicator(
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                                goldenn))
-                                    : const Text(
-                                        "Log in",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 14),
+                                                Colors.white))
+                                    : Text(
+                                        Strings.login,
+                                        style: Styles.normalText(
+                                            isBold: true, color: Colors.white),
                                       ),
                               ),
                             ),
                           ),
-                          10.height,
-                          Text(
-                              'No real money involved. This is a virtual trading \napplication with all features to trade.',
-                              style:
-                                  boldTextStyle(color: Colors.white, size: 10)),
-                          10.height,
-                          Text(
-                              'This application is used for exchanging views on market\nfor training purposes only.',
-                              style:
-                                  boldTextStyle(color: Colors.white, size: 10)),
                           20.height,
+                          Text(Strings.termsConditions,
+                              style: Styles.normalText(
+                                  isBold: true,
+                                  color: Colors.white,
+                                  fontSize: 13)),
                         ],
                       ),
                     ),
@@ -289,5 +309,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _requestNotificationPermission() async {
+    final status = await Permission.notification.status;
+    if (status.isDenied) {
+      final result = await Permission.notification.request();
+    }
   }
 }

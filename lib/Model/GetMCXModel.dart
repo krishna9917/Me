@@ -1,57 +1,57 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
+  import 'dart:convert';
+  import 'package:flutter/material.dart';
+  import 'package:nb_utils/nb_utils.dart';
 
-GetMcx getMcxFromJson(String str) => GetMcx.fromJson(json.decode(str));
+  GetMcx getMcxFromJson(String str) => GetMcx.fromJson(json.decode(str));
 
-String getMcxToJson(GetMcx data) => json.encode(data.toJson());
+  String getMcxToJson(GetMcx data) => json.encode(data.toJson());
 
-class GetMcx {
-  int? status;
-  String? message;
-  List<Datum>? data;
+  class GetMcx {
+    int? status;
+    String? message;
+    List<Datum>? data;
 
-  GetMcx({
-    this.status,
-    this.message,
-    this.data,
-  });
+    GetMcx({
+      this.status,
+      this.message,
+      this.data,
+    });
 
-  factory GetMcx.fromJson(Map<String, dynamic> json) => GetMcx(
-        status: json["status"],
-        message: json["message"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-      );
+    factory GetMcx.fromJson(Map<String, dynamic> json) => GetMcx(
+          status: json["status"],
+          message: json["message"],
+          data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        );
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "message": message,
-        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
-      };
-}
+    Map<String, dynamic> toJson() => {
+          "status": status,
+          "message": message,
+          "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+        };
+  }
 
-class Datum {
-  String? categoryId;
-  String? title;
-  String? expireDate;
-  String? instrumentToken;
-  String? instrumentType;
-  String? quotationLot;
-  int? isChecked;
-  int? status;
-  num? priceChange;
-  num? priceChangePercentage;
-  Color? priceChangeColor;
-  num? high;
-  num? buyPrice;
-  num? low;
-  Color? buyPriceColor;
-  Color? salePriceColor;
-  num? salePrice;
-  num? lastTradePrice;
+  class Datum {
+    String? categoryId;
+    String? title;
+    String? expireDate;
+    String? instrumentToken;
+    String? instrumentType;
+    String? quotationLot;
+    int? isChecked;
+    int? status;
+    num? priceChange;
+    num? priceChangePercentage;
+    Color? priceChangeColor;
+    num? high;
+    num? buyPrice;
+    num? low;
+    Color? buyPriceColor;
+    Color? salePriceColor;
+    num? salePrice;
+    num? lastTradePrice;
 
-  Datum(
-      {this.categoryId,
+    Datum({
+      this.categoryId,
       this.title,
       this.expireDate,
       this.instrumentToken,
@@ -68,27 +68,72 @@ class Datum {
       this.buyPriceColor = Colors.transparent,
       this.salePriceColor = Colors.transparent,
       this.salePrice = 0,
-      this.lastTradePrice = 0});
+      this.lastTradePrice = 0,
+    });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        categoryId: json["category_id"],
-        title: json["title"],
-        expireDate: json["expire_date"],
-        instrumentToken: json["instrument_token"],
-        instrumentType: json["instrument_type"],
-        quotationLot: json["QuotationLot"],
-        isChecked: json["is_checked"],
-        status: json["status"].toString().toInt(),
+    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+      categoryId: json["category_id"],
+      title: json["title"],
+      expireDate: json["expire_date"],
+      instrumentToken: json["instrument_token"],
+      instrumentType: json["instrument_type"],
+      quotationLot: json["QuotationLot"],
+      isChecked: json["is_checked"],
+      status: json["status"].toString().toInt(),
+    );
+
+    Map<String, dynamic> toJson() => {
+      "category_id": categoryId,
+      "title": title,
+      "expire_date": expireDate,
+      "instrument_token": instrumentToken,
+      "instrument_type": instrumentType,
+      "QuotationLot": quotationLot,
+      "is_checked": isChecked,
+      "status": status,
+    };
+
+    Datum copyWith({
+      String? categoryId,
+      String? title,
+      String? expireDate,
+      String? instrumentToken,
+      String? instrumentType,
+      String? quotationLot,
+      int? isChecked,
+      int? status,
+      num? priceChange,
+      num? priceChangePercentage,
+      Color? priceChangeColor,
+      num? high,
+      num? buyPrice,
+      num? low,
+      Color? buyPriceColor,
+      Color? salePriceColor,
+      num? salePrice,
+      num? lastTradePrice,
+    }) {
+      return Datum(
+        categoryId: categoryId ?? this.categoryId,
+        title: title ?? this.title,
+        expireDate: expireDate ?? this.expireDate,
+        instrumentToken: instrumentToken ?? this.instrumentToken,
+        instrumentType: instrumentType ?? this.instrumentType,
+        quotationLot: quotationLot ?? this.quotationLot,
+        isChecked: isChecked ?? this.isChecked,
+        status: status ?? this.status,
+        priceChange: priceChange ?? this.priceChange,
+        priceChangePercentage:
+        priceChangePercentage ?? this.priceChangePercentage,
+        priceChangeColor: priceChangeColor ?? this.priceChangeColor,
+        high: high ?? this.high,
+        buyPrice: buyPrice ?? this.buyPrice,
+        low: low ?? this.low,
+        buyPriceColor: buyPriceColor ?? this.buyPriceColor,
+        salePriceColor: salePriceColor ?? this.salePriceColor,
+        salePrice: salePrice ?? this.salePrice,
+        lastTradePrice: lastTradePrice ?? this.lastTradePrice,
       );
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-        "category_id": categoryId,
-        "title": title,
-        "expire_date": expireDate,
-        "instrument_token": instrumentToken,
-        "instrument_type": instrumentType,
-        "QuotationLot": quotationLot,
-        "is_checked": isChecked,
-        "status": status,
-      };
-}

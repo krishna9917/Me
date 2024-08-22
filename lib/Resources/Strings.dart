@@ -94,6 +94,13 @@ class Strings {
   static const String confirmPasswordRequired = "Confirm password is required";
   static const String passwordDoNotMatch = "Passwords do not match";
   static const String updatePassword = "Update Password";
+  static const String enterYourPassword = "Enter your password";
+  static const String pleaseEnterPassword = "Password is required";
+  static const String login = "Login";
+  static const String termsConditions =
+      "No real money involved. This is a virtual trading \napplication with all features to trade.\nThis application is used for exchanging views on market\nfor training purposes only.";
+  static const String password = "Password";
+  static const String userId = "User ID";
 
   //sharedPreferences key
   static const String ACCESS_TOKEN = "access_token";
