@@ -45,7 +45,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                     context,
                     Text(
                       Strings.areYouSureToClose,
-                      style: Styles.normalText(isBold: true),
+                      style: Styles.normalText(context: context,isBold: true),
                     ), () {
                   SystemNavigator.pop();
                 });

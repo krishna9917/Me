@@ -78,13 +78,13 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                               children: [
                                 Text(
                                   "Username: ${user.userData?.name}",
-                                  style: Styles.normalText(
+                                  style: Styles.normalText(context: context,
                                       isBold: true,
                                       color: Colors.amber.shade800),
                                 ),
                                 Text(
                                   "MemberId: ${user.userData?.uniqueId}",
-                                  style: Styles.normalText(
+                                  style: Styles.normalText(context: context,
                                       isBold: true,
                                       color: Colors.amber.shade800),
                                 ),
@@ -107,11 +107,11 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                     child: ListTile(
                       title: Text(
                         "Wallet",
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       ),
                       subtitle: Text(
                         "See amount add and deduct from your wallet",
-                        style: Styles.normalText(fontSize: 12),
+                        style: Styles.normalText(context: context,fontSize: 12),
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios,
                           size: 18, color: Colors.black),
@@ -126,11 +126,11 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                     child: ListTile(
                       title: Text(
                         "Profile",
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       ),
                       subtitle: Text(
                         "See/Edit your profile detail",
-                        style: Styles.normalText(fontSize: 12),
+                        style: Styles.normalText(context: context,fontSize: 12),
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios,
                           size: 18, color: Colors.black),
@@ -145,11 +145,11 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                     child: ListTile(
                       title: Text(
                         "Change Password",
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       ),
                       subtitle: Text(
                         "Change password of your account",
-                        style: Styles.normalText(fontSize: 12),
+                        style: Styles.normalText(context: context,fontSize: 12),
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios,
                           size: 18, color: Colors.black),
@@ -165,9 +165,9 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                     height: 60,
                     child: ListTile(
                       title: Text("Notification",
-                          style: Styles.normalText(isBold: true)),
+                          style: Styles.normalText(context: context,isBold: true)),
                       subtitle: Text("See important notification history",
-                          style: Styles.normalText(fontSize: 12)),
+                          style: Styles.normalText(context: context,fontSize: 12)),
                       trailing: const Icon(Icons.arrow_forward_ios,
                           size: 15, color: Colors.black),
                       onTap: () {
@@ -181,11 +181,11 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                     child: ListTile(
                       title: Text(
                         "Privacy Policy",
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       ),
                       subtitle: Text(
                         "Know your privacy policy",
-                        style: Styles.normalText(fontSize: 12),
+                        style: Styles.normalText(context: context,fontSize: 12),
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios,
                           size: 18, color: Colors.black),
@@ -198,11 +198,11 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                     child: ListTile(
                       title: Text(
                         "Logout",
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       ),
                       subtitle: Text(
                         "Logout your account",
-                        style: Styles.normalText(fontSize: 12),
+                        style: Styles.normalText(context: context,fontSize: 12),
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios,
                           size: 18, color: Colors.black),
@@ -211,7 +211,7 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                             context,
                             Text(
                               Strings.logoutWarning,
-                              style: Styles.normalText(isBold: true),
+                              style: Styles.normalText(context: context,isBold: true),
                             ), () {
                           logout();
                         });
