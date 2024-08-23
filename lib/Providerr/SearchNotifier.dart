@@ -7,8 +7,8 @@ import '../Model/StatusMessage.dart';
 import '../Utils/HelperFunction.dart';
 
 class SearchState {
-  final List<Datum> initialData;
-  final List<Datum> list;
+  final List<StockData> initialData;
+  final List<StockData> list;
 
   SearchState({
     required this.initialData,
@@ -16,8 +16,8 @@ class SearchState {
   });
 
   SearchState copyWith({
-    List<Datum>? initialData,
-    List<Datum>? list,
+    List<StockData>? initialData,
+    List<StockData>? list,
   }) {
     return SearchState(
       initialData: initialData ?? this.initialData,
@@ -37,7 +37,7 @@ class SearchNotifier extends StateNotifier<SearchState> {
     final data = response!.data!;
     state = state.copyWith(
       initialData: data,
-      list: data.where((Datum data) => data.instrumentType == type).toList(),
+      list: data.where((StockData data) => data.instrumentType == type).toList(),
     );
   }
 

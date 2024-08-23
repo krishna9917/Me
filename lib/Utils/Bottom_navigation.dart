@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:me_app/Resources/ImagePaths.dart';
 
 import '../Screen/PortfolioScreen.dart';
 import '../Screen/SettingScreen.dart';
@@ -37,21 +38,37 @@ class _Bottom_NavigationState extends State<Bottom_Navigation> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.currency_rupee),
+            icon: Image.asset(
+              ImagePaths.wishlist,
+              width: 20,
+              height: 20,
+            ),
             label: 'Watchlist',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.document_scanner_sharp),
+            icon: Image.asset(
+              ImagePaths.trade,
+              width: 20,
+              height: 20,
+            ),
             label: 'Trades',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.folder_shared),
+            icon: Image.asset(
+              ImagePaths.portfolio,
+              width: 20,
+              height: 20,
+            ),
             label: 'Portfolio',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Image.asset(
+              ImagePaths.profile,
+              width: 20,
+              height: 20,
+            ),
             label: 'Settings',
           ),
         ],

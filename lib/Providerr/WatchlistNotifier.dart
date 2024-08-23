@@ -7,8 +7,8 @@ import 'package:me_app/Model/GetMCXModel.dart';
 import 'package:me_app/Utils/HelperFunction.dart';
 
 class WatchlistState {
-  final List<Datum> mcxList;
-  final List<Datum> nseList;
+  final List<StockData> mcxList;
+  final List<StockData> nseList;
 
   WatchlistState({
     required this.mcxList,
@@ -38,11 +38,11 @@ class WatchlistNotifier extends StateNotifier<WatchlistState> {
     final response =
         await ApiInterface.getStockList(context, showLoading: true);
     if (response!.status == 1) {
-      final List<Datum> initialData = response.data!;
-      final mcxList = initialData.where((Datum data) {
+      final List<StockData> initialData = response.data!;
+      final mcxList = initialData.where((StockData data) {
         return data.instrumentType == "MCX" && data.isChecked == 1;
       }).toList();
-      final nseList = initialData.where((Datum data) {
+      final nseList = initialData.where((StockData data) {
         return data.instrumentType == "NSE" && data.isChecked == 1;
       }).toList();
       state = WatchlistState(mcxList: mcxList, nseList: nseList);

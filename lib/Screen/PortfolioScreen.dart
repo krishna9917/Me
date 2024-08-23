@@ -10,6 +10,8 @@ import '../Resources/Styles.dart';
 import '../Utils/AppBar.dart';
 import '../Utils/AppTheme.dart';
 import '../Utils/HelperFunction.dart';
+import 'StockDetailScreen.dart';
+import '../Model/GetMCXModel.dart';
 
 class PortfolioScreen extends ConsumerStatefulWidget {
   const PortfolioScreen({super.key});
@@ -247,16 +249,26 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                           children: [
                             Row(
                               children: [
-                                Text('Bought : ',
-                                    style: Styles.normalText(context: context,isBold: true)),
-                                Text('1@${data.avrageBidPrice.toString()}',
+                                Text(
+                                    data.bidType!.contains("1")  ? 'Bought : ' : "Sold : ",
+                                    style: Styles.normalText(context: context,
+                                        isBold: true,
+                                        color: data.bidType!.contains("1")
+                                            ? Colors.green
+                                            : Colors.red)),
+                                Text(
+                                    '${data.lot}@${data.avrageBidPrice.toString()}',
                                     style: Styles.normalText(context: context,isBold: true)),
                               ],
                             ),
                             5.height,
                             Text(data.plBalance.toString(),
                                 style: Styles.normalText(context: context,
-                                    isBold: true, fontSize: 14)),
+                                    isBold: true,
+                                    fontSize: 14,
+                                    color: data.plBalance! < 0
+                                        ? Colors.red
+                                        : Colors.green)),
                             5.height,
                             Text('CMP:${data.cmprate.toString()}',
                                 style: Styles.normalText(context: context,
@@ -269,14 +281,18 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                     horizontal: 15, vertical: 7),
                                 child: Text(
                                   Strings.closeOrder,
-                                  style: Styles.normalText(context: context,
+                                  style: Styles.normalText(
+                                    context: context,
                                       fontSize: 10,
                                       isBold: true,
                                       color: Colors.white),
                                 ),
                               ),
                             ).onTap(() {
-
+                              ref
+                                  .read(portfolioProvider.notifier)
+                                  .updateTradeStatus(
+                                      context, data.categoryId.toString(), "3");
                             }),
                           ],
                         ),
@@ -284,7 +300,16 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                     ),
                     const Divider()
                   ],
-                );
+                ).onTap(() {
+                  StockDetailScreen(
+                    stockData: StockData(
+                        categoryId: data.categoryId,
+                        title: data.instrumentToken,
+                        expireDate: data.expireDate,
+                        salePrice: data.bidPrice,
+                        buyPrice: data.bidPrice),
+                  ).launch(context);
+                });
               },
             ),
           ),
@@ -360,8 +385,9 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                   Text('Net Profit Loss : ',
                                       style: Styles.normalText(context: context,
                                           isBold: true, fontSize: 11)),
-                                  Text(data.plBalance!,
-                                      style: Styles.normalText(context: context,
+                                  Text("${data.plBalance.toDouble() >= 0 ?"+":""}${data.plBalance!}",
+                                      style: Styles.normalText(
+                                        context: context,
                                           isBold: true,
                                           fontSize: 11,
                                           color: data.plBalance.toDouble() >= 0
@@ -377,7 +403,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                               Row(
                                 children: [
                                   Text('Qty : ',
-                                      style: Styles.normalText(context: context,isBold: true)),
+                                      style: Styles.normalText(context: context,isBold: true,color: data.bidType!.contains("1")?Colors.green:Colors.red)),
                                   Text(data.lot.toString(),
                                       style: Styles.normalText(context: context,isBold: true)),
                                 ],
@@ -393,7 +419,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                           isBold: true, fontSize: 11)),
                                   Text(data.brokerage.toString(),
                                       style: Styles.normalText(context: context,
-                                          isBold: true, fontSize: 11)),
+                                          isBold: true, fontSize: 11,color: Colors.red)),
                                 ],
                               )
                             ],

@@ -4,6 +4,8 @@ import 'package:me_app/Model/GetPortfolioList.dart';
 import 'package:me_app/Model/PortfolioCloseList.dart';
 import 'package:me_app/Utils/HelperFunction.dart';
 import '../ApiService/ApiInterface.dart';
+import '../Dialogs/AlertBox.dart';
+import '../Model/StatusMessage.dart';
 
 class PortfolioState {
   final GetPortfolioList portfolioList;
@@ -59,7 +61,17 @@ class PortfolioNotifier extends StateNotifier<PortfolioState> {
       );
     }
   }
+  Future<void> updateTradeStatus(
+      BuildContext context, String orderId, String type) async {
+    StatusMessage? response =
+    await ApiInterface.updateTradeStatus(context, orderId, type);
+    AlertBox.showStatus(
+        context, response!.message.toString(), response.status == 0);
+  }
 }
+
+
+
 
 final portfolioProvider =
     StateNotifierProvider<PortfolioNotifier, PortfolioState>(

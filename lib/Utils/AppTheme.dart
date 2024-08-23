@@ -27,7 +27,7 @@ ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme
     ],
     scaffoldBackgroundColor: isGoldenTheme
         ? Colors.black
-        : (isDarkTheme ? Colors.black : Colors.white12),
+        : (isDarkTheme ? Colors.black : Colors.grey.shade200),
     textTheme: Theme.of(context)
         .textTheme.copyWith(
           titleSmall: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:me_app/CommonWidget/TradeStock.dart';
 import 'package:me_app/Resources/ImagePaths.dart';
@@ -7,6 +8,7 @@ import 'package:me_app/Resources/Styles.dart';
 import 'package:me_app/Screen/SearchScreen.dart';
 import 'package:me_app/Screen/StockDetailScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../Dialogs/AlertBox.dart';
 import '../Model/GetMCXModel.dart';
 import '../Providerr/WatchlistNotifier.dart';
 import '../Utils/Colors.dart';
@@ -39,7 +41,14 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
             IconButton(
               icon: Image.asset(ImagePaths.appLogo),
               onPressed: () {
-                //_showDialog(context);
+                AlertBox.showAlert(
+                    context,
+                    Text(
+                      Strings.areYouSureToClose,
+                      style: Styles.normalText(isBold: true),
+                    ), () {
+                  SystemNavigator.pop();
+                });
               },
             ),
             const Spacer(),
@@ -97,7 +106,8 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
     );
   }
 
-  Widget _buildListView(List<Datum> list, BuildContext context, String type) {
+  Widget _buildListView(
+      List<StockData> list, BuildContext context, String type) {
     return SingleChildScrollView(
       child: Column(
         children: [

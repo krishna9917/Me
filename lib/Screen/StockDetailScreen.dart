@@ -15,7 +15,7 @@ import '../Utils/AppTheme.dart';
 import '../Utils/HelperFunction.dart';
 
 class StockDetailScreen extends ConsumerStatefulWidget {
-  Datum stockData;
+  StockData stockData;
 
   StockDetailScreen({super.key, required this.stockData});
 
