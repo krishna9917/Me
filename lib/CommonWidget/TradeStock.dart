@@ -4,7 +4,7 @@ import '../Model/GetMCXModel.dart';
 import '../Resources/Styles.dart';
 
 class Tradestock extends StatefulWidget {
-  Datum data;
+  StockData data;
   bool showCheckUncheck;
 
   Tradestock({super.key, required this.data, this.showCheckUncheck = false});

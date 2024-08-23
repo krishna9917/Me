@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:me_app/Utils/HelperFunction.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Dialogs/AlertBox.dart';
+import '../Model/GetMCXModel.dart';
 import '../Model/TradeData.dart';
 import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
+import '../Screen/StockDetailScreen.dart';
 
 class Tradehistory extends StatefulWidget {
   int tradeStatus = 1;
@@ -258,7 +260,7 @@ class _TradehistoryState extends State<Tradehistory> {
                                       if (widget.tradeStatus == 1 &&
                                           trade.status!.contains("4")) {
                                         HelperFunction.showMessage(
-                                            context, "Order already Cancelled");
+                                            context, Strings.orderCancelled);
                                       } else if (widget.tradeStatus == 1 &&
                                           !trade.status!.contains("4")) {
                                         widget.onCancelCall(
@@ -283,27 +285,15 @@ class _TradehistoryState extends State<Tradehistory> {
                           Divider(),
                         ],
                       ).onTap(() async {
-                        //
-                        //
-                        // final double? bidPrice =
-                        //     double.tryParse(trade.bidPrice ?? '0');
-                        // final double? sellPrice =
-                        //     double.tryParse(trade.sellPrice ?? '0');
-                        // await Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => BuyScreen(
-                        //       categoryId: '${trade.categoryName}',
-                        //       identifier: "${trade.token}",
-                        //       title: "${trade.categoryName}",
-                        //       expiryDate: "${trade.expireDate}",
-                        //       buyPrice: bidPrice ?? 0.0,
-                        //       // Provide default value if parsing fails
-                        //       sellPrice: sellPrice ??
-                        //           0.0, // Provide default value if parsing fails
-                        //     ),
-                        //   ),
-                        // );
+                        StockDetailScreen(
+                          stockData: StockData(
+                              categoryId: trade.categoryId,
+                              title: trade.token,
+                              expireDate: trade.expireDate,
+                              salePrice: trade.bidPrice.toDouble(),
+                              buyPrice: trade.bidPrice.toDouble()),
+                        ).launch(context);
+
                       });
                     },
                   ),
