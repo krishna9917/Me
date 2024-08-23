@@ -34,7 +34,7 @@ class HelperFunction {
       SnackBar(
         content: Text(
           message == null || message == "" ? "Something went wrong" : message,
-          style: Styles.normalText(color: Colors.white),
+          style: Styles.normalText(context: context,color: Colors.white),
         ),
         backgroundColor: type == 2
             ? Colors.green

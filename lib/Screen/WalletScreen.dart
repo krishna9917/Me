@@ -42,7 +42,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
             title: Row(
               children: [
                 Text(Strings.walletHistory,
-                    style: Styles.normalText(
+                    style: Styles.normalText(context: context,
                         isBold: true, color: Colors.white, fontSize: 17)),
               ],
             )),
@@ -73,7 +73,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                           Expanded(
                                             child: Text(
                                               "${data?.description}",
-                                              style: Styles.normalText(
+                                              style: Styles.normalText(context: context,
                                                   color: Colors.white,
                                                   isBold: true),
                                             ),
@@ -85,7 +85,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                                   color: Colors.white),
                                               Text(
                                                 "${data?.affectPoint}",
-                                                style: Styles.normalText(
+                                                style: Styles.normalText(context: context,
                                                     color: Colors.green,
                                                     isBold: true),
                                               ),
@@ -99,25 +99,25 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                           Expanded(
                                             child: Text(
                                               Strings.settlement,
-                                              style: Styles.normalText(
+                                              style: Styles.normalText(context: context,
                                                   color: Colors.white),
                                             ),
                                           ),
                                           Text(
                                             "${data?.created}",
-                                            style: Styles.normalText(
+                                            style: Styles.normalText(context: context,
                                                 color: Colors.white),
                                           ),
                                         ],
                                       ),
                                       Text(
                                         "${Strings.beforePoint} ${data?.beforePoint}",
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             color: Colors.white),
                                       ),
                                       Text(
                                         "${Strings.afterPoint} ${data?.afterPoint}",
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             color: Colors.white),
                                       ),
                                     ],

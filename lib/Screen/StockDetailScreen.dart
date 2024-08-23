@@ -97,7 +97,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                             children: [
                               Text(
                                 "${widget.stockData.title}_${widget.stockData.expireDate}",
-                                style: Styles.normalText(isBold: true),
+                                style: Styles.normalText(context: context,isBold: true),
                               ),
                               25.height,
                               Padding(
@@ -111,9 +111,9 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                       labelPadding: EdgeInsets.zero,
                                       controller: _tabController,
                                       labelStyle:
-                                          Styles.normalText(isBold: true),
+                                          Styles.normalText(context: context,isBold: true),
                                       labelColor: Colors.white,
-                                      unselectedLabelStyle: Styles.normalText(),
+                                      unselectedLabelStyle: Styles.normalText(context: context,),
                                       indicator: BoxDecoration(
                                         color: Colors.black,
                                         borderRadius: BorderRadius.horizontal(
@@ -197,13 +197,13 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                     children: [
                                       Text(
                                         "Sell@",
-                                        style: Styles.normalText(isBold: true),
+                                        style: Styles.normalText(context: context,isBold: true),
                                       ),
                                       Text(
                                           _textEditingController.text.isEmpty
                                               ? "${data != null ? data?.sellPrice : widget.stockData.salePrice}"
                                               : _textEditingController.text,
-                                          style: Styles.normalText(
+                                          style: Styles.normalText(context: context,
                                               isBold: true, fontSize: 17)),
                                     ],
                                   ),
@@ -231,13 +231,13 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                     children: [
                                       Text(
                                         "Buy@",
-                                        style: Styles.normalText(isBold: true),
+                                        style: Styles.normalText(context: context,isBold: true),
                                       ),
                                       Text(
                                         _textEditingController.text.isEmpty
                                             ? "${data != null ? data?.buyPrice : widget.stockData.buyPrice}"
                                             : _textEditingController.text,
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             isBold: true, fontSize: 17),
                                       ),
                                     ],
@@ -375,7 +375,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
             : Center(
                 child: Text(
                   Strings.dataNotAvailable,
-                  style: Styles.normalText(),
+                  style: Styles.normalText(context: context,),
                 ),
               ));
   }
@@ -388,7 +388,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
           Column(
             children: [
               10.height,
-              Text(Strings.enterLotSize, style: Styles.normalText()),
+              Text(Strings.enterLotSize, style: Styles.normalText(context: context,)),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -403,7 +403,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                       lotSize = value;
                     });
                   },
-                  style: Styles.normalText(),
+                  style: Styles.normalText(context: context,),
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     contentPadding:
@@ -413,7 +413,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
               ),
               if (showBidPrice) ...[
                 10.height,
-                Text(Strings.enterPrice, style: Styles.normalText()),
+                Text(Strings.enterPrice, style: Styles.normalText(context: context,)),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.black12,
@@ -426,7 +426,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                     onChanged: (value) {
                       setState(() {});
                     },
-                    style: Styles.normalText(isBold: true),
+                    style: Styles.normalText(context: context,isBold: true),
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
@@ -468,7 +468,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
               Expanded(
                   child: Text(
                 title,
-                style: Styles.normalText(
+                style: Styles.normalText(context: context,
                     isBold: true,
                     color: Theme.of(context).extension<AppColors>()!.color1 ==
                             Colors.amber
@@ -479,7 +479,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                   child: Text(
                 value,
                 textAlign: TextAlign.end,
-                style: Styles.normalText(
+                style: Styles.normalText(context: context,
                     isBold: true,
                     color: Theme.of(context).extension<AppColors>()!.color1 ==
                             Colors.amber

@@ -63,24 +63,24 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                 Tab(
                   child: Center(
                       child: Text(Strings.pending,
-                          style: Styles.normalText(
+                          style: Styles.normalText(context: context,
                               isBold: true, color: Colors.amber))),
                 ),
                 Tab(
                   child: Center(
                       child: Text(Strings.active,
-                          style: Styles.normalText(
+                          style: Styles.normalText(context: context,
                               isBold: true, color: Colors.green))),
                 ),
                 Tab(
                   child: Center(
                       child: Text(Strings.close,
-                          style: Styles.normalText(
+                          style: Styles.normalText(context: context,
                               isBold: true, color: Colors.red))),
                 ),
               ],
-              labelStyle: Styles.normalText(isBold: true),
-              unselectedLabelStyle: Styles.normalText(),
+              labelStyle: Styles.normalText(context: context,isBold: true),
+              unselectedLabelStyle: Styles.normalText(context: context,),
               labelColor: Colors.blue,
               unselectedLabelColor: Colors.grey,
               indicatorColor: Colors.amber.shade700,
@@ -129,10 +129,10 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text('${trade.categoryName}',
-                                                      style: Styles.normalText(
+                                                      style: Styles.normalText(context: context,
                                                           isBold: true)),
                                                   Text('${trade.expireDate}',
-                                                      style: Styles.normalText(
+                                                      style: Styles.normalText(context: context,
                                                           fontSize: 11,
                                                           isBold: true)),
                                                   Wrap(
@@ -142,7 +142,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     children: [
                                                       Text('Sold by Trader',
                                                           style:
-                                                              Styles.normalText(
+                                                              Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold:
                                                                       true)),
@@ -168,7 +168,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                           child: Text(
                                                               '${trade.bidPrice}',
                                                               style: Styles
-                                                                  .normalText(
+                                                                  .normalText(context: context,
                                                                       fontSize:
                                                                           11,
                                                                       isBold:
@@ -187,7 +187,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                               .formattedDate(trade
                                                                   .orderDateTime!),
                                                           style:
-                                                              Styles.normalText(
+                                                              Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold:
                                                                       true)),
@@ -247,7 +247,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                                           ? Strings
                                                                                               .monthSettlement
                                                                                           : "",
-                                                              style: Styles.normalText(
+                                                              style: Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold: true,
                                                                   color: trade
@@ -301,7 +301,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                       6),
                                                           child: Text(
                                                               '${trade.totalProfit}/${trade.brokerage}',
-                                                              style: Styles.normalText(
+                                                              style: Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold: true,
                                                                   color: trade.totalProfit
@@ -338,7 +338,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                       6),
                                                           child: Text(
                                                               'QTY:${trade.lot}',
-                                                              style: Styles.normalText(
+                                                              style: Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold: true,
                                                                   color: trade.totalProfit
@@ -359,7 +359,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     children: [
                                                       Text('Brought By Trader',
                                                           style:
-                                                              Styles.normalText(
+                                                              Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold:
                                                                       true)),
@@ -385,7 +385,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                           child: Text(
                                                               '${trade.sellPrice}',
                                                               style: Styles
-                                                                  .normalText(
+                                                                  .normalText(context: context,
                                                                       fontSize:
                                                                           11,
                                                                       isBold:
@@ -409,7 +409,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                               .formattedDate(trade
                                                                   .orderUpdateDateTime!),
                                                           style:
-                                                              Styles.normalText(
+                                                              Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold:
                                                                       true)),
@@ -469,7 +469,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                                           ? Strings
                                                                                               .monthSettlement
                                                                                           : "",
-                                                              style: Styles.normalText(
+                                                              style: Styles.normalText(context: context,
                                                                   fontSize: 11,
                                                                   isBold: true,
                                                                   color: trade
@@ -496,7 +496,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                             : Center(
                                 child: Text(
                                 Strings.dataNotAvailable,
-                                style: Styles.normalText(),
+                                style: Styles.normalText(context: context,),
                               )),
                       ),
                     ],

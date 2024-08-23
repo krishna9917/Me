@@ -61,7 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Text(
                   Strings.areYouSureToClose,
-                  style: Styles.normalText(isBold: true),
+                  style: Styles.normalText(context: context,isBold: true),
                   textAlign: TextAlign.start,
                 ),
                 const SizedBox(height: 20),
@@ -76,7 +76,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Text(
                         Strings.decline.toUpperCase(),
                         style:
-                            Styles.normalText(isBold: true, color: Colors.red),
+                            Styles.normalText(context: context,isBold: true, color: Colors.red),
                       ),
                     ),
                     ElevatedButton(
@@ -96,7 +96,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       },
                       child: Text(
                         Strings.confirm.toUpperCase(),
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       ),
                     ),
                   ],

@@ -42,14 +42,14 @@ class _TradehistoryState extends State<Tradehistory> {
                             ? Strings.cancelAllPendingMcxOrder
                             : Strings.closeMcxOrder,
                         textAlign: TextAlign.center,
-                        style: Styles.normalText(isBold: true, fontSize: 10)),
+                        style: Styles.normalText(context: context,isBold: true, fontSize: 10)),
                   ),
                 ).onTap(() {
                   AlertBox.showAlert(
                       context,
                       Text(
                         "Are you sure you want to ${widget.tradeStatus == 1 ? Strings.cancelAllPendingMcxOrder : Strings.closeMcxOrder}?",
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       ), () {
                     widget.onCancelCall(widget.tradeStatus.toString(),
                         widget.tradeStatus == 1 ? "5" : "4");
@@ -66,7 +66,7 @@ class _TradehistoryState extends State<Tradehistory> {
                             ? Strings.cancelAllPendingNseOrder
                             : Strings.closeNseOrder,
                         textAlign: TextAlign.center,
-                        style: Styles.normalText(isBold: true, fontSize: 10)),
+                        style: Styles.normalText(context: context,isBold: true, fontSize: 10)),
                   ),
                 ).onTap(
                   () {
@@ -74,7 +74,7 @@ class _TradehistoryState extends State<Tradehistory> {
                         context,
                         Text(
                           "Are you sure you want to ${widget.tradeStatus == 1 ? Strings.cancelAllPendingNseOrder : Strings.closeNseOrder}?",
-                          style: Styles.normalText(isBold: true),
+                          style: Styles.normalText(context: context,isBold: true),
                         ), () {
                       widget.onCancelCall(widget.tradeStatus.toString(),
                           widget.tradeStatus == 1 ? "5" : "4");
@@ -124,7 +124,7 @@ class _TradehistoryState extends State<Tradehistory> {
                                               trade.bidType!.contains("1")
                                                   ? "BuyX${trade.lot}"
                                                   : "SellX${trade.lot}",
-                                              style: Styles.normalText(
+                                              style: Styles.normalText(context: context,
                                                   fontSize: 11,
                                                   isBold: true,
                                                   color: trade.bidType!
@@ -178,7 +178,7 @@ class _TradehistoryState extends State<Tradehistory> {
                                                                           : trade.orderType!.contains("7")
                                                                               ? Strings.monthSettlement
                                                                               : "",
-                                                  style: Styles.normalText(
+                                                  style: Styles.normalText(context: context,
                                                     fontSize: 11,
                                                     isBold: true,
                                                     color: trade.orderType!
@@ -192,19 +192,19 @@ class _TradehistoryState extends State<Tradehistory> {
                                     5.height,
                                     Text(
                                       '${trade.categoryName}_${trade.expireDate}',
-                                      style: Styles.normalText(isBold: true),
+                                      style: Styles.normalText(context: context,isBold: true),
                                     ),
                                     5.height,
                                     Text(
                                       trade.bidType!.contains("1")
                                           ? "Bought By nul"
                                           : "Sold by null",
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           fontSize: 11, isBold: true),
                                     ),
                                     Text(
                                       '${trade.orderDateTime}',
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           fontSize: 10, isBold: true),
                                     ),
                                   ],
@@ -230,7 +230,7 @@ class _TradehistoryState extends State<Tradehistory> {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 3, horizontal: 6),
                                         child: Text('${trade.bidPrice}',
-                                            style: Styles.normalText(
+                                            style: Styles.normalText(context: context,
                                                 fontSize: 12,
                                                 isBold: true,
                                                 color:
@@ -251,7 +251,7 @@ class _TradehistoryState extends State<Tradehistory> {
                                                     ? Strings.cancelled
                                                     : Strings.cancelOrder
                                                 : Strings.closeOrder,
-                                            style: Styles.normalText(
+                                            style: Styles.normalText(context: context,
                                                 fontSize: 10, isBold: true)),
                                       ),
                                     ).onTap(() {
@@ -269,11 +269,11 @@ class _TradehistoryState extends State<Tradehistory> {
                                       }
                                     }),
                                     Text('Margin used:${trade.intradayMargin}',
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             fontSize: 10, isBold: true)),
                                     Text(
                                         'Holding Mar.Req.:${trade.holdingMargin}',
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             fontSize: 10, isBold: true)),
                                   ],
                                 ),
@@ -283,8 +283,7 @@ class _TradehistoryState extends State<Tradehistory> {
                           Divider(),
                         ],
                       ).onTap(() async {
-                        //
-                        //
+
                         // final double? bidPrice =
                         //     double.tryParse(trade.bidPrice ?? '0');
                         // final double? sellPrice =
@@ -312,7 +311,7 @@ class _TradehistoryState extends State<Tradehistory> {
             : Center(
                 child: Text(
                 Strings.dataNotAvailable,
-                style: Styles.normalText(),
+                style: Styles.normalText(context: context,),
               )),
         //  Divider(),
       ],

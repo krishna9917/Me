@@ -27,10 +27,10 @@ class _TradestockState extends State<Tradestock> {
                 flex: 2,
                 child: Wrap(direction: Axis.vertical, children: [
                   Text(widget.data.title.toString(),
-                      style: Styles.normalText(fontSize: 16, isBold: true)),
+                      style: Styles.normalText(context: context,fontSize: 16, isBold: true)),
                   Text(
                     widget.data.expireDate.toString(),
-                    style: Styles.normalText(isBold: true, fontSize: 12),
+                    style: Styles.normalText(context: context,isBold: true, fontSize: 12),
                   ),
                   5.height,
                   Row(
@@ -41,7 +41,7 @@ class _TradestockState extends State<Tradestock> {
                             widget.showCheckUncheck
                                 ? "Lot Size: ${widget.data.quotationLot}"
                                 : "Chg:${widget.data.priceChange}",
-                            style: Styles.normalText(
+                            style: Styles.normalText(context: context,
                                 fontSize: 10,
                                 isBold: true,
                                 color: widget.showCheckUncheck
@@ -52,7 +52,7 @@ class _TradestockState extends State<Tradestock> {
                             visible: !widget.showCheckUncheck,
                             child: Text(
                               "(${widget.data.priceChangePercentage}%)",
-                              style: Styles.normalText(
+                              style: Styles.normalText(context: context,
                                   fontSize: 10,
                                   isBold: true,
                                   color: widget.data.priceChangeColor!),
@@ -63,7 +63,7 @@ class _TradestockState extends State<Tradestock> {
                       5.width,
                       Text(
                         "High:${widget.data.high}",
-                        style: Styles.normalText(
+                        style: Styles.normalText(context: context,
                           fontSize: 10,
                           isBold: true,
                         ),
@@ -84,12 +84,12 @@ class _TradestockState extends State<Tradestock> {
                         padding: const EdgeInsets.only(left: 8, right: 8),
                         child: Text(
                           "${widget.data.buyPrice}",
-                          style: Styles.normalText(isBold: true, fontSize: 16),
+                          style: Styles.normalText(context: context,isBold: true, fontSize: 16),
                         ),
                       ),
                       Text(
                         "Low: ${widget.data.low}",
-                        style: Styles.normalText(isBold: true, fontSize: 10),
+                        style: Styles.normalText(context: context,isBold: true, fontSize: 10),
                       ),
                     ]),
               ),
@@ -105,13 +105,13 @@ class _TradestockState extends State<Tradestock> {
                             borderRadius: BorderRadius.circular(5)),
                         child: Text(
                           "${widget.data.salePrice}",
-                          style: Styles.normalText(isBold: true, fontSize: 16),
+                          style: Styles.normalText(context: context,isBold: true, fontSize: 16),
                         ),
                       ),
                       20.width,
                       Text(
                         "LTP: ${widget.data.lastTradePrice}",
-                        style: Styles.normalText(isBold: true, fontSize: 10),
+                        style: Styles.normalText(context: context,isBold: true, fontSize: 10),
                       ),
                     ]),
               ),

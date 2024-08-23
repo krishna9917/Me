@@ -3,8 +3,8 @@ import 'package:me_app/Resources/Styles.dart';
 
 import 'Colors.dart';
 
-ThemeData getAppTheme(
-    BuildContext context, bool isDarkTheme, bool isGoldenTheme) {
+ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme) {
+
   return ThemeData(
     extensions: <ThemeExtension<AppColors>>[
       AppColors(
@@ -29,10 +29,8 @@ ThemeData getAppTheme(
         ? Colors.black
         : (isDarkTheme ? Colors.black : Colors.white12),
     textTheme: Theme.of(context)
-        .textTheme
-        .copyWith(
-          titleSmall:
-              Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
+        .textTheme.copyWith(
+          titleSmall: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
         )
         .apply(
           bodyColor: isGoldenTheme
@@ -63,8 +61,8 @@ ThemeData getAppTheme(
           : (isDarkTheme ? Colors.white54 : Colors.black54),
     ),
     dialogTheme: DialogTheme(
-      titleTextStyle: Styles.normalText(color: Colors.black),
-      contentTextStyle: Styles.normalText(color: Colors.black),
+      titleTextStyle: Styles.normalText(context: context,color: Colors.black),
+      contentTextStyle: Styles.normalText(context: context,color: Colors.black),
     ),
   );
 }

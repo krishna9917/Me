@@ -37,7 +37,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: Text(Strings.profile,
-              style: Styles.normalText(
+              style: Styles.normalText(context: context,
                   color: Colors.white, fontSize: 17, isBold: true)),
         ),
         body: Container(
@@ -65,30 +65,30 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                         children: [
                                           Text(
                                             Strings.nse,
-                                            style: Styles.normalText(
+                                            style: Styles.normalText(context: context,
                                                 color: Colors.amber,
                                                 isBold: true),
                                           ),
                                           7.width,
                                           Text(
                                             Strings.tradingEnabled,
-                                            style: Styles.normalText(),
+                                            style: Styles.normalText(context: context,),
                                           ),
                                         ],
                                       ),
                                       Text(
                                         Strings.brokerage,
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             color: Colors.amber, isBold: true),
                                       ),
                                       Text(
                                         "${Profiledata?.nseBrokerage}",
-                                        style: Styles.normalText(),
+                                        style: Styles.normalText(context: context,),
                                       ),
                                       const Divider(),
                                       Text(
                                         Strings.marginIntraday,
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             color: Colors.amber),
                                       ),
                                       Text(
@@ -96,7 +96,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                       const Divider(),
                                       Text(
                                         Strings.marginHolding,
-                                        style: Styles.normalText(
+                                        style: Styles.normalText(context: context,
                                             color: Colors.amber),
                                       ),
                                       Text(
@@ -115,20 +115,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                       children: [
                                         Text(
                                           Strings.mcx,
-                                          style: Styles.normalText(
+                                          style: Styles.normalText(context: context,
                                               color: Colors.amber,
                                               isBold: true),
                                         ),
                                         const SizedBox(width: 7),
                                         Text(
                                           Strings.tradingEnabled,
-                                          style: Styles.normalText(),
+                                          style: Styles.normalText(context: context,),
                                         ),
                                       ],
                                     ),
                                     Text(
                                       Strings.brokerage,
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           color: Colors.amber),
                                     ),
                                     // Displaying mcxBrokerage as a ListView
@@ -164,7 +164,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     const Divider(),
                                     Text(
                                       Strings.marginIntraday,
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           color: Colors.amber, isBold: true),
                                     ),
                                     ListView.builder(
@@ -189,7 +189,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     const Divider(),
                                     Text(
                                       Strings.marginHolding,
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           color: Colors.amber, isBold: true),
                                     ),
                                     ListView.builder(
@@ -216,7 +216,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   : Center(
                       child: Text(
                       Strings.dataNotAvailable,
-                      style: Styles.normalText(),
+                      style: Styles.normalText(context: context,),
                     )),
         ));
   }

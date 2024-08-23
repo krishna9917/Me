@@ -60,10 +60,10 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
         title: TextField(
           controller: _searchController,
           onChanged: searchStock,
-          style: Styles.normalText(color: Colors.white),
+          style: Styles.normalText(context: context,color: Colors.white),
           decoration: InputDecoration(
             hintText: Strings.search,
-            hintStyle: Styles.normalText(color: Colors.white),
+            hintStyle: Styles.normalText(context: context,color: Colors.white),
             border: InputBorder.none,
           ),
         ),
@@ -88,7 +88,7 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
           : Center(
               child: Text(
                 Strings.dataNotAvailable,
-                style: Styles.normalText(),
+                style: Styles.normalText(context: context,),
               ),
             ),
     );

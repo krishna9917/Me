@@ -60,8 +60,15 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                   Tab(text: Strings.nseFutures),
                   Tab(text: Strings.others),
                 ],
-                labelStyle: Styles.normalText(fontSize: 12, isBold: true),
-                unselectedLabelStyle: Styles.normalText(fontSize: 12),
+                labelStyle: Styles.normalText(
+                  context: context,
+                  fontSize: 12,
+                  isBold: true,
+                ),
+                unselectedLabelStyle: Styles.normalText(
+                  context: context,
+                  fontSize: 12,
+                ),
                 labelColor: Theme.of(context).tabBarTheme.labelColor,
                 unselectedLabelColor:
                     Theme.of(context).tabBarTheme.unselectedLabelColor,
@@ -109,8 +116,9 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                           StockDetailScreen(stockData: data)
                               .launch(context)
                               .then((b) {
-                            Future.microtask(
-                                    () => ref.read(watchlistProvider.notifier).fetchCategoryList(context));
+                            Future.microtask(() => ref
+                                .read(watchlistProvider.notifier)
+                                .fetchCategoryList(context));
                           });
                         });
                       },
@@ -118,7 +126,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                   : Center(
                       child: Text(
                         Strings.dataNotAvailable,
-                        style: Styles.normalText(),
+                        style: Styles.normalText(context: context),
                       ),
                     ),
             ),
@@ -138,7 +146,11 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           7.width,
           Text(Strings.search,
-              style: Styles.normalText(isBold: true, fontSize: 12)),
+              style: Styles.normalText(
+                context: context,
+                isBold: true,
+                fontSize: 12,
+              )),
         ],
       ),
     ).onTap(() {
@@ -156,7 +168,11 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
           padding: const EdgeInsets.all(20),
           child: Text(
             Strings.comingSoonMsg,
-            style: Styles.normalText(fontSize: 20, isBold: true),
+            style: Styles.normalText(
+              context: context,
+              fontSize: 20,
+              isBold: true,
+            ),
           ),
         ),
       ],

@@ -12,7 +12,7 @@ class AlertBox {
         context: context,
         builder: (context) => AlertDialog(
                 title: message,
-                titleTextStyle: Styles.normalText(),
+                titleTextStyle: Styles.normalText(context: context,),
                 actions: [
                   25.height,
                   Row(
@@ -22,7 +22,7 @@ class AlertBox {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           Strings.decline.toUpperCase(),
-                          style: Styles.normalText(
+                          style: Styles.normalText(context: context,
                               isBold: true, color: Colors.red),
                         ),
                       ).onTap(() {
@@ -35,7 +35,7 @@ class AlertBox {
                         color: Colors.black,
                         child: Text(
                           Strings.confirm.toUpperCase(),
-                          style: Styles.normalText(
+                          style: Styles.normalText(context: context,
                               isBold: true, color: Colors.white),
                         ),
                       ).onTap(() {
@@ -65,7 +65,7 @@ class AlertBox {
                     10.height,
                     Text(
                       message,
-                      style: Styles.normalText(isBold: true),
+                      style: Styles.normalText(context: context,isBold: true),
                       textAlign: TextAlign.center,
                     )
                   ],
@@ -81,7 +81,7 @@ class AlertBox {
                               vertical: 8, horizontal: 15),
                           child: Text(
                             Strings.close.toUpperCase(),
-                            style: Styles.normalText(
+                            style: Styles.normalText(context: context,
                                 isBold: true, color: Colors.white),
                           ),
                         ).onTap(() {

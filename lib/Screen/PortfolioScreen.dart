@@ -53,16 +53,16 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                   Tab(
                       child: Center(
                           child: Text(Strings.active,
-                              style: Styles.normalText(
+                              style: Styles.normalText(context: context,
                                   isBold: true, color: Colors.green)))),
                   Tab(
                       child: Center(
                           child: Text(Strings.close,
-                              style: Styles.normalText(
+                              style: Styles.normalText(context: context,
                                   isBold: true, color: Colors.amber)))),
                 ],
-                labelStyle: Styles.normalText(isBold: true),
-                unselectedLabelStyle: Styles.normalText(),
+                labelStyle: Styles.normalText(context: context,isBold: true),
+                unselectedLabelStyle: Styles.normalText(context: context,),
                 labelColor: Colors.blue,
                 unselectedLabelColor: Colors.grey,
                 indicatorColor: Colors.amber.shade700,
@@ -78,7 +78,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                         : Center(
                             child: Text(
                               Strings.dataNotAvailable,
-                              style: Styles.normalText(),
+                              style: Styles.normalText(context: context,),
                             ),
                           ),
                   ),
@@ -88,7 +88,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                         : Center(
                             child: Text(
                               Strings.dataNotAvailable,
-                              style: Styles.normalText(),
+                              style: Styles.normalText(context: context,),
                             ),
                           ),
                   )
@@ -114,7 +114,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
               Expanded(
                   child: Text(
                 title,
-                style: Styles.normalText(
+                style: Styles.normalText(context: context,
                     isBold: true,
                     color: Theme.of(context).extension<AppColors>()!.color1 ==
                             Colors.amber
@@ -125,7 +125,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                   child: Text(
                 value,
                 textAlign: TextAlign.end,
-                style: Styles.normalText(
+                style: Styles.normalText(context: context,
                     isBold: true,
                     color: Theme.of(context).extension<AppColors>()!.color1 ==
                             Colors.amber
@@ -199,13 +199,13 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                       Expanded(
                           child: Text(
                         Strings.requireHoldingMargin,
-                        style: Styles.normalText(
+                        style: Styles.normalText(context: context,
                           isBold: true,
                         ),
                       )),
                       Text(
                         portfolioList.totalPlBalance.toString(),
-                        style: Styles.normalText(isBold: true),
+                        style: Styles.normalText(context: context,isBold: true),
                       )
                     ],
                   ),
@@ -231,14 +231,14 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                           children: [
                             Text(
                                 '${data.categoryName.toString()}_${data.expireDate.toString()}',
-                                style: Styles.normalText(isBold: true)),
+                                style: Styles.normalText(context: context,isBold: true)),
                             5.height,
                             Text("Margin:${data.intradayMargin.toString()}",
-                                style: Styles.normalText(
+                                style: Styles.normalText(context: context,
                                     isBold: true, fontSize: 11)),
                             Text(
                                 "Holdin Margin:${data.holdingMargin.toString()}",
-                                style: Styles.normalText(
+                                style: Styles.normalText(context: context,
                                     isBold: true, fontSize: 11)),
                           ],
                         ),
@@ -248,18 +248,18 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                             Row(
                               children: [
                                 Text('Bought : ',
-                                    style: Styles.normalText(isBold: true)),
+                                    style: Styles.normalText(context: context,isBold: true)),
                                 Text('1@${data.avrageBidPrice.toString()}',
-                                    style: Styles.normalText(isBold: true)),
+                                    style: Styles.normalText(context: context,isBold: true)),
                               ],
                             ),
                             5.height,
                             Text(data.plBalance.toString(),
-                                style: Styles.normalText(
+                                style: Styles.normalText(context: context,
                                     isBold: true, fontSize: 14)),
                             5.height,
                             Text('CMP:${data.cmprate.toString()}',
-                                style: Styles.normalText(
+                                style: Styles.normalText(context: context,
                                     isBold: true, fontSize: 11)),
                             5.height,
                             Card(
@@ -269,13 +269,15 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                     horizontal: 15, vertical: 7),
                                 child: Text(
                                   Strings.closeOrder,
-                                  style: Styles.normalText(
+                                  style: Styles.normalText(context: context,
                                       fontSize: 10,
                                       isBold: true,
                                       color: Colors.white),
                                 ),
                               ),
-                            ).onTap(() {}),
+                            ).onTap(() {
+
+                            }),
                           ],
                         ),
                       ],
@@ -348,18 +350,18 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                             children: [
                               Text(
                                   '${data.categoryName.toString()}_${data.expireDate.toString()}',
-                                  style: Styles.normalText(isBold: true)),
+                                  style: Styles.normalText(context: context,isBold: true)),
                               5.height,
                               Text("Avg sell: ${data.avgSellPrice.toString()}",
-                                  style: Styles.normalText(
+                                  style: Styles.normalText(context: context,
                                       isBold: true, fontSize: 11)),
                               Row(
                                 children: [
                                   Text('Net Profit Loss : ',
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           isBold: true, fontSize: 11)),
                                   Text(data.plBalance!,
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           isBold: true,
                                           fontSize: 11,
                                           color: data.plBalance.toDouble() >= 0
@@ -375,22 +377,22 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                               Row(
                                 children: [
                                   Text('Qty : ',
-                                      style: Styles.normalText(isBold: true)),
+                                      style: Styles.normalText(context: context,isBold: true)),
                                   Text(data.lot.toString(),
-                                      style: Styles.normalText(isBold: true)),
+                                      style: Styles.normalText(context: context,isBold: true)),
                                 ],
                               ),
                               5.height,
                               Text("Avg Buy : ${data.avgSellPrice.toString()}",
-                                  style: Styles.normalText(
+                                  style: Styles.normalText(context: context,
                                       isBold: true, fontSize: 11)),
                               Row(
                                 children: [
                                   Text('Brokerage : ',
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           isBold: true, fontSize: 11)),
                                   Text(data.brokerage.toString(),
-                                      style: Styles.normalText(
+                                      style: Styles.normalText(context: context,
                                           isBold: true, fontSize: 11)),
                                 ],
                               )

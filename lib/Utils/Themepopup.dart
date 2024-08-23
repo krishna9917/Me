@@ -20,7 +20,7 @@ void showThemeSelectionDialog(BuildContext context, WidgetRef ref) {
               ListTile(
                 title: Text(
                   Strings.lightTheme,
-                  style: Styles.normalText(isBold: true),
+                  style: Styles.normalText(context: context,isBold: true),
                 ),
                 onTap: () {
                   ref.read(appThemeProvider.notifier).state = false;
@@ -31,7 +31,7 @@ void showThemeSelectionDialog(BuildContext context, WidgetRef ref) {
               ListTile(
                 title: Text(
                   Strings.darkTheme,
-                  style: Styles.normalText(isBold: true),
+                  style: Styles.normalText(context: context,isBold: true),
                 ),
                 onTap: () {
                   ref.read(appThemeProvider.notifier).state = true;
@@ -42,7 +42,7 @@ void showThemeSelectionDialog(BuildContext context, WidgetRef ref) {
               ListTile(
                 title: Text(
                   Strings.goldenTheme,
-                  style: Styles.normalText(isBold: true),
+                  style: Styles.normalText(context: context,isBold: true),
                 ),
                 onTap: () {
                   ref.read(appThemeProvider.notifier).state = false;

@@ -25,7 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _isObscure = true;
   String? pswd;
   var userdata;
-  bool _showErrorIcon = false; // Track if the form was submitted
+  bool _showErrorIcon = false;
 
   Future<void> login() async {
     setState(() {
@@ -35,7 +35,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final bool? isValid = _formKey.currentState?.validate();
     if (isValid == true) {
       LoginData? loginResponse =
-          await ApiInterface.login(context, username!, pswd!);
+      await ApiInterface.login(context, username!, pswd!);
       if (loginResponse?.status == 1) {
         LoginData.saveData(loginResponse!);
         if (loginResponse.userData!.isFirstTimeLogin == 1) {
@@ -43,8 +43,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => ChangePassword(
-                      isComingFromAccount: false,
-                    )),
+                  isComingFromAccount: false,
+                )),
           );
         } else {
           Navigator.pushReplacement(
@@ -108,23 +108,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               TextFormField(
                                 decoration: InputDecoration(
                                   suffixIcon: _showErrorIcon &&
-                                          _formKey.currentState?.validate() !=
-                                              true
+                                      _formKey.currentState?.validate() !=
+                                          true
                                       ? const Icon(Icons.error,
-                                          color: Colors.red)
+                                      color: Colors.red)
                                       : null,
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       10.0, 20.0, 10.0, 20.0),
                                   hintText: 'Enter your user id',
-                                  hintStyle:
-                                      Styles.normalText(color: Colors.white),
+                                  hintStyle: Styles.normalText(
+                                      context: context, color: Colors.white),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide: BorderSide(
                                       color: _showErrorIcon &&
-                                              _formKey.currentState
-                                                      ?.validate() !=
-                                                  true
+                                          _formKey.currentState
+                                              ?.validate() !=
+                                              true
                                           ? Colors.red
                                           : Colors.white,
                                       width: 1.0,
@@ -146,7 +146,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         color: Colors.white, width: 2.0),
                                   ),
                                 ),
-                                style: Styles.normalText(color: Colors.white),
+                                style: Styles.normalText(
+                                    context: context, color: Colors.white),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
                                     return '';
@@ -169,6 +170,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 child: Text(
                                   Strings.userId,
                                   style: Styles.normalText(
+                                    context: context,
                                     color: Colors.amber,
                                     fontSize: 10,
                                   ),
@@ -183,36 +185,36 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 obscureText: _isObscure,
                                 decoration: InputDecoration(
                                   suffixIcon: _showErrorIcon &&
-                                          _formKey.currentState?.validate() !=
-                                              true
+                                      _formKey.currentState?.validate() !=
+                                          true
                                       ? const Icon(Icons.error,
-                                          color: Colors.red)
+                                      color: Colors.red)
                                       : IconButton(
-                                          icon: Icon(
-                                            _isObscure
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                            color: Colors.white,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              _isObscure =
-                                                  !_isObscure; // Toggle visibility
-                                            });
-                                          },
-                                        ),
+                                    icon: Icon(
+                                      _isObscure
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure =
+                                        !_isObscure; // Toggle visibility
+                                      });
+                                    },
+                                  ),
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       10.0, 20.0, 10.0, 20.0),
                                   hintText: Strings.enterYourPassword,
-                                  hintStyle:
-                                      Styles.normalText(color: Colors.white),
+                                  hintStyle: Styles.normalText(
+                                      context: context, color: Colors.white),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide: BorderSide(
                                       color: _showErrorIcon &&
-                                              _formKey.currentState
-                                                      ?.validate() !=
-                                                  true
+                                          _formKey.currentState
+                                              ?.validate() !=
+                                              true
                                           ? Colors.red
                                           : Colors.white,
                                       width: 1.0,
@@ -234,7 +236,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         color: Colors.white, width: 2.0),
                                   ),
                                 ),
-                                style: Styles.normalText(color: Colors.white),
+                                style: Styles.normalText(
+                                    context: context, color: Colors.white),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
                                     return Strings.pleaseEnterPassword;
@@ -257,6 +260,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 child: Text(
                                   Strings.password,
                                   style: Styles.normalText(
+                                    context: context,
                                     color: Colors.amber,
                                     fontSize: 10,
                                   ),
@@ -281,23 +285,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ),
                                 child: isLoading
                                     ? const CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.white))
+                                    valueColor:
+                                    AlwaysStoppedAnimation<Color>(
+                                        Colors.white))
                                     : Text(
-                                        Strings.login,
-                                        style: Styles.normalText(
-                                            isBold: true, color: Colors.white),
-                                      ),
+                                  Strings.login,
+                                  style: Styles.normalText(
+                                      context: context,
+                                      isBold: true,
+                                      color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
                           20.height,
-                          Text(Strings.termsConditions,
-                              style: Styles.normalText(
-                                  isBold: true,
-                                  color: Colors.white,
-                                  fontSize: 13)),
+                          Text(
+                            Strings.termsConditions,
+                            style: Styles.normalText(
+                                context: context,
+                                isBold: true,
+                                color: Colors.white,
+                                fontSize: 13),
+                          ),
                         ],
                       ),
                     ),
@@ -313,8 +322,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _requestNotificationPermission() async {
     final status = await Permission.notification.status;
-    if (status.isDenied) {
-      final result = await Permission.notification.request();
+    if (!status.isGranted) {
+      await Permission.notification.request();
     }
   }
 }
