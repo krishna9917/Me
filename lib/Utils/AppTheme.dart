@@ -3,66 +3,64 @@ import 'package:me_app/Resources/Styles.dart';
 
 import 'Colors.dart';
 
-ThemeData getAppTheme(BuildContext context, bool isDarkTheme, bool isGoldenTheme) {
-
+ThemeData getAppTheme(
+    BuildContext context, bool isDarkTheme, bool isGoldenTheme) {
+  Color textColor = isGoldenTheme
+      ? Colors.amber
+      : isDarkTheme
+          ? Colors.white
+          : Colors.black;
   return ThemeData(
     extensions: <ThemeExtension<AppColors>>[
       AppColors(
-        color1: isGoldenTheme
-            ? goldencolor
-            : isDarkTheme
-                ? Colors.blue
-                : Colors.green,
+        color1: isGoldenTheme || isDarkTheme ? Colors.blueGrey : Colors.white,
         color2: isGoldenTheme
-            ? Colors.black
+            ? Colors.amber
             : isDarkTheme
-                ? Colors.pink
-                : Colors.blue,
-        color3: isGoldenTheme
-            ? Colors.green
-            : isDarkTheme
-                ? Colors.yellow
-                : Colors.red,
+                ? Colors.white
+                : Colors.black87,
+        color3:  isGoldenTheme || isDarkTheme ? Colors.blueGrey : Colors.black87,
       ),
     ],
     scaffoldBackgroundColor: isGoldenTheme
         ? Colors.black
         : (isDarkTheme ? Colors.black : Colors.grey.shade200),
-    textTheme: Theme.of(context)
-        .textTheme.copyWith(
-          titleSmall: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
-        )
-        .apply(
-          bodyColor: isGoldenTheme
-              ? goldencolor
-              : (isDarkTheme ? Colors.white : Colors.black),
-          displayColor: Colors.grey,
-        ),
+    textTheme: TextTheme(
+        titleLarge:
+            Styles.normalText(context: context, color: textColor, isBold: true),
+        titleMedium: Styles.normalText(
+            context: context, color: textColor, fontSize: 12, isBold: true),
+        titleSmall: Styles.normalText(
+            context: context, color: textColor, fontSize: 9, isBold: true),
+        headlineLarge: Styles.normalText(context: context, color: textColor),
+        headlineMedium:
+            Styles.normalText(context: context, color: textColor, fontSize: 12),
+        headlineSmall:
+            Styles.normalText(context: context, color: textColor, fontSize: 9)),
     switchTheme: SwitchThemeData(
       thumbColor: MaterialStateProperty.all(isGoldenTheme
           ? Colors.red
           : (isDarkTheme ? Colors.orange : Colors.white)),
     ),
+    iconTheme: IconThemeData(color: textColor),
     listTileTheme: ListTileThemeData(
         iconColor: isGoldenTheme
             ? Colors.red
             : (isDarkTheme ? Colors.orange : Colors.white)),
-    appBarTheme: AppBarTheme(
-        backgroundColor: isGoldenTheme
-            ? Colors.black
-            : (isDarkTheme ? Colors.black : Colors.white),
-        iconTheme: const IconThemeData(color: Colors.white)),
+    appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.black,
+        iconTheme:
+            IconThemeData(color: Colors.white)),
     tabBarTheme: TabBarTheme(
-      labelColor: isGoldenTheme
-          ? Colors.white
-          : (isDarkTheme ? Colors.white : Colors.black),
-      unselectedLabelColor: isGoldenTheme
-          ? Colors.grey
-          : (isDarkTheme ? Colors.white54 : Colors.black54),
-    ),
+        dividerColor: Colors.white10,
+        labelColor: isGoldenTheme ? Colors.amber : Colors.white,
+        unselectedLabelColor:
+            isGoldenTheme ? Colors.amber.shade300 : Colors.white70,
+        labelStyle: Theme.of(context).textTheme.titleSmall,
+        unselectedLabelStyle: Theme.of(context).textTheme.titleSmall),
     dialogTheme: DialogTheme(
-      titleTextStyle: Styles.normalText(context: context,color: Colors.black),
-      contentTextStyle: Styles.normalText(context: context,color: Colors.black),
+      titleTextStyle: Theme.of(context).textTheme.titleMedium,
+      contentTextStyle: Theme.of(context).textTheme.titleSmall,
     ),
   );
 }

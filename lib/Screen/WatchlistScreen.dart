@@ -11,6 +11,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../Dialogs/AlertBox.dart';
 import '../Model/GetMCXModel.dart';
 import '../Providerr/WatchlistNotifier.dart';
+import '../Utils/AppTheme.dart';
 import '../Utils/Colors.dart';
 import '../Resources/Strings.dart';
 import '../Utils/Themepopup.dart';
@@ -36,7 +37,6 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.black,
           actions: [
             IconButton(
               icon: Image.asset(ImagePaths.appLogo),
@@ -45,7 +45,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
                     context,
                     Text(
                       Strings.areYouSureToClose,
-                      style: Styles.normalText(context: context,isBold: true),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ), () {
                   SystemNavigator.pop();
                 });
@@ -59,48 +59,30 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
               },
             ),
           ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(50.0),
-            child: Container(
-              color: Colors.grey.shade200,
-              child: TabBar(
-                tabs: const [
-                  Tab(text: Strings.mcxFutures),
-                  Tab(text: Strings.nseFutures),
-                  Tab(text: Strings.others),
-                ],
-                labelStyle: Styles.normalText(
-                  context: context,
-                  fontSize: 12,
-                  isBold: true,
-                ),
-                unselectedLabelStyle: Styles.normalText(
-                  context: context,
-                  fontSize: 12,
-                ),
-                labelColor: Theme.of(context).tabBarTheme.labelColor,
-                unselectedLabelColor:
-                    Theme.of(context).tabBarTheme.unselectedLabelColor,
-                indicatorColor: goldencolor,
-              ),
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(50.0),
+            child: TabBar(
+              tabs: [
+                Tab(text: Strings.mcxFutures),
+                Tab(text: Strings.nseFutures),
+                Tab(text: Strings.others),
+              ],
+              indicatorColor: goldencolor,
             ),
           ),
         ),
-        body: Container(
-          color: Colors.grey.shade200,
-          child: Column(
-            children: [
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    _buildListView(watchlistState.mcxList, context, "MCX"),
-                    _buildListView(watchlistState.nseList, context, "NSE"),
-                    _buildComingSoon(),
-                  ],
-                ),
+        body: Column(
+          children: [
+            Expanded(
+              child: TabBarView(
+                children: [
+                  _buildListView(watchlistState.mcxList, context, "MCX"),
+                  _buildListView(watchlistState.nseList, context, "NSE"),
+                  _buildComingSoon(),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -147,20 +129,21 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
   }
 
   Widget _buildSearchBar(BuildContext context, String type) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      color: Colors.white,
+      color: appColors.color1,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
+              )),
           7.width,
           Text(Strings.search,
-              style: Styles.normalText(
-                context: context,
-                isBold: true,
-                fontSize: 12,
-              )),
+              style: Theme.of(context).textTheme.headlineLarge),
         ],
       ),
     ).onTap(() {
@@ -178,11 +161,7 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
           padding: const EdgeInsets.all(20),
           child: Text(
             Strings.comingSoonMsg,
-            style: Styles.normalText(
-              context: context,
-              fontSize: 20,
-              isBold: true,
-            ),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
       ],

@@ -10,4 +10,6 @@ class ImagePaths {
   static const String trade = "assets/img_trade.png";
   static const String portfolio = "assets/img_portfolio.png";
   static const String profile = "assets/img_profile.png";
+  static const String checkedBox="assets/checked.png";
+  static const String unCheckedBox="assets/unchecked.png";
 }

@@ -63,27 +63,28 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                 Tab(
                   child: Center(
                       child: Text(Strings.pending,
-                          style: Styles.normalText(context: context,
-                              isBold: true, color: Colors.amber))),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: Colors.amber))),
                 ),
                 Tab(
                   child: Center(
                       child: Text(Strings.active,
-                          style: Styles.normalText(context: context,
-                              isBold: true, color: Colors.green))),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: Colors.green))),
                 ),
                 Tab(
                   child: Center(
                       child: Text(Strings.close,
-                          style: Styles.normalText(context: context,
-                              isBold: true, color: Colors.red))),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: Colors.red))),
                 ),
               ],
-              labelStyle: Styles.normalText(context: context,isBold: true),
-              unselectedLabelStyle: Styles.normalText(context: context,),
-              labelColor: Colors.blue,
-              unselectedLabelColor: Colors.grey,
-              indicatorColor: Colors.amber.shade700,
             ),
             Expanded(
               child: TabBarView(
@@ -129,12 +130,13 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text('${trade.categoryName}',
-                                                      style: Styles.normalText(context: context,
-                                                          isBold: true)),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleLarge),
                                                   Text('${trade.expireDate}',
-                                                      style: Styles.normalText(context: context,
-                                                          fontSize: 11,
-                                                          isBold: true)),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleMedium),
                                                   Wrap(
                                                     crossAxisAlignment:
                                                         WrapCrossAlignment
@@ -142,10 +144,9 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     children: [
                                                       Text('Sold by Trader',
                                                           style:
-                                                              Styles.normalText(context: context,
-                                                                  fontSize: 11,
-                                                                  isBold:
-                                                                      true)),
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleMedium),
                                                       const SizedBox(width: 8),
                                                       Container(
                                                         decoration:
@@ -167,12 +168,11 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                       6),
                                                           child: Text(
                                                               '${trade.bidPrice}',
-                                                              style: Styles
-                                                                  .normalText(context: context,
-                                                                      fontSize:
-                                                                          11,
-                                                                      isBold:
-                                                                          true,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .copyWith(
                                                                       color: Colors
                                                                           .red)),
                                                         ),
@@ -186,11 +186,10 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                           HelperFunction
                                                               .formattedDate(trade
                                                                   .orderDateTime!),
-                                                          style:
-                                                              Styles.normalText(context: context,
-                                                                  fontSize: 11,
-                                                                  isBold:
-                                                                      true)),
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .titleMedium!),
                                                       const SizedBox(width: 8),
                                                       Container(
                                                         decoration:
@@ -230,33 +229,16 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                               "3")
                                                                           ? Strings
                                                                               .sl
-                                                                          : trade.orderType!.contains(
-                                                                                  "4")
-                                                                              ? Strings
-                                                                                  .admin
-                                                                              : trade.orderType!.contains(
-                                                                                      "5")
-                                                                                  ? Strings
-                                                                                      .carriedForward
-                                                                                  : trade.orderType!.contains(
-                                                                                          "6")
-                                                                                      ? Strings
-                                                                                          .iFund
-                                                                                      : trade.orderType!.contains(
-                                                                                              "7")
-                                                                                          ? Strings
-                                                                                              .monthSettlement
+                                                                          : trade.orderType!.contains("4")
+                                                                              ? Strings.admin
+                                                                              : trade.orderType!.contains("5")
+                                                                                  ? Strings.carriedForward
+                                                                                  : trade.orderType!.contains("6")
+                                                                                      ? Strings.iFund
+                                                                                      : trade.orderType!.contains("7")
+                                                                                          ? Strings.monthSettlement
                                                                                           : "",
-                                                              style: Styles.normalText(context: context,
-                                                                  fontSize: 11,
-                                                                  isBold: true,
-                                                                  color: trade
-                                                                          .orderType!
-                                                                          .contains(
-                                                                              "1")
-                                                                      ? Colors
-                                                                          .green
-                                                                      : Colors.red)),
+                                                              style: Theme.of(context).textTheme.titleMedium!.copyWith(color: trade.orderType!.contains("1") ? Colors.green : Colors.red)),
                                                         ),
                                                       )
                                                     ],
@@ -301,19 +283,19 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                       6),
                                                           child: Text(
                                                               '${trade.totalProfit}/${trade.brokerage}',
-                                                              style: Styles.normalText(context: context,
-                                                                  fontSize: 11,
-                                                                  isBold: true,
-                                                                  color: trade.totalProfit
-                                                                              .toDouble() >
-                                                                          0
-                                                                      ? Colors
-                                                                          .green
-                                                                      : Colors
-                                                                          .red)),
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .copyWith(
+                                                                      color: trade.totalProfit.toDouble() > 0
+                                                                          ? Colors
+                                                                              .green
+                                                                          : Colors
+                                                                              .red)),
                                                         ),
                                                       ),
-                                                      SizedBox(width: 8),
+                                                      const SizedBox(width: 8),
                                                       Container(
                                                         decoration:
                                                             BoxDecoration(
@@ -338,16 +320,16 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                       6),
                                                           child: Text(
                                                               'QTY:${trade.lot}',
-                                                              style: Styles.normalText(context: context,
-                                                                  fontSize: 11,
-                                                                  isBold: true,
-                                                                  color: trade.totalProfit
-                                                                              .toDouble() >
-                                                                          0
-                                                                      ? Colors
-                                                                          .green
-                                                                      : Colors
-                                                                          .red)),
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .copyWith(
+                                                                      color: trade.totalProfit.toDouble() > 0
+                                                                          ? Colors
+                                                                              .green
+                                                                          : Colors
+                                                                              .red)),
                                                         ),
                                                       ),
                                                     ],
@@ -359,10 +341,9 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     children: [
                                                       Text('Brought By Trader',
                                                           style:
-                                                              Styles.normalText(context: context,
-                                                                  fontSize: 11,
-                                                                  isBold:
-                                                                      true)),
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleMedium),
                                                       const SizedBox(width: 8),
                                                       Container(
                                                         decoration:
@@ -384,12 +365,11 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                       6),
                                                           child: Text(
                                                               '${trade.sellPrice}',
-                                                              style: Styles
-                                                                  .normalText(context: context,
-                                                                      fontSize:
-                                                                          11,
-                                                                      isBold:
-                                                                          true,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .copyWith(
                                                                       color: Colors
                                                                           .green)),
                                                         ),
@@ -409,7 +389,9 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                               .formattedDate(trade
                                                                   .orderUpdateDateTime!),
                                                           style:
-                                                              Styles.normalText(context: context,
+                                                              Styles.normalText(
+                                                                  context:
+                                                                      context,
                                                                   fontSize: 11,
                                                                   isBold:
                                                                       true)),
@@ -452,32 +434,16 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                               "3")
                                                                           ? Strings
                                                                               .sl
-                                                                          : trade.closeOrderType!.contains(
-                                                                                  "4")
-                                                                              ? Strings
-                                                                                  .admin
-                                                                              : trade.closeOrderType!.contains(
-                                                                                      "5")
-                                                                                  ? Strings
-                                                                                      .carriedForward
-                                                                                  : trade.closeOrderType!.contains(
-                                                                                          "6")
-                                                                                      ? Strings
-                                                                                          .iFund
-                                                                                      : trade.closeOrderType!.contains(
-                                                                                              "7")
-                                                                                          ? Strings
-                                                                                              .monthSettlement
+                                                                          : trade.closeOrderType!.contains("4")
+                                                                              ? Strings.admin
+                                                                              : trade.closeOrderType!.contains("5")
+                                                                                  ? Strings.carriedForward
+                                                                                  : trade.closeOrderType!.contains("6")
+                                                                                      ? Strings.iFund
+                                                                                      : trade.closeOrderType!.contains("7")
+                                                                                          ? Strings.monthSettlement
                                                                                           : "",
-                                                              style: Styles.normalText(context: context,
-                                                                  fontSize: 11,
-                                                                  isBold: true,
-                                                                  color: trade
-                                                                          .closeOrderType!
-                                                                          .contains(
-                                                                              "1")
-                                                                      ? Colors.green
-                                                                      : Colors.red)),
+                                                              style: Theme.of(context).textTheme.titleMedium!.copyWith(color: trade.closeOrderType!.contains("1") ? Colors.green : Colors.red)),
                                                         ),
                                                       ),
                                                     ],
@@ -488,7 +454,10 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                           ),
                                         ],
                                       ),
-                                      Divider(),
+                                      const Divider(
+                                        thickness: 0.4,
+                                        color: Colors.blueGrey,
+                                      )
                                     ],
                                   );
                                 },
@@ -496,7 +465,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                             : Center(
                                 child: Text(
                                 Strings.dataNotAvailable,
-                                style: Styles.normalText(context: context,),
+                                style:  Theme.of(context).textTheme.titleLarge,
                               )),
                       ),
                     ],

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Model/GetMCXModel.dart';
+import '../Resources/ImagePaths.dart';
 import '../Resources/Styles.dart';
+import '../Utils/AppTheme.dart';
 
 class Tradestock extends StatefulWidget {
   StockData data;
@@ -16,6 +18,7 @@ class Tradestock extends StatefulWidget {
 class _TradestockState extends State<Tradestock> {
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: Column(
@@ -27,10 +30,10 @@ class _TradestockState extends State<Tradestock> {
                 flex: 2,
                 child: Wrap(direction: Axis.vertical, children: [
                   Text(widget.data.title.toString(),
-                      style: Styles.normalText(context: context,fontSize: 16, isBold: true)),
+                      style: Theme.of(context).textTheme.titleLarge),
                   Text(
                     widget.data.expireDate.toString(),
-                    style: Styles.normalText(context: context,isBold: true, fontSize: 12),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   5.height,
                   Row(
@@ -41,21 +44,25 @@ class _TradestockState extends State<Tradestock> {
                             widget.showCheckUncheck
                                 ? "Lot Size: ${widget.data.quotationLot}"
                                 : "Chg:${widget.data.priceChange}",
-                            style: Styles.normalText(context: context,
-                                fontSize: 10,
-                                isBold: true,
-                                color: widget.showCheckUncheck
-                                    ? Colors.black
-                                    : widget.data.priceChangeColor!),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                    color: widget.showCheckUncheck
+                                        ? widget.showCheckUncheck
+                                            ? appColors.color2
+                                            : Colors.black
+                                        : widget.data.priceChangeColor!),
                           ),
                           Visibility(
                             visible: !widget.showCheckUncheck,
                             child: Text(
                               "(${widget.data.priceChangePercentage}%)",
-                              style: Styles.normalText(context: context,
-                                  fontSize: 10,
-                                  isBold: true,
-                                  color: widget.data.priceChangeColor!),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      color: widget.data.priceChangeColor!),
                             ),
                           ),
                         ],
@@ -63,10 +70,7 @@ class _TradestockState extends State<Tradestock> {
                       5.width,
                       Text(
                         "High:${widget.data.high}",
-                        style: Styles.normalText(context: context,
-                          fontSize: 10,
-                          isBold: true,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
                     ],
                   ),
@@ -84,12 +88,12 @@ class _TradestockState extends State<Tradestock> {
                         padding: const EdgeInsets.only(left: 8, right: 8),
                         child: Text(
                           "${widget.data.buyPrice}",
-                          style: Styles.normalText(context: context,isBold: true, fontSize: 16),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                       Text(
                         "Low: ${widget.data.low}",
-                        style: Styles.normalText(context: context,isBold: true, fontSize: 10),
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
                     ]),
               ),
@@ -105,26 +109,27 @@ class _TradestockState extends State<Tradestock> {
                             borderRadius: BorderRadius.circular(5)),
                         child: Text(
                           "${widget.data.salePrice}",
-                          style: Styles.normalText(context: context,isBold: true, fontSize: 16),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                       20.width,
                       Text(
                         "LTP: ${widget.data.lastTradePrice}",
-                        style: Styles.normalText(context: context,isBold: true, fontSize: 10),
+                        style: Theme.of(context).textTheme.titleMedium!,
                       ),
                     ]),
               ),
               Visibility(
                 visible: widget.showCheckUncheck,
                 child: Image.asset(widget.data.isChecked == 1
-                    ? 'assets/checked.png'
-                    : 'assets/unchecked.png'),
+                    ? ImagePaths.checkedBox
+                    : ImagePaths.unCheckedBox),
               )
             ],
           ),
-          Divider(
-            color: Colors.green.shade900,
+          const Divider(
+            thickness: 0.4,
+            color: Colors.blueGrey,
           )
         ],
       ),

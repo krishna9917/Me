@@ -75,8 +75,8 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Scaffold(
-        backgroundColor: Colors.grey.shade200,
         appBar: CustomAppBar(
           ref: ref,
           showBackButton: true,
@@ -87,7 +87,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                 child: SingleChildScrollView(
                     child: Column(children: [
                   Card(
-                    color: Colors.white,
+                    color: appColors.color1,
                     elevation: 6,
                     child: Column(
                       children: [
@@ -97,7 +97,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                             children: [
                               Text(
                                 "${widget.stockData.title}_${widget.stockData.expireDate}",
-                                style: Styles.normalText(context: context,isBold: true),
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               25.height,
                               Padding(
@@ -105,15 +105,12 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                 child: SizedBox(
                                   height: 35,
                                   child: TabBar(
+                                      dividerColor: Colors.transparent,
                                       isScrollable: true,
                                       indicatorSize: TabBarIndicatorSize.tab,
-                                      dividerColor: Colors.transparent,
                                       labelPadding: EdgeInsets.zero,
+                                      unselectedLabelColor: appColors.color1,
                                       controller: _tabController,
-                                      labelStyle:
-                                          Styles.normalText(context: context,isBold: true),
-                                      labelColor: Colors.white,
-                                      unselectedLabelStyle: Styles.normalText(context: context,),
                                       indicator: BoxDecoration(
                                         color: Colors.black,
                                         borderRadius: BorderRadius.horizontal(
@@ -197,14 +194,18 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                     children: [
                                       Text(
                                         "Sell@",
-                                        style: Styles.normalText(context: context,isBold: true),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
                                       ),
                                       Text(
                                           _textEditingController.text.isEmpty
                                               ? "${data != null ? data?.sellPrice : widget.stockData.salePrice}"
                                               : _textEditingController.text,
-                                          style: Styles.normalText(context: context,
-                                              isBold: true, fontSize: 17)),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge!
+                                              .copyWith(fontSize: 17)),
                                     ],
                                   ),
                                 ),
@@ -231,14 +232,18 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                     children: [
                                       Text(
                                         "Buy@",
-                                        style: Styles.normalText(context: context,isBold: true),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
                                       ),
                                       Text(
                                         _textEditingController.text.isEmpty
                                             ? "${data != null ? data?.buyPrice : widget.stockData.buyPrice}"
                                             : _textEditingController.text,
-                                        style: Styles.normalText(context: context,
-                                            isBold: true, fontSize: 17),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .copyWith(fontSize: 17),
                                       ),
                                     ],
                                   ),
@@ -253,7 +258,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                   30.height,
                   Card(
                     elevation: 6,
-                    color: Colors.white,
+                    color: appColors.color1,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Table(
@@ -375,7 +380,9 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
             : Center(
                 child: Text(
                   Strings.dataNotAvailable,
-                  style: Styles.normalText(context: context,),
+                  style: Styles.normalText(
+                    context: context,
+                  ),
                 ),
               ));
   }
@@ -388,7 +395,9 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
           Column(
             children: [
               10.height,
-              Text(Strings.enterLotSize, style: Styles.normalText(context: context,)),
+              Text(Strings.enterLotSize,
+                  style: Theme.of(context).textTheme.titleLarge),
+              9.height,
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -403,7 +412,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                       lotSize = value;
                     });
                   },
-                  style: Styles.normalText(context: context,),
+                  style: Theme.of(context).textTheme.titleLarge,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     contentPadding:
@@ -413,7 +422,8 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
               ),
               if (showBidPrice) ...[
                 10.height,
-                Text(Strings.enterPrice, style: Styles.normalText(context: context,)),
+                Text(Strings.enterPrice,
+                    style: Theme.of(context).textTheme.titleLarge),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.black12,
@@ -426,7 +436,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                     onChanged: (value) {
                       setState(() {});
                     },
-                    style: Styles.normalText(context: context,isBold: true),
+                    style: Theme.of(context).textTheme.titleLarge,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(
@@ -455,36 +465,23 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
     );
   }
 
-  TableCell _buildTableCell(String title, String value,
-      {Color valueColor = Colors.black}) {
+  TableCell _buildTableCell(String title, String value) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
-          height: 30,
+          height: 35,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                  child: Text(
-                title,
-                style: Styles.normalText(context: context,
-                    isBold: true,
-                    color: Theme.of(context).extension<AppColors>()!.color1 ==
-                            Colors.amber
-                        ? Colors.amber
-                        : Colors.black),
-              )),
+                  child: Text(title,
+                      style: Theme.of(context).textTheme.titleMedium)),
               Expanded(
                   child: Text(
                 value,
                 textAlign: TextAlign.end,
-                style: Styles.normalText(context: context,
-                    isBold: true,
-                    color: Theme.of(context).extension<AppColors>()!.color1 ==
-                            Colors.amber
-                        ? Colors.amber
-                        : valueColor),
+                style: Theme.of(context).textTheme.titleLarge,
               )),
             ],
           ),

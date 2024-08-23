@@ -60,7 +60,7 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
         title: TextField(
           controller: _searchController,
           onChanged: searchStock,
-          style: Styles.normalText(context: context,color: Colors.white),
+          style: Theme.of(context).textTheme.titleMedium!,
           decoration: InputDecoration(
             hintText: Strings.search,
             hintStyle: Styles.normalText(context: context,color: Colors.white),
