@@ -26,7 +26,7 @@ class PortfolioNotifier extends StateNotifier<PortfolioState> {
 
   Future<void> getPortfolioData(BuildContext context) async {
     final response = await ApiInterface.getPortfolio(context,
-        showLoading: state.portfolioList.data == null);
+        showLoading: state.portfolioList.status==null);
     if (response?.status == 1) {
       state = PortfolioState(
         portfolioList: response!,
@@ -64,7 +64,7 @@ class PortfolioNotifier extends StateNotifier<PortfolioState> {
   Future<void> updateTradeStatus(
       BuildContext context, String orderId, String type) async {
     StatusMessage? response =
-    await ApiInterface.updateTradeStatus(context, orderId, type);
+    await ApiInterface.updateTradeStatus(context, orderId, type,showLoading: true);
     AlertBox.showStatus(
         context, response!.message.toString(), response.status == 0);
   }

@@ -104,9 +104,13 @@ class Strings {
   static const String orderCancelled = "Order already Cancelled";
   static const String logoutWarning = "Are you surely to logout?";
 
+
+
+
   //sharedPreferences key
   static const String ACCESS_TOKEN = "access_token";
   static const String USER_ID = "user_id";
   static const String USER_DETAILS = "user_details";
   static const String IS_LOGIN = "is_login";
+  static const String theme = "theme";
 }

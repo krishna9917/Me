@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:me_app/Dialogs/AlertBox.dart';
@@ -12,6 +13,7 @@ import 'package:me_app/Model/LoginData.dart';
 import 'package:me_app/Model/StatusMessage.dart';
 import 'package:me_app/Model/TradeData.dart';
 import 'package:me_app/Resources/Strings.dart';
+import 'package:me_app/Screen/LoginScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import '../Model/PortfolioCloseList.dart';
@@ -53,14 +55,17 @@ class ApiInterface {
     var (bool status, Response? response) = await _getApiCall(
         context, "getLiveRate", showLoading,
         requestParams: token != "" ? {"token": token} : {});
-    return status ? LiveRate.fromJson(jsonDecode(response!.body)) : null;
+    final data = status ? LiveRate.fromJson(jsonDecode(response!.body)) : null;
+    sessionOut(data?.isLogin != null && data?.isLogin == 0, context,
+        data?.message ?? "");
+    return data;
   }
 
   static Future<StatusMessage?> addToWatchList(
       BuildContext context, String categoryId, num isChecked,
       {bool showLoading = false}) async {
     var (bool status, Response? response) = await _getApiCall(
-        context, "addUserWatchList", showLoading, requestParams: {
+        context, "addUserWatchList", true, requestParams: {
       "category_id": categoryId,
       "ischecked": isChecked.toString()
     });
@@ -79,7 +84,7 @@ class ApiInterface {
       BuildContext context, String orderId, String type,
       {bool showLoading = false}) async {
     var (bool status, Response? response) = await _postApiCall(
-        context, "closeCancelTrade", showLoading,
+        context, "closeCancelTrade", true,
         requestParams: {"orderID": orderId, "type": type});
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
@@ -120,7 +125,7 @@ class ApiInterface {
       BuildContext? context, String newPassword, String oldPassword,
       {bool showLoading = false}) async {
     var (bool status, Response? response) = await _postApiCall(
-        context!, "changePassword", showLoading,
+        context!, "changePassword", true,
         requestParams: {"opw": oldPassword, "npw": newPassword});
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
@@ -135,7 +140,7 @@ class ApiInterface {
       String lotSize,
       {bool showLoading = false}) async {
     var (bool status, Response? response) =
-        await _postApiCall(context!, "orderAuth", showLoading, requestParams: {
+        await _postApiCall(context!, "orderAuth", true, requestParams: {
       "catID": catId,
       "exipreDate": expireDate,
       "orderType": orderType,
@@ -155,11 +160,14 @@ class ApiInterface {
       }
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
+      final deviceInfoPlugin = DeviceInfoPlugin();
+      final deviceInfo = await deviceInfoPlugin.androidInfo;
+      String? token = await FirebaseMessaging.instance.getToken();
       requestParams ??= {};
       requestParams.addAll({
         "userID": sharedPreferences.getString(Strings.USER_ID).toString(),
-        "fcm_id": "",
-        "deviceName": ""
+        "fcm_id": token,
+        "deviceName": "${deviceInfo.display} ${deviceInfo.model}"
       });
       final response = await httpClient.get(
           Uri.parse(BASE_URL + endPoint)
@@ -190,10 +198,11 @@ class ApiInterface {
           await SharedPreferences.getInstance();
       final deviceInfoPlugin = DeviceInfoPlugin();
       final deviceInfo = await deviceInfoPlugin.androidInfo;
+      String? token = await FirebaseMessaging.instance.getToken();
       requestParams ??= {};
       requestParams.addAll({
         "userID": sharedPreferences.getString(Strings.USER_ID).toString(),
-        "fcm_id": "",
+        "fcm_id": token,
         "deviceName": "${deviceInfo.display} ${deviceInfo.model}"
       });
       final response = await httpClient.post(Uri.parse(BASE_URL + endPoint),
@@ -220,5 +229,16 @@ class ApiInterface {
       "Accept": "application/json",
       "Token": sharedPreferences.getString(Strings.ACCESS_TOKEN).toString()
     };
+  }
+
+  static Future<void> sessionOut(
+      bool isLogout, BuildContext context, String message) async {
+    if (isLogout) {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.clear();
+      LoginScreen().launch(context, isNewTask: true);
+      HelperFunction.showMessage(context, message, type: 3);
+    }
   }
 }

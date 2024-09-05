@@ -25,11 +25,15 @@ class TradesNotifier extends StateNotifier<TradesState> {
           closeTrades: [],
         ));
 
+  bool showPendingTradeLoader = true;
+  bool showActiveTradeLoader = true;
+  bool showCloseTradeLoader = true;
+
   Future<void> fetchTrades(BuildContext context, int type) async {
     TradeData? response = await ApiInterface.tradeList(context, type,
-        showLoading: (state.pendingTrades == null && type == 1) ||
-            (state.activeTrades == null && type == 2) ||
-            (state.closeTrades == null && type == 3));
+        showLoading: (showPendingTradeLoader && type == 1) ||
+            (showActiveTradeLoader && type == 2) ||
+            (showCloseTradeLoader && type == 3));
     if (response?.status == 1) {
       switch (type) {
         case 1:
@@ -38,6 +42,7 @@ class TradesNotifier extends StateNotifier<TradesState> {
             activeTrades: state.activeTrades,
             closeTrades: state.closeTrades,
           );
+          showPendingTradeLoader = false;
           break;
         case 2:
           state = TradesState(
@@ -45,6 +50,7 @@ class TradesNotifier extends StateNotifier<TradesState> {
             activeTrades: response?.data,
             closeTrades: state.closeTrades,
           );
+          showActiveTradeLoader = false;
           break;
         case 3:
           state = TradesState(
@@ -52,6 +58,7 @@ class TradesNotifier extends StateNotifier<TradesState> {
             activeTrades: state.activeTrades,
             closeTrades: response?.data,
           );
+          showCloseTradeLoader = false;
           break;
       }
     }

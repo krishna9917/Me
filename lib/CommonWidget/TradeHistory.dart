@@ -5,7 +5,6 @@ import '../Dialogs/AlertBox.dart';
 import '../Model/GetMCXModel.dart';
 import '../Model/TradeData.dart';
 import '../Resources/Strings.dart';
-import '../Resources/Styles.dart';
 import '../Screen/StockDetailScreen.dart';
 
 class Tradehistory extends StatefulWidget {
@@ -44,14 +43,14 @@ class _TradehistoryState extends State<Tradehistory> {
                             ? Strings.cancelAllPendingMcxOrder
                             : Strings.closeMcxOrder,
                         textAlign: TextAlign.center,
-                        style: Styles.normalText(context: context,isBold: true, fontSize: 10)),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ),
                 ).onTap(() {
                   AlertBox.showAlert(
                       context,
                       Text(
                         "Are you sure you want to ${widget.tradeStatus == 1 ? Strings.cancelAllPendingMcxOrder : Strings.closeMcxOrder}?",
-                        style: Styles.normalText(context: context,isBold: true),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ), () {
                     widget.onCancelCall(widget.tradeStatus.toString(),
                         widget.tradeStatus == 1 ? "5" : "4");
@@ -68,7 +67,7 @@ class _TradehistoryState extends State<Tradehistory> {
                             ? Strings.cancelAllPendingNseOrder
                             : Strings.closeNseOrder,
                         textAlign: TextAlign.center,
-                        style: Styles.normalText(context: context,isBold: true, fontSize: 10)),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ),
                 ).onTap(
                   () {
@@ -76,7 +75,7 @@ class _TradehistoryState extends State<Tradehistory> {
                         context,
                         Text(
                           "Are you sure you want to ${widget.tradeStatus == 1 ? Strings.cancelAllPendingNseOrder : Strings.closeNseOrder}?",
-                          style: Styles.normalText(context: context,isBold: true),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ), () {
                       widget.onCancelCall(widget.tradeStatus.toString(),
                           widget.tradeStatus == 1 ? "5" : "4");
@@ -126,13 +125,14 @@ class _TradehistoryState extends State<Tradehistory> {
                                               trade.bidType!.contains("1")
                                                   ? "BuyX${trade.lot}"
                                                   : "SellX${trade.lot}",
-                                              style: Styles.normalText(context: context,
-                                                  fontSize: 11,
-                                                  isBold: true,
-                                                  color: trade.bidType!
-                                                          .contains("1")
-                                                      ? Colors.green
-                                                      : Colors.red),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
+                                                      color: trade.bidType!
+                                                              .contains("1")
+                                                          ? Colors.green
+                                                          : Colors.red),
                                             ),
                                           ),
                                         ),
@@ -177,37 +177,44 @@ class _TradehistoryState extends State<Tradehistory> {
                                                                               "6")
                                                                           ? Strings
                                                                               .iFund
-                                                                          : trade.orderType!.contains("7")
-                                                                              ? Strings.monthSettlement
+                                                                          : trade.orderType!.contains(
+                                                                                  "7")
+                                                                              ? Strings
+                                                                                  .monthSettlement
                                                                               : "",
-                                                  style: Styles.normalText(context: context,
-                                                    fontSize: 11,
-                                                    isBold: true,
-                                                    color: trade.orderType!
-                                                            .contains("1")
-                                                        ? Colors.green
-                                                        : Colors.red,
-                                                  ))),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium!
+                                                      .copyWith(
+                                                          color: trade
+                                                                  .orderType!
+                                                                  .contains("1")
+                                                              ? Colors.green
+                                                              : Colors.red))),
                                         ),
                                       ],
                                     ),
                                     5.height,
                                     Text(
                                       '${trade.categoryName}_${trade.expireDate}',
-                                      style: Styles.normalText(context: context,isBold: true),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
                                     ),
                                     5.height,
                                     Text(
                                       trade.bidType!.contains("1")
                                           ? "Bought By nul"
                                           : "Sold by null",
-                                      style: Styles.normalText(context: context,
-                                          fontSize: 11, isBold: true),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!,
                                     ),
                                     Text(
                                       '${trade.orderDateTime}',
-                                      style: Styles.normalText(context: context,
-                                          fontSize: 10, isBold: true),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
                                     ),
                                   ],
                                 ),
@@ -232,16 +239,17 @@ class _TradehistoryState extends State<Tradehistory> {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 3, horizontal: 6),
                                         child: Text('${trade.bidPrice}',
-                                            style: Styles.normalText(context: context,
-                                                fontSize: 12,
-                                                isBold: true,
-                                                color:
-                                                    trade.bidType!.contains("1")
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                    color: trade.bidType!
+                                                            .contains("1")
                                                         ? Colors.green
                                                         : Colors.red)),
                                       ),
                                     ),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Card(
                                       color: Colors.red,
                                       child: Padding(
@@ -253,8 +261,9 @@ class _TradehistoryState extends State<Tradehistory> {
                                                     ? Strings.cancelled
                                                     : Strings.cancelOrder
                                                 : Strings.closeOrder,
-                                            style: Styles.normalText(context: context,
-                                                fontSize: 10, isBold: true)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!),
                                       ),
                                     ).onTap(() {
                                       if (widget.tradeStatus == 1 &&
@@ -271,29 +280,36 @@ class _TradehistoryState extends State<Tradehistory> {
                                       }
                                     }),
                                     Text('Margin used:${trade.intradayMargin}',
-                                        style: Styles.normalText(context: context,
-                                            fontSize: 10, isBold: true)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall),
                                     Text(
                                         'Holding Mar.Req.:${trade.holdingMargin}',
-                                        style: Styles.normalText(context: context,
-                                            fontSize: 10, isBold: true)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                          Divider(),
+                          const Divider(
+                            thickness: 0.4,
+                            color: Colors.blueGrey,
+                          )
                         ],
                       ).onTap(() async {
                         StockDetailScreen(
                           stockData: StockData(
-                              categoryId: trade.categoryId,
-                              title: trade.token,
-                              expireDate: trade.expireDate,
-                              salePrice: trade.bidPrice.toDouble(),
-                              buyPrice: trade.bidPrice.toDouble()),
+                            instrumentToken: trade.token,
+                            categoryId: trade.categoryId,
+                            title: trade.token,
+                            expireDate: trade.expireDate,
+                            salePrice: trade.bidPrice.toDouble(),
+                            buyPrice: trade.bidPrice.toDouble(),
+                            quotationLot: trade.lot,
+                          ),
                         ).launch(context);
-
                       });
                     },
                   ),
@@ -302,7 +318,7 @@ class _TradehistoryState extends State<Tradehistory> {
             : Center(
                 child: Text(
                 Strings.dataNotAvailable,
-                style: Styles.normalText(context: context,),
+                style: Theme.of(context).textTheme.titleLarge,
               )),
         //  Divider(),
       ],

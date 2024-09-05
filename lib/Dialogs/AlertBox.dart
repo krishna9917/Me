@@ -12,7 +12,7 @@ class AlertBox {
         context: context,
         builder: (context) => AlertDialog(
                 title: message,
-                titleTextStyle: Styles.normalText(context: context,),
+                titleTextStyle: Theme.of(context).textTheme.headlineLarge,
                 actions: [
                   25.height,
                   Row(
@@ -65,7 +65,7 @@ class AlertBox {
                     10.height,
                     Text(
                       message,
-                      style: Styles.normalText(context: context,isBold: true),
+                      style:  Theme.of(context).textTheme.headlineLarge,
                       textAlign: TextAlign.center,
                     )
                   ],

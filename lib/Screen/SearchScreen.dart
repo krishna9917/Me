@@ -63,7 +63,7 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
           style: Theme.of(context).textTheme.titleMedium!,
           decoration: InputDecoration(
             hintText: Strings.search,
-            hintStyle: Styles.normalText(context: context,color: Colors.white),
+            hintStyle: Styles.normalText(context: context, color: Colors.white),
             border: InputBorder.none,
           ),
         ),
@@ -88,7 +88,9 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
           : Center(
               child: Text(
                 Strings.dataNotAvailable,
-                style: Styles.normalText(context: context,),
+                style: Styles.normalText(
+                  context: context,
+                ),
               ),
             ),
     );

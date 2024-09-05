@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Resources/Strings.dart';
 import '../Utils/AppBar.dart';
+import '../Utils/AppTheme.dart';
 import 'ChangePassword.dart';
 import 'LoginScreen.dart';
 
@@ -47,6 +48,7 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Scaffold(
       appBar: CustomAppBar(ref: ref), // Pass ref here
       body: SingleChildScrollView(
@@ -76,18 +78,16 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  "Username: ${user.userData?.name}",
-                                  style: Styles.normalText(context: context,
-                                      isBold: true,
-                                      color: Colors.amber.shade800),
-                                ),
-                                Text(
-                                  "MemberId: ${user.userData?.uniqueId}",
-                                  style: Styles.normalText(context: context,
-                                      isBold: true,
-                                      color: Colors.amber.shade800),
-                                ),
+                                Text("Username: ${user.userData?.name}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(color: appColors.color4)),
+                                Text("MemberId: ${user.userData?.uniqueId}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(color: appColors.color4)),
                               ],
                             ),
                           ),
@@ -98,128 +98,144 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                 ),
               ),
             ),
-            Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 60,
-                    child: ListTile(
-                      title: Text(
-                        "Wallet",
-                        style: Styles.normalText(context: context,isBold: true),
-                      ),
-                      subtitle: Text(
-                        "See amount add and deduct from your wallet",
-                        style: Styles.normalText(context: context,fontSize: 12),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios,
-                          size: 18, color: Colors.black),
-                      onTap: () {
-                        WalletScreen().launch(context);
-                      },
+            Column(
+              children: [
+                SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    title: Text(
+                      "Wallet",
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 60,
-                    child: ListTile(
-                      title: Text(
-                        "Profile",
-                        style: Styles.normalText(context: context,isBold: true),
-                      ),
-                      subtitle: Text(
-                        "See/Edit your profile detail",
-                        style: Styles.normalText(context: context,fontSize: 12),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios,
-                          size: 18, color: Colors.black),
-                      onTap: () {
-                        ProfileScreen().launch(context);
-                      },
+                    subtitle: Text(
+                      "See amount add and deduct from your wallet",
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 60,
-                    child: ListTile(
-                      title: Text(
-                        "Change Password",
-                        style: Styles.normalText(context: context,isBold: true),
-                      ),
-                      subtitle: Text(
-                        "Change password of your account",
-                        style: Styles.normalText(context: context,fontSize: 12),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios,
-                          size: 18, color: Colors.black),
-                      onTap: () {
-                        ChangePassword(
-                          isComingFromAccount: true,
-                        ).launch(context);
-                      },
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: appColors.color2,
+                      size: 18,
                     ),
+                    onTap: () {
+                      WalletScreen().launch(context);
+                    },
                   ),
-                  Divider(),
-                  SizedBox(
-                    height: 60,
-                    child: ListTile(
-                      title: Text("Notification",
-                          style: Styles.normalText(context: context,isBold: true)),
-                      subtitle: Text("See important notification history",
-                          style: Styles.normalText(context: context,fontSize: 12)),
-                      trailing: const Icon(Icons.arrow_forward_ios,
-                          size: 15, color: Colors.black),
-                      onTap: () {
-                        //NotificationScreen().launch(context);
-                      },
+                ),
+                const Divider(),
+                SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    title: Text(
+                      "Profile",
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 60,
-                    child: ListTile(
-                      title: Text(
-                        "Privacy Policy",
-                        style: Styles.normalText(context: context,isBold: true),
-                      ),
-                      subtitle: Text(
-                        "Know your privacy policy",
-                        style: Styles.normalText(context: context,fontSize: 12),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios,
-                          size: 18, color: Colors.black),
-                      onTap: () => _launchPrivacyPolicyURL(),
+                    subtitle: Text(
+                      "See/Edit your profile detail",
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                  ),
-                  const Divider(),
-                  SizedBox(
-                    height: 60,
-                    child: ListTile(
-                      title: Text(
-                        "Logout",
-                        style: Styles.normalText(context: context,isBold: true),
-                      ),
-                      subtitle: Text(
-                        "Logout your account",
-                        style: Styles.normalText(context: context,fontSize: 12),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios,
-                          size: 18, color: Colors.black),
-                      onTap: () {
-                        AlertBox.showAlert(
-                            context,
-                            Text(
-                              Strings.logoutWarning,
-                              style: Styles.normalText(context: context,isBold: true),
-                            ), () {
-                          logout();
-                        });
-                      },
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: appColors.color2,
+                      size: 18,
                     ),
+                    onTap: () {
+                      ProfileScreen().launch(context);
+                    },
                   ),
-                ],
-              ),
+                ),
+                const Divider(),
+                SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    title: Text(
+                      "Change Password",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    subtitle: Text(
+                      "Change password of your account",
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: appColors.color2,
+                      size: 18,
+                    ),
+                    onTap: () {
+                      ChangePassword(
+                        isComingFromAccount: true,
+                      ).launch(context);
+                    },
+                  ),
+                ),
+                Divider(),
+                SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    title: Text("Notification",
+                        style: Theme.of(context).textTheme.titleLarge),
+                    subtitle: Text("See important notification history",
+                        style: Theme.of(context).textTheme.headlineMedium),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: appColors.color2,
+                      size: 18,
+                    ),
+                    onTap: () {
+                      //NotificationScreen().launch(context);
+                    },
+                  ),
+                ),
+                Divider(),
+                SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    title: Text(
+                      "Privacy Policy",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    subtitle: Text(
+                      "Know your privacy policy",
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: appColors.color2,
+                      size: 18,
+                    ),
+                    onTap: () => _launchPrivacyPolicyURL(),
+                  ),
+                ),
+                const Divider(),
+                SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    title: Text(
+                      "Logout",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    subtitle: Text(
+                      "Logout your account",
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: appColors.color2,
+                      size: 18,
+                    ),
+                    onTap: () {
+                      AlertBox.showAlert(
+                          context,
+                          Text(
+                            Strings.logoutWarning,
+                            style: Styles.normalText(
+                                context: context, isBold: true),
+                          ), () {
+                        logout();
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
         ),

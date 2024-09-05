@@ -2,11 +2,20 @@
 
 class LiveRate {
   LiveRate({
-      List<Livedata>? livedata,}){
+    num? status,
+    String? message,
+    num? isLogin,
+    List<Livedata>? livedata,}){
+    _status = status;
+    _message = message;
+    _isLogin = isLogin;
     _livedata = livedata;
-}
+  }
 
   LiveRate.fromJson(dynamic json) {
+    _status = json['status'];
+    _message = json['message'];
+    _isLogin = json['is_login'];
     if (json['livedata'] != null) {
       _livedata = [];
       json['livedata'].forEach((v) {
@@ -14,14 +23,29 @@ class LiveRate {
       });
     }
   }
+  num? _status;
+  String? _message;
+  num? _isLogin;
   List<Livedata>? _livedata;
-LiveRate copyWith({  List<Livedata>? livedata,
-}) => LiveRate(  livedata: livedata ?? _livedata,
-);
+  LiveRate copyWith({  num? status,
+    String? message,
+    num? isLogin,
+    List<Livedata>? livedata,
+  }) => LiveRate(  status: status ?? _status,
+    message: message ?? _message,
+    isLogin: isLogin ?? _isLogin,
+    livedata: livedata ?? _livedata,
+  );
+  num? get status => _status;
+  String? get message => _message;
+  num? get isLogin => _isLogin;
   List<Livedata>? get livedata => _livedata;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['status'] = _status;
+    map['message'] = _message;
+    map['is_login'] = _isLogin;
     if (_livedata != null) {
       map['livedata'] = _livedata?.map((v) => v.toJson()).toList();
     }

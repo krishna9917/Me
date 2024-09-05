@@ -35,22 +35,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final bool? isValid = _formKey.currentState?.validate();
     if (isValid == true) {
       LoginData? loginResponse =
-      await ApiInterface.login(context, username!, pswd!);
+          await ApiInterface.login(context, username!, pswd!);
       if (loginResponse?.status == 1) {
         LoginData.saveData(loginResponse!);
         if (loginResponse.userData!.isFirstTimeLogin == 1) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChangePassword(
-                  isComingFromAccount: false,
-                )),
-          );
+          ChangePassword(
+            isComingFromAccount: false,
+          ).launch(context, isNewTask: true);
         } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Bottom_Navigation()),
-          );
+          Bottom_Navigation().launch(context, isNewTask: true);
         }
       } else {
         HelperFunction.showMessage(context, loginResponse!.message!, type: 3);
@@ -108,10 +101,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               TextFormField(
                                 decoration: InputDecoration(
                                   suffixIcon: _showErrorIcon &&
-                                      _formKey.currentState?.validate() !=
-                                          true
+                                          _formKey.currentState?.validate() !=
+                                              true
                                       ? const Icon(Icons.error,
-                                      color: Colors.red)
+                                          color: Colors.red)
                                       : null,
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       10.0, 20.0, 10.0, 20.0),
@@ -122,9 +115,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide: BorderSide(
                                       color: _showErrorIcon &&
-                                          _formKey.currentState
-                                              ?.validate() !=
-                                              true
+                                              _formKey.currentState
+                                                      ?.validate() !=
+                                                  true
                                           ? Colors.red
                                           : Colors.white,
                                       width: 1.0,
@@ -185,24 +178,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 obscureText: _isObscure,
                                 decoration: InputDecoration(
                                   suffixIcon: _showErrorIcon &&
-                                      _formKey.currentState?.validate() !=
-                                          true
+                                          _formKey.currentState?.validate() !=
+                                              true
                                       ? const Icon(Icons.error,
-                                      color: Colors.red)
+                                          color: Colors.red)
                                       : IconButton(
-                                    icon: Icon(
-                                      _isObscure
-                                          ? Icons.visibility_off
-                                          : Icons.visibility,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isObscure =
-                                        !_isObscure; // Toggle visibility
-                                      });
-                                    },
-                                  ),
+                                          icon: Icon(
+                                            _isObscure
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              _isObscure =
+                                                  !_isObscure; // Toggle visibility
+                                            });
+                                          },
+                                        ),
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       10.0, 20.0, 10.0, 20.0),
                                   hintText: Strings.enterYourPassword,
@@ -212,9 +205,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide: BorderSide(
                                       color: _showErrorIcon &&
-                                          _formKey.currentState
-                                              ?.validate() !=
-                                              true
+                                              _formKey.currentState
+                                                      ?.validate() !=
+                                                  true
                                           ? Colors.red
                                           : Colors.white,
                                       width: 1.0,
@@ -285,16 +278,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ),
                                 child: isLoading
                                     ? const CircularProgressIndicator(
-                                    valueColor:
-                                    AlwaysStoppedAnimation<Color>(
-                                        Colors.white))
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.white))
                                     : Text(
-                                  Strings.login,
-                                  style: Styles.normalText(
-                                      context: context,
-                                      isBold: true,
-                                      color: Colors.white),
-                                ),
+                                        Strings.login,
+                                        style: Styles.normalText(
+                                            context: context,
+                                            isBold: true,
+                                            color: Colors.white),
+                                      ),
                               ),
                             ),
                           ),

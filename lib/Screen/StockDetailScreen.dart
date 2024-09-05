@@ -81,310 +81,293 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
           ref: ref,
           showBackButton: true,
         ),
-        body: data != null
-            ? Padding(
-                padding: const EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                    child: Column(children: [
-                  Card(
-                    color: appColors.color1,
-                    elevation: 6,
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: SingleChildScrollView(
+              child: Column(children: [
+            Card(
+              color: appColors.color1,
+              elevation: 6,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15),
                     child: Column(
                       children: [
+                        Text(
+                          "${widget.stockData.title}_${widget.stockData.expireDate}",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        25.height,
                         Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Column(
-                            children: [
-                              Text(
-                                "${widget.stockData.title}_${widget.stockData.expireDate}",
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              25.height,
-                              Padding(
-                                padding: const EdgeInsets.only(right: 35),
-                                child: SizedBox(
-                                  height: 35,
-                                  child: TabBar(
-                                      dividerColor: Colors.transparent,
-                                      isScrollable: true,
-                                      indicatorSize: TabBarIndicatorSize.tab,
-                                      labelPadding: EdgeInsets.zero,
-                                      unselectedLabelColor: appColors.color1,
-                                      controller: _tabController,
-                                      indicator: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.horizontal(
-                                          left: _tabController.index == 0
-                                              ? const Radius.circular(10)
-                                              : Radius.zero,
-                                          right: _tabController.index == 2
-                                              ? const Radius.circular(10)
-                                              : Radius.zero,
-                                        ),
-                                      ),
-                                      tabs: List.generate(3, (index) {
-                                        bool isSelected =
-                                            _tabController.index == index;
-                                        return Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          decoration: BoxDecoration(
-                                            color: isSelected
-                                                ? Colors.transparent
-                                                : Colors.grey.shade300,
-                                            // Change the color as needed
-                                            borderRadius:
-                                                BorderRadius.horizontal(
-                                              left: index == 0
-                                                  ? const Radius.circular(10)
-                                                  : Radius.zero,
-                                              right: index == 2
-                                                  ? const Radius.circular(10)
-                                                  : Radius.zero,
-                                            ),
-                                          ),
-                                          child: Tab(
-                                            text: index == 0
-                                                ? Strings.market
-                                                : index == 1
-                                                    ? Strings.limit
-                                                    : Strings.sl,
-                                          ),
-                                        );
-                                      }),
-                                      onTap: (index) {
-                                        setState(() {});
-                                      }),
+                          padding: const EdgeInsets.only(right: 35),
+                          child: SizedBox(
+                            height: 35,
+                            child: TabBar(
+                                dividerColor: Colors.transparent,
+                                isScrollable: true,
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                labelPadding: EdgeInsets.zero,
+                                unselectedLabelColor: appColors.color3,
+                                controller: _tabController,
+                                indicator: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.horizontal(
+                                    left: _tabController.index == 0
+                                        ? const Radius.circular(10)
+                                        : Radius.zero,
+                                    right: _tabController.index == 2
+                                        ? const Radius.circular(10)
+                                        : Radius.zero,
+                                  ),
                                 ),
-                              ),
-                              15.height,
-                              SizedBox(
-                                height: _tabController.index == 0 ? 100 : 170,
-                                child: TabBarView(
-                                    controller: _tabController,
-                                    children: [
-                                      buildTabContent(showBidPrice: false),
-                                      buildTabContent(showBidPrice: true),
-                                      buildTabContent(showBidPrice: true)
-                                    ]),
-                              ),
-                            ],
+                                tabs: List.generate(3, (index) {
+                                  bool isSelected =
+                                      _tabController.index == index;
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? Colors.transparent
+                                          : Colors.grey.shade300,
+                                      // Change the color as needed
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: index == 0
+                                            ? const Radius.circular(10)
+                                            : Radius.zero,
+                                        right: index == 2
+                                            ? const Radius.circular(10)
+                                            : Radius.zero,
+                                      ),
+                                    ),
+                                    child: Tab(
+                                      text: index == 0
+                                          ? Strings.market
+                                          : index == 1
+                                              ? Strings.limit
+                                              : Strings.sl,
+                                    ),
+                                  );
+                                }),
+                                onTap: (index) {
+                                  setState(() {});
+                                }),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  placeAnOrder(true);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                                  backgroundColor: Colors.red,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(
-                                          15), // Match the card's border radius
-                                    ),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Sell@",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge,
-                                      ),
-                                      Text(
-                                          _textEditingController.text.isEmpty
-                                              ? "${data != null ? data?.sellPrice : widget.stockData.salePrice}"
-                                              : _textEditingController.text,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge!
-                                              .copyWith(fontSize: 17)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  placeAnOrder(false);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                                  backgroundColor: Colors.green[700],
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(
-                                          15), // Match the card's border radius
-                                    ),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Buy@",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge,
-                                      ),
-                                      Text(
-                                        _textEditingController.text.isEmpty
-                                            ? "${data != null ? data?.buyPrice : widget.stockData.buyPrice}"
-                                            : _textEditingController.text,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge!
-                                            .copyWith(fontSize: 17),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
+                        15.height,
+                        SizedBox(
+                          height: _tabController.index == 0 ? 100 : 170,
+                          child:
+                              TabBarView(controller: _tabController, children: [
+                            buildTabContent(showBidPrice: false),
+                            buildTabContent(showBidPrice: true),
+                            buildTabContent(showBidPrice: true)
+                          ]),
+                        ),
                       ],
                     ),
                   ),
-                  30.height,
-                  Card(
-                    elevation: 6,
-                    color: appColors.color1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Table(
-                        columnWidths: const {
-                          0: FlexColumnWidth(1),
-                          1: FlexColumnWidth(1),
-                        },
-                        children: [
-                          TableRow(children: [
-                            _buildTableCell(
-                                Strings.bid,
-                                !data!.buyPrice.toString().isEmptyOrNull
-                                    ? data!.buyPrice.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.ask,
-                                !data!.sellPrice.toString().isEmptyOrNull
-                                    ? data!.sellPrice.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.lastP,
-                                !data!.lastTradePrice.toString().isEmptyOrNull
-                                    ? data!.lastTradePrice.toString()
-                                    : Strings.na)
-                          ]),
-                          TableRow(children: [
-                            _buildTableCell(
-                                Strings.open,
-                                !data!.open.toString().isEmptyOrNull
-                                    ? data!.open.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.close,
-                                !data!.close.toString().isEmptyOrNull
-                                    ? data!.close.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.volume,
-                                !data!.totalQtyTraded.toString().isEmptyOrNull
-                                    ? data!.totalQtyTraded.toString()
-                                    : Strings.na)
-                          ]),
-                          TableRow(children: [
-                            _buildTableCell(
-                                Strings.high,
-                                !data!.high.toString().isEmptyOrNull
-                                    ? data!.high.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.low,
-                                !data!.low.toString().isEmptyOrNull
-                                    ? data!.low.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.change,
-                                !data!.priceChange.toString().isEmptyOrNull
-                                    ? data!.priceChange.toString()
-                                    : Strings.na)
-                          ]),
-                          TableRow(children: [
-                            _buildTableCell(
-                                Strings.buyers,
-                                !data!.buyQty.toString().isEmptyOrNull
-                                    ? data!.buyQty.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.sellers,
-                                !data!.sellQty.toString().isEmptyOrNull
-                                    ? data!.sellQty.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.openInterest,
-                                !data!.openInterest.toString().isEmptyOrNull
-                                    ? data!.openInterest.toString()
-                                    : Strings.na)
-                          ]),
-                          TableRow(children: [
-                            _buildTableCell(
-                                Strings.upperCkt,
-                                !data!.upperCircuit.toString().isEmptyOrNull
-                                    ? data!.upperCircuit.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.lowerCkt,
-                                !data!.lowerCircuit.toString().isEmptyOrNull
-                                    ? data!.lowerCircuit.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.atp,
-                                !data!.averageTradedPrice
-                                        .toString()
-                                        .isEmptyOrNull
-                                    ? data!.averageTradedPrice.toString()
-                                    : Strings.na)
-                          ]),
-                          TableRow(children: [
-                            _buildTableCell(
-                                Strings.lastBuy,
-                                !data!.buyQty.toString().isEmptyOrNull
-                                    ? data!.buyQty.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.lastSell,
-                                !data!.sellQty.toString().isEmptyOrNull
-                                    ? data!.sellQty.toString()
-                                    : Strings.na),
-                            _buildTableCell(
-                                Strings.lotSize,
-                                !data!.quotationLot.toString().isEmptyOrNull
-                                    ? data!.quotationLot.toString()
-                                    : Strings.na)
-                          ])
-                        ],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            placeAnOrder(true);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.red,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(
+                                    15), // Match the card's border radius
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Sell@",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                Text(
+                                    _textEditingController.text.isEmpty
+                                        ? "${data != null ? data?.sellPrice : widget.stockData.salePrice}"
+                                        : _textEditingController.text,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(fontSize: 17)),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            placeAnOrder(false);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.green[700],
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(
+                                    15), // Match the card's border radius
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Buy@",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                Text(
+                                  _textEditingController.text.isEmpty
+                                      ? "${data != null ? data?.buyPrice : widget.stockData.buyPrice}"
+                                      : _textEditingController.text,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(fontSize: 17),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   )
-                ])),
-              )
-            : Center(
-                child: Text(
-                  Strings.dataNotAvailable,
-                  style: Styles.normalText(
-                    context: context,
-                  ),
+                ],
+              ),
+            ),
+            30.height,
+            Card(
+              elevation: 6,
+              color: appColors.color1,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(1),
+                    1: FlexColumnWidth(1),
+                  },
+                  children: [
+                    TableRow(children: [
+                      _buildTableCell(
+                          Strings.bid,
+                          data?.buyPrice != null
+                              ? data!.buyPrice.toString()
+                              : widget.stockData.buyPrice.toString()),
+                      _buildTableCell(
+                          Strings.ask,
+                          data?.sellPrice != null
+                              ? data!.sellPrice.toString()
+                              : widget.stockData.salePrice.toString()),
+                      _buildTableCell(
+                          Strings.lastP,
+                          data?.lastTradePrice != null
+                              ? data!.lastTradePrice.toString()
+                              : widget.stockData.lastTradePrice.toString())
+                    ]),
+                    TableRow(children: [
+                      _buildTableCell(
+                          Strings.open,
+                          data?.open != null
+                              ? data!.open.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.close,
+                          data?.close != null
+                              ? data!.close.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.volume,
+                          data?.totalQtyTraded != null
+                              ? data!.totalQtyTraded.toString()
+                              : Strings.na)
+                    ]),
+                    TableRow(children: [
+                      _buildTableCell(
+                          Strings.high,
+                          data?.high != null
+                              ? data!.high.toString()
+                              : widget.stockData.high.toString()),
+                      _buildTableCell(
+                          Strings.low,
+                          data?.low != null
+                              ? data!.low.toString()
+                              : widget.stockData.low.toString()),
+                      _buildTableCell(
+                          Strings.change,
+                          data?.priceChange != null
+                              ? data!.priceChange.toString()
+                              : widget.stockData.priceChange.toString())
+                    ]),
+                    TableRow(children: [
+                      _buildTableCell(
+                          Strings.buyers,
+                          data?.buyQty != null
+                              ? data!.buyQty.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.sellers,
+                          data?.sellQty != null
+                              ? data!.sellQty.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.openInterest,
+                          data?.openInterest != null
+                              ? data!.openInterest.toString()
+                              : Strings.na)
+                    ]),
+                    TableRow(children: [
+                      _buildTableCell(
+                          Strings.upperCkt,
+                          data?.upperCircuit != null
+                              ? data!.upperCircuit.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.lowerCkt,
+                          data?.lowerCircuit != null
+                              ? data!.lowerCircuit.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.atp,
+                          data?.averageTradedPrice != null
+                              ? data!.averageTradedPrice.toString()
+                              : Strings.na)
+                    ]),
+                    TableRow(children: [
+                      _buildTableCell(
+                          Strings.lastBuy,
+                          data?.buyQty != null
+                              ? data!.buyQty.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.lastSell,
+                          data?.sellQty != null
+                              ? data!.sellQty.toString()
+                              : Strings.na),
+                      _buildTableCell(
+                          Strings.lotSize,
+                          data?.quotationLot != null
+                              ? data!.quotationLot.toString()
+                              : widget.stockData.quotationLot.toString())
+                    ])
+                  ],
                 ),
-              ));
+              ),
+            )
+          ])),
+        ));
   }
 
   Widget buildTabContent({required bool showBidPrice}) {
@@ -397,7 +380,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
               10.height,
               Text(Strings.enterLotSize,
                   style: Theme.of(context).textTheme.titleLarge),
-              9.height,
+              5.height,
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -424,6 +407,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                 10.height,
                 Text(Strings.enterPrice,
                     style: Theme.of(context).textTheme.titleLarge),
+                5.height,
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.black12,
@@ -492,8 +476,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
 
   Future<void> fetchData() async {
     final response = await ApiInterface.getLiveRate(context,
-        token: widget.stockData.instrumentToken.toString(),
-        showLoading: data == null);
+        token: widget.stockData.instrumentToken.toString(), showLoading: false);
     data = response!.livedata!.first;
     setState(() {});
   }

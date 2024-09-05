@@ -48,27 +48,24 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
         length: 2,
         child: Column(
           children: [
-            Container(
-              child: TabBar(
-                controller: _tabController,
-                tabs: [
-                  Tab(
-                      child: Center(
-                          child: Text(Strings.active,
-                              style: Styles.normalText(context: context,
-                                  isBold: true, color: Colors.green)))),
-                  Tab(
-                      child: Center(
-                          child: Text(Strings.close,
-                              style: Styles.normalText(context: context,
-                                  isBold: true, color: Colors.amber)))),
-                ],
-                labelStyle: Styles.normalText(context: context,isBold: true),
-                unselectedLabelStyle: Styles.normalText(context: context,),
-                labelColor: Colors.blue,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: Colors.amber.shade700,
-              ),
+            TabBar(
+              controller: _tabController,
+              tabs: [
+                Tab(
+                    child: Center(
+                        child: Text(Strings.active,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(color: Colors.green)))),
+                Tab(
+                    child: Center(
+                        child: Text(Strings.close,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(color: Colors.amber)))),
+              ],
             ),
             Expanded(
               child: TabBarView(
@@ -80,7 +77,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                         : Center(
                             child: Text(
                               Strings.dataNotAvailable,
-                              style: Styles.normalText(context: context,),
+                              style: Theme.of(context).textTheme.titleLarge!,
                             ),
                           ),
                   ),
@@ -90,7 +87,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                         : Center(
                             child: Text(
                               Strings.dataNotAvailable,
-                              style: Styles.normalText(context: context,),
+                              style: Theme.of(context).textTheme.titleLarge!,
                             ),
                           ),
                   )
@@ -116,23 +113,18 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
               Expanded(
                   child: Text(
                 title,
-                style: Styles.normalText(context: context,
-                    isBold: true,
-                    color: Theme.of(context).extension<AppColors>()!.color1 ==
-                            Colors.amber
-                        ? Colors.amber
-                        : Colors.black),
+                style: Theme.of(context).textTheme.headlineLarge,
               )),
               Expanded(
                   child: Text(
                 value,
                 textAlign: TextAlign.end,
-                style: Styles.normalText(context: context,
-                    isBold: true,
-                    color: Theme.of(context).extension<AppColors>()!.color1 ==
-                            Colors.amber
-                        ? Colors.amber
-                        : valueColor),
+                style: valueColor != Colors.black
+                    ? Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: valueColor)
+                    : Theme.of(context).textTheme.titleLarge,
               )),
             ],
           ),
@@ -142,13 +134,14 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
   }
 
   Widget getUi(GetPortfolioList portfolioList) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: appColors.color1,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.black),
             ),
@@ -201,13 +194,11 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                       Expanded(
                           child: Text(
                         Strings.requireHoldingMargin,
-                        style: Styles.normalText(context: context,
-                          isBold: true,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge,
                       )),
                       Text(
                         portfolioList.totalPlBalance.toString(),
-                        style: Styles.normalText(context: context,isBold: true),
+                        style: Theme.of(context).textTheme.titleLarge!,
                       )
                     ],
                   ),
@@ -233,15 +224,13 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                           children: [
                             Text(
                                 '${data.categoryName.toString()}_${data.expireDate.toString()}',
-                                style: Styles.normalText(context: context,isBold: true)),
+                                style: Theme.of(context).textTheme.titleLarge!),
                             5.height,
                             Text("Margin:${data.intradayMargin.toString()}",
-                                style: Styles.normalText(context: context,
-                                    isBold: true, fontSize: 11)),
+                                style: Theme.of(context).textTheme.titleMedium),
                             Text(
                                 "Holdin Margin:${data.holdingMargin.toString()}",
-                                style: Styles.normalText(context: context,
-                                    isBold: true, fontSize: 11)),
+                                style: Theme.of(context).textTheme.titleMedium),
                           ],
                         ),
                         Column(
@@ -250,29 +239,34 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                             Row(
                               children: [
                                 Text(
-                                    data.bidType!.contains("1")  ? 'Bought : ' : "Sold : ",
-                                    style: Styles.normalText(context: context,
-                                        isBold: true,
-                                        color: data.bidType!.contains("1")
-                                            ? Colors.green
-                                            : Colors.red)),
+                                    data.bidType!.contains("1")
+                                        ? 'Bought : '
+                                        : "Sold : ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                            color: data.bidType!.contains("1")
+                                                ? Colors.green
+                                                : Colors.red)),
                                 Text(
                                     '${data.lot}@${data.avrageBidPrice.toString()}',
-                                    style: Styles.normalText(context: context,isBold: true)),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge),
                               ],
                             ),
                             5.height,
                             Text(data.plBalance.toString(),
-                                style: Styles.normalText(context: context,
-                                    isBold: true,
-                                    fontSize: 14,
-                                    color: data.plBalance! < 0
-                                        ? Colors.red
-                                        : Colors.green)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                        color: data.plBalance! < 0
+                                            ? Colors.red
+                                            : Colors.green)),
                             5.height,
                             Text('CMP:${data.cmprate.toString()}',
-                                style: Styles.normalText(context: context,
-                                    isBold: true, fontSize: 11)),
+                                style: Theme.of(context).textTheme.titleMedium),
                             5.height,
                             Card(
                               color: Colors.red,
@@ -281,11 +275,8 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                     horizontal: 15, vertical: 7),
                                 child: Text(
                                   Strings.closeOrder,
-                                  style: Styles.normalText(
-                                    context: context,
-                                      fontSize: 10,
-                                      isBold: true,
-                                      color: Colors.white),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
                                 ),
                               ),
                             ).onTap(() {
@@ -303,11 +294,13 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                 ).onTap(() {
                   StockDetailScreen(
                     stockData: StockData(
+                        instrumentToken: data.instrumentToken,
                         categoryId: data.categoryId,
                         title: data.instrumentToken,
                         expireDate: data.expireDate,
                         salePrice: data.bidPrice,
-                        buyPrice: data.bidPrice),
+                        buyPrice: data.bidPrice,
+                        quotationLot: data.lot),
                   ).launch(context);
                 });
               },
@@ -319,13 +312,14 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
   }
 
   Widget getCloseUi(PortfolioCloseList portfolioCloseList) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: appColors.color1,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.black),
             ),
@@ -375,24 +369,28 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                             children: [
                               Text(
                                   '${data.categoryName.toString()}_${data.expireDate.toString()}',
-                                  style: Styles.normalText(context: context,isBold: true)),
+                                  style:
+                                      Theme.of(context).textTheme.titleLarge!),
                               5.height,
                               Text("Avg sell: ${data.avgSellPrice.toString()}",
-                                  style: Styles.normalText(context: context,
-                                      isBold: true, fontSize: 11)),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
                               Row(
                                 children: [
                                   Text('Net Profit Loss : ',
-                                      style: Styles.normalText(context: context,
-                                          isBold: true, fontSize: 11)),
-                                  Text("${data.plBalance.toDouble() >= 0 ?"+":""}${data.plBalance!}",
-                                      style: Styles.normalText(
-                                        context: context,
-                                          isBold: true,
-                                          fontSize: 11,
-                                          color: data.plBalance.toDouble() >= 0
-                                              ? Colors.green
-                                              : Colors.red)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium),
+                                  Text(
+                                      "${data.plBalance.toDouble() >= 0 ? "+" : ""}${data.plBalance!}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                              color:
+                                                  data.plBalance.toDouble() >= 0
+                                                      ? Colors.green
+                                                      : Colors.red)),
                                 ],
                               )
                             ],
@@ -403,23 +401,34 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                               Row(
                                 children: [
                                   Text('Qty : ',
-                                      style: Styles.normalText(context: context,isBold: true,color: data.bidType!.contains("1")?Colors.green:Colors.red)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                              color: data.bidType!.contains("1")
+                                                  ? Colors.green
+                                                  : Colors.red)),
                                   Text(data.lot.toString(),
-                                      style: Styles.normalText(context: context,isBold: true)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!),
                                 ],
                               ),
                               5.height,
                               Text("Avg Buy : ${data.avgSellPrice.toString()}",
-                                  style: Styles.normalText(context: context,
-                                      isBold: true, fontSize: 11)),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
                               Row(
                                 children: [
                                   Text('Brokerage : ',
-                                      style: Styles.normalText(context: context,
-                                          isBold: true, fontSize: 11)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium),
                                   Text(data.brokerage.toString(),
-                                      style: Styles.normalText(context: context,
-                                          isBold: true, fontSize: 11,color: Colors.red)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(color: Colors.red)),
                                 ],
                               )
                             ],
@@ -428,7 +437,8 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                       ),
                     ),
                     const Divider(
-                      color: Colors.green,
+                      thickness: 0.4,
+                      color: Colors.blueGrey,
                     )
                   ],
                 );

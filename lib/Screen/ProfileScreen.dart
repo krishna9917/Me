@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:me_app/ApiService/ApiInterface.dart';
-import 'package:me_app/Resources/ImagePaths.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Model/GetProfileData.dart';
 import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
+import '../Utils/AppTheme.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   @override
@@ -14,16 +14,10 @@ class ProfileScreen extends ConsumerStatefulWidget {
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   GetProfiledata? Profiledata;
-  bool isLoading = true;
 
   Future<void> fetchProfile() async {
-    setState(() {
-      isLoading = true;
-    });
-    Profiledata = await ApiInterface.getProfile(context);
-    setState(() {
-      isLoading = false;
-    });
+    Profiledata = await ApiInterface.getProfile(context, showLoading: true);
+    setState(() {});
   }
 
   void initState() {
@@ -33,191 +27,229 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: Text(Strings.profile,
-              style: Styles.normalText(context: context,
-                  color: Colors.white, fontSize: 17, isBold: true)),
+          title: const Text(Strings.profile),
         ),
-        body: Container(
-          color: Colors.black,
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: isLoading
-              ? Center(
-                  child: Image.asset(ImagePaths.loader),
-                )
-              : Profiledata != null
-                  ? SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            Card(
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+          child: Profiledata != null
+              ? SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Card(
+                            color: appColors.color1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            Strings.nse,
-                                            style: Styles.normalText(context: context,
-                                                color: Colors.amber,
-                                                isBold: true),
-                                          ),
-                                          7.width,
-                                          Text(
-                                            Strings.tradingEnabled,
-                                            style: Styles.normalText(context: context,),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        Strings.brokerage,
-                                        style: Styles.normalText(context: context,
-                                            color: Colors.amber, isBold: true),
-                                      ),
-                                      Text(
-                                        "${Profiledata?.nseBrokerage}",
-                                        style: Styles.normalText(context: context,),
-                                      ),
-                                      const Divider(),
-                                      Text(
-                                        Strings.marginIntraday,
-                                        style: Styles.normalText(context: context,
-                                            color: Colors.amber),
-                                      ),
-                                      Text(
-                                          "${Strings.turnOver} ${Profiledata?.nseIntradayMargin}"),
-                                      const Divider(),
-                                      Text(
-                                        Strings.marginHolding,
-                                        style: Styles.normalText(context: context,
-                                            color: Colors.amber),
-                                      ),
-                                      Text(
-                                          "${Strings.turnOver} ${Profiledata?.nseHoldingMargin}"),
+                                      Text(Strings.nse,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge),
+                                      7.width,
+                                      Text(Strings.tradingEnabled,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge!
+                                              .copyWith(
+                                                  color: appColors.color5))
                                     ],
                                   ),
-                                )),
-                            Card(
-                              color: Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  Text(Strings.brokerage,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(color: appColors.color5)),
+                                  Text(
+                                    "${Profiledata?.nseBrokerage}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge!
+                                        .copyWith(color: appColors.color2),
+                                  ),
+                                  const Divider(),
+                                  Text(
+                                    Strings.marginIntraday,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(color: appColors.color5),
+                                  ),
+                                  Text(
+                                    "${Strings.turnOver} ${Profiledata?.nseIntradayMargin}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge!
+                                        .copyWith(color: appColors.color2),
+                                  ),
+                                  const Divider(),
+                                  Text(
+                                    Strings.marginHolding,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(color: appColors.color5),
+                                  ),
+                                  Text(
+                                    "${Strings.turnOver} ${Profiledata?.nseHoldingMargin}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge!
+                                        .copyWith(color: appColors.color2),
+                                  ),
+                                ],
+                              ),
+                            )),
+                        Card(
+                          color: appColors.color1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          Strings.mcx,
-                                          style: Styles.normalText(context: context,
-                                              color: Colors.amber,
-                                              isBold: true),
-                                        ),
-                                        const SizedBox(width: 7),
-                                        Text(
-                                          Strings.tradingEnabled,
-                                          style: Styles.normalText(context: context,),
-                                        ),
-                                      ],
-                                    ),
                                     Text(
-                                      Strings.brokerage,
-                                      style: Styles.normalText(context: context,
-                                          color: Colors.amber),
+                                      Strings.mcx,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(color: appColors.color5),
                                     ),
-                                    // Displaying mcxBrokerage as a ListView
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: Profiledata?.mcxBrokeragePerLot
-                                              ?.toJson()
-                                              .length ??
-                                          0,
-                                      itemBuilder: (context, index) {
-                                        final items = Profiledata
-                                            ?.mcxBrokeragePerLot!
-                                            .toJson()
-                                            .entries
-                                            .toList();
-                                        final entry = items?[index];
-                                        final title = entry?.key;
-                                        final margin = entry?.value;
-                                        return Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text('$title: '),
-                                                Text('$margin'),
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                    const Divider(),
+                                    const SizedBox(width: 7),
                                     Text(
-                                      Strings.marginIntraday,
-                                      style: Styles.normalText(context: context,
-                                          color: Colors.amber, isBold: true),
-                                    ),
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          Profiledata!.mcxIntraday?.length ?? 0,
-                                      itemBuilder: (context, index) {
-                                        var mcxIntraday =
-                                            Profiledata!.mcxIntraday?[index];
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                                "${mcxIntraday?.title} : / ${mcxIntraday?.margin}"),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                    const Divider(),
-                                    Text(
-                                      Strings.marginHolding,
-                                      style: Styles.normalText(context: context,
-                                          color: Colors.amber, isBold: true),
-                                    ),
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          Profiledata!.mcxHolding?.length ?? 0,
-                                      itemBuilder: (context, index) {
-                                        var mcxHolding =
-                                            Profiledata!.mcxHolding?[index];
-                                        return Text(
-                                            "${mcxHolding?.title}: / ${mcxHolding?.margin}");
-                                      },
+                                      Strings.tradingEnabled,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(color: appColors.color5),
                                     ),
                                   ],
                                 ),
-                              ),
+                                Text(Strings.brokerage,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(color: appColors.color5)),
+                                // Displaying mcxBrokerage as a ListView
+                                10.height,
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: Profiledata?.mcxBrokeragePerLot
+                                          ?.toJson()
+                                          .length ??
+                                      0,
+                                  itemBuilder: (context, index) {
+                                    final items = Profiledata
+                                        ?.mcxBrokeragePerLot!
+                                        .toJson()
+                                        .entries
+                                        .toList();
+                                    final entry = items?[index];
+                                    final title = entry?.key;
+                                    final margin = entry?.value;
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '$title: ',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineLarge!,
+                                            ),
+                                            Text(
+                                              '$margin',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineLarge,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                const Divider(),
+                                Text(
+                                  Strings.marginIntraday,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(color: appColors.color4),
+                                ),
+                                10.height,
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      Profiledata!.mcxIntraday?.length ?? 0,
+                                  itemBuilder: (context, index) {
+                                    var mcxIntraday =
+                                        Profiledata!.mcxIntraday?[index];
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${mcxIntraday?.title} : / ${mcxIntraday?.margin}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineLarge!
+                                              .copyWith(
+                                                  color: appColors.color5),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                const Divider(),
+                                Text(Strings.marginHolding,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(color: appColors.color4)),
+                                10.height,
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      Profiledata!.mcxHolding?.length ?? 0,
+                                  itemBuilder: (context, index) {
+                                    var mcxHolding =
+                                        Profiledata!.mcxHolding?[index];
+                                    return Text(
+                                      "${mcxHolding?.title}: / ${mcxHolding?.margin}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge!
+                                          .copyWith(color: appColors.color5),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    )
-                  : Center(
-                      child: Text(
-                      Strings.dataNotAvailable,
-                      style: Styles.normalText(context: context,),
-                    )),
+                      ],
+                    ),
+                  ),
+                )
+              : Center(
+                  child: Text(
+                  Strings.dataNotAvailable,
+                  style: Styles.normalText(
+                    context: context,
+                  ),
+                )),
         ));
   }
 }

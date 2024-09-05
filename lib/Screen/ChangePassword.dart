@@ -6,6 +6,7 @@ import 'package:me_app/Utils/HelperFunction.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
+import '../Utils/AppTheme.dart';
 import '../Utils/Colors.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         isLoading = true;
       });
       StatusMessage? response =
-      await ApiInterface.changePassword(context, npw!, opw!);
+          await ApiInterface.changePassword(context, npw!, opw!);
       if (response!.status == 1) {
         HelperFunction.showMessage(context, response.message.toString(),
             type: 2);
@@ -51,18 +52,10 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          Strings.changePassword,
-          style: Styles.normalText(
-            context: context,
-            fontSize: 17,
-            isBold: true,
-          ),
-        ),
+        title: const Text(Strings.changePassword),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -78,32 +71,32 @@ class _ChangePasswordState extends State<ChangePassword> {
                     const Center(
                       child: Icon(
                         Icons.account_circle,
-                        size: 80,
-                        color: Colors.white,
+                        size: 100,
                       ),
                     ),
+                    15.height,
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: Strings.existingPassword,
-                          hintStyle: Styles.normalText(context: context),
-                          prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                          hintStyle: Theme.of(context).textTheme.titleLarge,
+                          prefixIcon: const Icon(Icons.lock),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 2.0),
+                            borderSide: BorderSide(
+                                color: appColors.color2!, width: 2.0),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 1.0),
+                            borderSide: BorderSide(
+                                color: appColors.color2!, width: 1.0),
                           ),
                         ),
-                        style: Styles.normalText(context: context),
+                        style: Theme.of(context).textTheme.headlineLarge,
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return Strings.existingPasswordRequired;
@@ -120,23 +113,23 @@ class _ChangePasswordState extends State<ChangePassword> {
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: Strings.newPassword,
-                          hintStyle: Styles.normalText(context: context),
-                          prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                          hintStyle: Theme.of(context).textTheme.titleLarge,
+                          prefixIcon: const Icon(Icons.lock),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 2.0),
+                            borderSide: BorderSide(
+                                color: appColors.color2!, width: 2.0),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 1.0),
+                            borderSide: BorderSide(
+                                color: appColors.color2!, width: 1.0),
                           ),
                         ),
-                        style: Styles.normalText(context: context),
+                        style: Theme.of(context).textTheme.headlineLarge,
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return Strings.newPasswordRequired;
@@ -154,23 +147,23 @@ class _ChangePasswordState extends State<ChangePassword> {
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: Strings.confirmPassword,
-                          hintStyle: Styles.normalText(context: context),
-                          prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                          hintStyle: Theme.of(context).textTheme.titleLarge,
+                          prefixIcon: const Icon(Icons.lock),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 2.0),
+                            borderSide: BorderSide(
+                                color: appColors.color2!, width: 2.0),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 1.0),
+                            borderSide: BorderSide(
+                                color: appColors.color2!, width: 1.0),
                           ),
                         ),
-                        style: Styles.normalText(context: context),
+                        style: Theme.of(context).textTheme.headlineLarge,
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return Strings.confirmPasswordRequired;
@@ -205,16 +198,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                           ),
                           child: isLoading
                               ? const CircularProgressIndicator(
-                              valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white))
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white))
                               : Text(
-                            Strings.updatePassword,
-                            style: Styles.normalText(
-                              context: context,
-                              isBold: true,
-                              color: Colors.white,
-                            ),
-                          ),
+                                  Strings.updatePassword,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(color: Colors.white),
+                                ),
                         ),
                       ),
                     ),

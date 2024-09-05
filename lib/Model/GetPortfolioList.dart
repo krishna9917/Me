@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:nb_utils/nb_utils.dart';
+
 GetPortfolioList getPortfolioListFromJson(String str) =>
     GetPortfolioList.fromJson(json.decode(str));
 
@@ -111,7 +113,7 @@ class Datum {
         holdingMargin: json["holdingMargin"],
         totalReqHoldingMargin: json["totalReqHoldingMargin"],
         lotSize: json["lotSize"],
-        bidPrice: json["bid_price"],
+        bidPrice: json["bid_price"].toString().toDouble(),
         avrageBidPrice: json["avrageBidPrice"].toDouble(),
         totalDebitAmount: json["total_debit_amount"],
         ledgerBalance: json["ledger_balance"],
