@@ -9,7 +9,7 @@ ThemeData getAppTheme(
     BuildContext context, bool isDarkTheme, bool isGoldenTheme) {
 
   Color textColor = isGoldenTheme
-      ? Colors.amber
+      ? Color.fromRGBO(182, 148, 76, 1)
       : isDarkTheme
           ? Colors.white
           : Colors.black;
@@ -18,14 +18,14 @@ ThemeData getAppTheme(
       AppColors(
           color1: isGoldenTheme || isDarkTheme ? Colors.blueGrey : Colors.white,
           color2: isGoldenTheme
-              ? Colors.amber
+              ? Color.fromRGBO(182, 148, 76, 1)
               : isDarkTheme
                   ? Colors.white
                   : Colors.black87,
           color3:
               isGoldenTheme || isDarkTheme ? Colors.blueGrey : Colors.black87,
-          color4: isGoldenTheme ? Colors.amber : Colors.white,
-          color5: isGoldenTheme ? Colors.amber : Colors.black),
+          color4: isGoldenTheme ? Color.fromRGBO(182, 148, 76, 1): Colors.white,
+          color5: isGoldenTheme ? Color.fromRGBO(182, 148, 76, 1) : Colors.black),
     ],
     scaffoldBackgroundColor: isGoldenTheme
         ? Colors.black
@@ -61,9 +61,9 @@ ThemeData getAppTheme(
         iconTheme: const IconThemeData(color: Colors.white)),
     tabBarTheme: TabBarTheme(
         dividerColor: Colors.white10,
-        labelColor: isGoldenTheme ? Colors.amber : Colors.white,
+        labelColor: isGoldenTheme ? Color.fromRGBO(182, 148, 76, 1) : Colors.white,
         unselectedLabelColor:
-            isGoldenTheme ? Colors.amber.shade300 : Colors.white70,
+            isGoldenTheme ?Color.fromRGBO(216,192, 120, 1) : Colors.white70,
         labelStyle: Theme.of(context).textTheme.titleSmall,
         unselectedLabelStyle: Theme.of(context).textTheme.titleSmall),
     dialogTheme: DialogTheme(

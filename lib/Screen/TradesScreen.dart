@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:me_app/CommonWidget/TradeHistory.dart';
 import 'package:me_app/Resources/Styles.dart';
+import 'package:me_app/Utils/Colors.dart';
 import 'package:me_app/Utils/HelperFunction.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,6 +60,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
           children: [
             TabBar(
               controller: _tabController,
+              indicatorColor: goldencolor,
               tabs: [
                 Tab(
                   child: Center(

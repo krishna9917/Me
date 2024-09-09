@@ -9,6 +9,7 @@ import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
 import '../Utils/AppBar.dart';
 import '../Utils/AppTheme.dart';
+import '../Utils/Colors.dart';
 import '../Utils/HelperFunction.dart';
 import 'StockDetailScreen.dart';
 import '../Model/GetMCXModel.dart';
@@ -50,6 +51,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
           children: [
             TabBar(
               controller: _tabController,
+              indicatorColor: goldencolor,
               tabs: [
                 Tab(
                     child: Center(
@@ -64,7 +66,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
-                                .copyWith(color: Colors.amber)))),
+                                .copyWith(color: goldencolor)))),
               ],
             ),
             Expanded(

@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-const goldenn = Color(0xFFBF993F);
-const golden = Color(0xFFE3C52A);
-const goldencolor = Color(0xffc2a024); // Banana Yellow
-const Amber = Color(0xFFFFC107); //
+const goldenn = Color(0xFFb6944c);
+const golden = Color(0xFFb6944c);
+const goldencolor = Color(0xffb6944c); // Banana Yellow
+const Amber = Color(0xFFb6944c); //
 const green = Color(0xFF54DE2D);
 const lightgreen = Color(0xFFCFFF8C);
 const green2 = Color(0xFF3EC127);

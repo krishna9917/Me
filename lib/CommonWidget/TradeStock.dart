@@ -36,9 +36,9 @@ class _TradestockState extends State<Tradestock> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   5.height,
-                  Row(
+                  Wrap(
                     children: [
-                      Row(
+                      Wrap(
                         children: [
                           Text(
                             widget.showCheckUncheck
