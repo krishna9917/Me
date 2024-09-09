@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Model/GetPortfolioList.dart';
 import '../Model/PortfolioCloseList.dart';
+import '../Providerr/NotificationProvider.dart';
 import '../Providerr/PortfolioProvider.dart';
 import '../Resources/Strings.dart';
-import '../Resources/Styles.dart';
 import '../Utils/AppBar.dart';
 import '../Utils/AppTheme.dart';
 import '../Utils/Colors.dart';
@@ -29,6 +29,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
   @override
   void initState() {
     super.initState();
+    ref.read(notificationProvider.notifier).fetchNotifications(context);
     _tabController = TabController(length: 3, vsync: this);
     getData();
   }
@@ -43,6 +44,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
   @override
   Widget build(BuildContext context) {
     final provider = ref.watch(portfolioProvider);
+    final notificationState = ref.watch(notificationProvider);
     return Scaffold(
       appBar: CustomAppBar(ref: ref),
       body: DefaultTabController(
@@ -69,6 +71,17 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                 .copyWith(color: goldencolor)))),
               ],
             ),
+            // notificationState.notifications?.data != null
+            //     ? TextMarquee(
+            //   '"Stay close to anything that makes you glad you are alive." -Hafez',
+            //   spaceSize: 72,
+            //   style: const TextStyle(
+            //       color: Colors.white,
+            //       fontWeight: FontWeight.w600,
+            //       fontSize: 24
+            //   ),
+            // )
+            //     : const SizedBox(),
             Expanded(
               child: TabBarView(
                 controller: _tabController,

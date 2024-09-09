@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:me_app/Dialogs/AlertBox.dart';
 import 'package:me_app/Model/GetMCXModel.dart';
+import 'package:me_app/Model/GetNotification.dart';
 import 'package:me_app/Model/GetPortfolioList.dart';
 import 'package:me_app/Model/GetProfileData.dart';
 import 'package:me_app/Model/GetWalletModel.dart';
@@ -129,6 +130,18 @@ class ApiInterface {
         requestParams: {"opw": oldPassword, "npw": newPassword});
     return status ? StatusMessage.fromJson(jsonDecode(response!.body)) : null;
   }
+
+  static Future<GetNotification?> getNotifications(BuildContext? context,
+      {bool showLoading = false}) async {
+    var (bool status, Response? response) = await _postApiCall(
+      context!,
+      "getNotificationList",
+      true,
+    );
+    return status ? GetNotification.fromJson(jsonDecode(response!.body)) : null;
+  }
+
+
 
   static Future<StatusMessage?> placeOrder(
       BuildContext? context,

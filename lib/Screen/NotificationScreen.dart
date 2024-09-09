@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Providerr/NotificationProvider.dart';
+import '../Resources/Strings.dart';
+import '../Resources/Styles.dart';
 
 class NotificationScreen extends ConsumerStatefulWidget {
   @override
@@ -9,26 +11,40 @@ class NotificationScreen extends ConsumerStatefulWidget {
 
 class _NotificationScreenState extends ConsumerState<NotificationScreen> {
   @override
-  Widget build(BuildContext context) {
-    final getNotification = ref.watch(notificationProvider);
+  void initState() {
+    ref.read(notificationProvider.notifier).fetchNotifications(context);
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final notificationState = ref.watch(notificationProvider);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('Notifications'),
-      ),
-      body: getNotification == null
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: getNotification.data?.length ?? 0,
-              itemBuilder: (context, index) {
-                final notification = getNotification.data![index];
-                return ListTile(
-                  title: Text(notification
-                      .toString()), // Modify this to display relevant info
-                );
-              },
-            ),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: const Text('Notifications'),
+        ),
+        body: notificationState.notifications != null
+            ? notificationState.notifications!.data!.length == 0
+                ? Center(
+                    child: Text(
+                      Strings.dataNotAvailable,
+                      style: Styles.normalText(context: context),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount:
+                        notificationState.notifications?.data?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final notification = notificationState
+                          .notifications?.data![index]
+                          .toString();
+                      return ListTile(
+                        title: Text(notification
+                            .toString()), // Modify this to display relevant info
+                      );
+                    },
+                  )
+            : SizedBox());
   }
 }

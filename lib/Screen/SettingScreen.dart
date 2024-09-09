@@ -13,6 +13,7 @@ import '../Utils/AppBar.dart';
 import '../Utils/AppTheme.dart';
 import 'ChangePassword.dart';
 import 'LoginScreen.dart';
+import 'NotificationScreen.dart';
 
 class SettingScreen extends ConsumerStatefulWidget {
   @override
@@ -181,11 +182,11 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                       size: 18,
                     ),
                     onTap: () {
-                      //NotificationScreen().launch(context);
+                      NotificationScreen().launch(context);
                     },
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 SizedBox(
                   height: 60,
                   child: ListTile(
