@@ -25,25 +25,47 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
           title: const Text('Notifications'),
         ),
         body: notificationState.notifications != null
-            ? notificationState.notifications!.data!.length == 0
+            ? notificationState.notifications!.data!.isEmpty
                 ? Center(
                     child: Text(
                       Strings.dataNotAvailable,
                       style: Styles.normalText(context: context),
                     ),
                   )
-                : ListView.builder(
-                    itemCount:
-                        notificationState.notifications?.data?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      final notification = notificationState
-                          .notifications?.data![index]
-                          .toString();
-                      return ListTile(
-                        title: Text(notification
-                            .toString()), // Modify this to display relevant info
-                      );
-                    },
+                : Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ListView.builder(
+                      itemCount:
+                          notificationState.notifications?.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    notificationState
+                                        .notifications!.data![index].message
+                                        .toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge,
+                                  ),
+                                ),
+                                Text(
+                                  notificationState
+                                      .notifications!.data![index].created
+                                      .toString(),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   )
             : SizedBox());
   }

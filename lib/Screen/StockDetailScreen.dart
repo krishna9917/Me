@@ -50,7 +50,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
         widget.stockData.categoryId.toString(),
         widget.stockData.expireDate.toString(),
         (_tabController.index + 1).toString(),
-        (isSellType ? 2 : 1).toString(),
+        (isSellType ? 1 : 2).toString(),
         _tabController.index > 0
             ? _textEditingController.text.toString()
             : isSellType && _tabController.index == 0
