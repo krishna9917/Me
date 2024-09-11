@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:me_app/Dialogs/AlertBox.dart';
 import 'package:me_app/Model/GetMCXModel.dart';
@@ -141,8 +142,6 @@ class ApiInterface {
     return status ? GetNotification.fromJson(jsonDecode(response!.body)) : null;
   }
 
-
-
   static Future<StatusMessage?> placeOrder(
       BuildContext? context,
       String catId,
@@ -171,31 +170,50 @@ class ApiInterface {
       if (showLoading) {
         AlertBox.showLoader(context);
       }
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       final deviceInfoPlugin = DeviceInfoPlugin();
-      final deviceInfo = await deviceInfoPlugin.androidInfo;
-      String? token = await FirebaseMessaging.instance.getToken();
-      requestParams ??= {};
-      requestParams.addAll({
-        "userID": sharedPreferences.getString(Strings.USER_ID).toString(),
-        "fcm_id": token,
-        "deviceName": "${deviceInfo.display} ${deviceInfo.model}"
-      });
-      final response = await httpClient.get(
-          Uri.parse(BASE_URL + endPoint)
-              .replace(queryParameters: requestParams),
-          headers: await getHeader());
-      if (showLoading) {
-        AlertBox.dismissLoader(context);
+
+      // Initialize device info with null checks
+      String deviceName = 'Unknown Device';
+      if (!kIsWeb) {
+        try {
+          final deviceInfo = await deviceInfoPlugin.androidInfo;
+          deviceName = "${deviceInfo.display ?? 'Unknown Display'} ${deviceInfo.model ?? 'Unknown Model'}";
+        } catch (e) {
+          print('Error fetching device info: $e');
+        }
       }
 
-      return (
+      String? token = await FirebaseMessaging.instance.getToken();
+
+      requestParams ??= {};
+      requestParams.addAll({
+        "userID": sharedPreferences.getString(Strings.USER_ID) ?? 'Unknown UserID',
+        "fcm_id": token ?? 'Unknown FCM Token',
+        "deviceName": deviceName,
+      });
+
+      try {
+        final uri = Uri.parse(BASE_URL + endPoint).replace(queryParameters: requestParams);
+        final response = await httpClient.get(uri, headers: await getHeader());
+
+        if (showLoading) {
+          AlertBox.dismissLoader(context);
+        }
+
+        return (
         (response.statusCode == 200 && response.body.isNotEmpty),
         response
-      );
-    }
-    {
+        );
+      } catch (e) {
+        print('Error making GET request: $e');
+        if (showLoading) {
+          AlertBox.dismissLoader(context);
+        }
+        return (false, null);
+      }
+    } else {
       return (false, null);
     }
   }
@@ -207,26 +225,55 @@ class ApiInterface {
       if (showLoading) {
         AlertBox.showLoader(context);
       }
+
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       final deviceInfoPlugin = DeviceInfoPlugin();
-      final deviceInfo = await deviceInfoPlugin.androidInfo;
+
+      // Initialize device info with null checks
+      String deviceName = 'Unknown Device';
+      if (!kIsWeb) {
+        try {
+          final deviceInfo = await deviceInfoPlugin.androidInfo;
+          deviceName =
+              "${deviceInfo.display ?? 'Unknown Display'} ${deviceInfo.model ?? 'Unknown Model'}";
+        } catch (e) {
+          print('Error fetching device info: $e');
+        }
+      }
+
       String? token = await FirebaseMessaging.instance.getToken();
+
       requestParams ??= {};
       requestParams.addAll({
-        "userID": sharedPreferences.getString(Strings.USER_ID).toString(),
-        "fcm_id": token,
-        "deviceName": "${deviceInfo.display} ${deviceInfo.model}"
+        "userID":
+            sharedPreferences.getString(Strings.USER_ID) ?? 'Unknown UserID',
+        "fcm_id": token ?? 'Unknown FCM Token',
+        "deviceName": deviceName,
       });
-      final response = await httpClient.post(Uri.parse(BASE_URL + endPoint),
-          headers: await getHeader(), body: requestParams);
-      if (showLoading) {
-        AlertBox.dismissLoader(context);
+
+      try {
+        final response = await httpClient.post(
+          Uri.parse(BASE_URL + endPoint),
+          headers: await getHeader(),
+          body: requestParams,
+        );
+
+        if (showLoading) {
+          AlertBox.dismissLoader(context);
+        }
+
+        return (
+          (response.statusCode == 200 && response.body.isNotEmpty),
+          response
+        );
+      } catch (e) {
+        print('Error making POST request: $e');
+        if (showLoading) {
+          AlertBox.dismissLoader(context);
+        }
+        return (false, null);
       }
-      return (
-        (response.statusCode == 200 && response.body.isNotEmpty),
-        response
-      );
     } else {
       return (false, null);
     }

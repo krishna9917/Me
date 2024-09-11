@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'Resources/Strings.dart';
 import 'Screen/Splashscreen.dart';
 import 'Utils/AppTheme.dart';
@@ -17,7 +16,13 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Initialize Firebase here
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+    apiKey: "AIzaSyAOCV4nwzCNwSZyUBLHkDV8RsNG6bZ2xG0",
+    projectId: "meonlinetrade-38bce",
+    messagingSenderId: "805539879858",
+    appId: "1:805539879858:web:d97a6fd6b4daf8d7f862ab",
+  )); // Initialize Firebase here
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -43,6 +48,4 @@ class MyApp extends ConsumerWidget {
       home: const SplashScreen(),
     );
   }
-
-
 }

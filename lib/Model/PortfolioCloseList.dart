@@ -1,9 +1,4 @@
-// To parse this JSON data, do
-//
-//     final portfolioCloseList = portfolioCloseListFromJson(jsonString);
-
 import 'dart:convert';
-import 'dart:ffi';
 
 PortfolioCloseList portfolioCloseListFromJson(String str) =>
     PortfolioCloseList.fromJson(json.decode(str));

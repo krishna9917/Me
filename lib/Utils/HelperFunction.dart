@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vibration/vibration.dart';
 
@@ -8,33 +11,39 @@ import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
 
 class HelperFunction {
-  // internet connection checking
+  static HttpWithMiddleware httpClient = HttpWithMiddleware.build(middlewares: [
+    HttpLogger(logLevel: LogLevel.BODY),
+  ]);
+
   static Future<bool> isInternetConnected(BuildContext context,
       {bool requireShowMessage = true}) async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
-      }
-    } on SocketException catch (_) {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
+    if (connectivityResult.contains(ConnectivityResult.none)) {
       if (requireShowMessage) {
-        showMessage(context, Strings.noInternetConnection, type: 3);
+        showMessage(context, "No internet connection", type: 3);
       }
       return false;
     }
-    return false;
+    return true;
   }
 
   //Snackbar   type  -- 1 -> black background ,2 ->  green background  3---> red background means error
   static void showMessage(BuildContext context, String message,
-      {int type = 1, SnackBarAction? snackBarAction}) {
+      {int type = 1, SnackBarAction? snackBarAction}) async {
     ScaffoldMessenger.of(context).clearSnackBars();
-    if (type == 3) Vibration.vibrate(pattern: [100, 500]);
+
+    // Check for vibration support before attempting to vibrate
+    if (type == 3 && !kIsWeb) {
+      Vibration.vibrate(pattern: [100, 500]);
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          message == null || message == "" ? "Something went wrong" : message,
-          style: Styles.normalText(context: context,color: Colors.white),
+          message.isEmpty ? "Something went wrong" : message,
+          style: TextStyle(
+              color: Colors.white), // Assuming Styles.normalText gives this
         ),
         backgroundColor: type == 2
             ? Colors.green

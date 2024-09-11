@@ -1,4 +1,4 @@
-  import 'dart:async';
+ import 'dart:async';
   import 'package:flutter/material.dart';
   import 'package:flutter_riverpod/flutter_riverpod.dart';
   import 'package:marqueer/marqueer.dart';
@@ -344,7 +344,8 @@
       );
     }
 
-    Widget getCloseUi(PortfolioCloseList portfolioCloseList) {
+    Widget getCloseUi(PortfolioCloseList portfolioCloseList)
+    {
       final appColors = Theme.of(context).extension<AppColors>()!;
       return Padding(
         padding: const EdgeInsets.all(10),
