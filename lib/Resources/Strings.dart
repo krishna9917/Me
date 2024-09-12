@@ -98,14 +98,11 @@ class Strings {
   static const String pleaseEnterPassword = "Password is required";
   static const String login = "Login";
   static const String termsConditions =
-      "No real money involved. This is a virtual trading \napplication with all features to trade.\nThis application is used for exchanging views on market\nfor training purposes only.";
+      "No real money involved. This is a virtual trading application which has all features to trade.\n\nThis is application is use for exchanging view on market for training purpose only.\n\nOnlineTradeLearn is not liable for any real money transaction. We don\'t deal in any real money";
   static const String password = "Password";
-  static const String userId = "User ID";
+  static const String userId = "User Id";
   static const String orderCancelled = "Order already Cancelled";
   static const String logoutWarning = "Are you surely to logout?";
-
-
-
 
   //sharedPreferences key
   static const String ACCESS_TOKEN = "access_token";

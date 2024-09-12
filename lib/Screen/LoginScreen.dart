@@ -298,7 +298,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 context: context,
                                 isBold: true,
                                 color: Colors.white,
-                                fontSize: 13),
+                                fontSize: 11),
                           ),
                         ],
                       ),

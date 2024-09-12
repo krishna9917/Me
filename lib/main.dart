@@ -16,13 +16,19 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
+
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      name: 'MeOnlineTrade',
       options: const FirebaseOptions(
-    apiKey: "AIzaSyAOCV4nwzCNwSZyUBLHkDV8RsNG6bZ2xG0",
-    projectId: "meonlinetrade-38bce",
-    messagingSenderId: "805539879858",
-    appId: "1:805539879858:web:d97a6fd6b4daf8d7f862ab",
-  )); // Initialize Firebase here
+        apiKey: "AIzaSyAOCV4nwzCNwSZyUBLHkDV8RsNG6bZ2xG0",
+        projectId: "meonlinetrade-38bce",
+        messagingSenderId: "805539879858",
+        appId: "1:805539879858:web:d97a6fd6b4daf8d7f862ab",
+      ),
+    );
+  }
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const ProviderScope(child: MyApp()));
 }

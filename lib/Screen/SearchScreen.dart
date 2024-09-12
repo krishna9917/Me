@@ -60,7 +60,7 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
         title: TextField(
           controller: _searchController,
           onChanged: searchStock,
-          style: Theme.of(context).textTheme.titleMedium!,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
           decoration: InputDecoration(
             hintText: Strings.search,
             hintStyle: Styles.normalText(context: context, color: Colors.white),
@@ -70,21 +70,24 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
         backgroundColor: Colors.black,
       ),
       body: searchState.list.isNotEmpty
-          ? ListView.builder(
-              itemCount: searchState.list.length,
-              itemBuilder: (context, index) {
-                final data = searchState.list[index];
-                return Tradestock(
-                  data: data,
-                  showCheckUncheck: true,
-                ).onTap(() {
-                  ref
-                      .read(searchNotifierProvider(widget.type).notifier)
-                      .addToWatchList(context, data.categoryId.toString(),
-                          data.isChecked!, index);
-                });
-              },
-            )
+          ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+                itemCount: searchState.list.length,
+                itemBuilder: (context, index) {
+                  final data = searchState.list[index];
+                  return Tradestock(
+                    data: data,
+                    showCheckUncheck: true,
+                  ).onTap(() {
+                    ref
+                        .read(searchNotifierProvider(widget.type).notifier)
+                        .addToWatchList(context, data.categoryId.toString(),
+                            data.isChecked!, index);
+                  });
+                },
+              ),
+          )
           : Center(
               child: Text(
                 Strings.dataNotAvailable,

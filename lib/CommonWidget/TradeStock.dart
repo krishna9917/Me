@@ -28,7 +28,9 @@ class _TradestockState extends State<Tradestock> {
             children: [
               Expanded(
                 flex: 2,
-                child: Wrap(direction: Axis.vertical, children: [
+                child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                   Text(widget.data.title.toString(),
                       style: Theme.of(context).textTheme.titleLarge),
                   Text(
@@ -38,34 +40,30 @@ class _TradestockState extends State<Tradestock> {
                   5.height,
                   Wrap(
                     children: [
-                      Wrap(
-                        children: [
-                          Text(
-                            widget.showCheckUncheck
-                                ? "Lot Size: ${widget.data.quotationLot}"
-                                : "Chg:${widget.data.priceChange}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                                    color: widget.showCheckUncheck
-                                        ? widget.showCheckUncheck
-                                            ? appColors.color2
-                                            : Colors.black
-                                        : widget.data.priceChangeColor!),
-                          ),
-                          Visibility(
-                            visible: !widget.showCheckUncheck,
-                            child: Text(
-                              "(${widget.data.priceChangePercentage}%)",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      color: widget.data.priceChangeColor!),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        widget.showCheckUncheck
+                            ? "Lot Size: ${widget.data.quotationLot}"
+                            : "Chg:${widget.data.priceChange}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                            color: widget.showCheckUncheck
+                                ? widget.showCheckUncheck
+                                ? appColors.color2
+                                : Colors.black
+                                : widget.data.priceChangeColor!),
+                      ),
+                      Visibility(
+                        visible: !widget.showCheckUncheck,
+                        child: Text(
+                          "(${widget.data.priceChangePercentage}%)",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                              color: widget.data.priceChangeColor!),
+                        ),
                       ),
                       5.width,
                       Text(
@@ -80,7 +78,6 @@ class _TradestockState extends State<Tradestock> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      20.height,
                       Container(
                         decoration: BoxDecoration(
                             color: widget.data.buyPriceColor,
@@ -91,6 +88,7 @@ class _TradestockState extends State<Tradestock> {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
+                      20.height,
                       Text(
                         "Low: ${widget.data.low}",
                         style: Theme.of(context).textTheme.titleMedium!,
@@ -101,7 +99,6 @@ class _TradestockState extends State<Tradestock> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      20.height,
                       Container(
                         padding: const EdgeInsets.only(left: 8, right: 8),
                         decoration: BoxDecoration(
@@ -113,8 +110,9 @@ class _TradestockState extends State<Tradestock> {
                         ),
                       ),
                       20.width,
+                      20.height,
                       Text(
-                        "LTP: ${widget.data.lastTradePrice}",
+                        "Ltp: ${widget.data.lastTradePrice}",
                         style: Theme.of(context).textTheme.titleMedium!,
                       ),
                     ]),

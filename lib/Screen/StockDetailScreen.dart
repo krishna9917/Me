@@ -50,7 +50,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
         widget.stockData.categoryId.toString(),
         widget.stockData.expireDate.toString(),
         (_tabController.index + 1).toString(),
-        (isSellType ? 1 : 2).toString(),
+        (isSellType ? 2 : 1).toString(),
         _tabController.index > 0
             ? _textEditingController.text.toString()
             : isSellType && _tabController.index == 0
@@ -195,7 +195,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                 ),
                                 Text(
                                     _textEditingController.text.isEmpty
-                                        ? "${data != null ? data?.sellPrice : widget.stockData.salePrice}"
+                                        ? "${data != null ? data?.buyPrice : widget.stockData.buyPrice}"
                                         : _textEditingController.text,
                                     style: Theme.of(context)
                                         .textTheme
@@ -231,7 +231,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                 ),
                                 Text(
                                   _textEditingController.text.isEmpty
-                                      ? "${data != null ? data?.buyPrice : widget.stockData.buyPrice}"
+                                      ? "${data != null ? data?.sellPrice : widget.stockData.salePrice}"
                                       : _textEditingController.text,
                                   style: Theme.of(context)
                                       .textTheme
