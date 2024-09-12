@@ -258,7 +258,7 @@ class ApiInterface {
         }
       }
 
-      String token = ""; // await FirebaseMessaging.instance.getToken();
+      String? token = await FirebaseMessaging.instance.getToken();
       requestParams ??= {};
       requestParams.addAll({
         "userID":
@@ -271,7 +271,7 @@ class ApiInterface {
         final response = await httpClient.post(
           Uri.parse(BASE_URL + endPoint),
           headers: await getHeader(),
-          body: jsonEncode(requestParams),
+          body: requestParams,
         );
 
         if (showLoading) {
@@ -327,7 +327,7 @@ class ApiInterface {
 
     return {
       "Deviceid": deviceId,
-      'Content-Type': 'application/json; charset=UTF-8',
+      "Content-Type": "application/x-www-form-urlencoded",
       "Accept": "application/json",
       "Token": accessToken,
     };
