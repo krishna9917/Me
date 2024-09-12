@@ -80,7 +80,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
-                                        .copyWith(color: appColors.color5),
+                                        .copyWith(
+                                            color: appColors.color5,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 19),
                                   ),
                                   Text(
                                     "${Strings.turnOver} ${Profiledata?.nseIntradayMargin}",
@@ -95,7 +98,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
-                                        .copyWith(color: appColors.color5),
+                                        .copyWith(
+                                            color: appColors.color5,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 19),
                                   ),
                                   Text(
                                     "${Strings.turnOver} ${Profiledata?.nseHoldingMargin}",

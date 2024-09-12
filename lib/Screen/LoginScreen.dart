@@ -34,19 +34,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
     final bool? isValid = _formKey.currentState?.validate();
     if (isValid == true) {
-      LoginData? loginResponse =
-          await ApiInterface.login(context, username!, pswd!);
-      if (loginResponse?.status == 1) {
-        LoginData.saveData(loginResponse!);
-        if (loginResponse.userData!.isFirstTimeLogin == 1) {
-          ChangePassword(
-            isComingFromAccount: false,
-          ).launch(context, isNewTask: true);
+      if (username != null && pswd != null) {
+        LoginData? loginResponse =
+        await ApiInterface.login(context, username!, pswd!);
+        if (loginResponse?.status == 1) {
+          LoginData.saveData(loginResponse!);
+          if (loginResponse.userData!.isFirstTimeLogin == 1) {
+            ChangePassword(
+              isComingFromAccount: false,
+            ).launch(context, isNewTask: true);
+          } else {
+            Bottom_Navigation().launch(context, isNewTask: true);
+          }
         } else {
-          Bottom_Navigation().launch(context, isNewTask: true);
+          HelperFunction.showMessage(context, loginResponse?.message ?? "",
+              type: 3);
         }
       } else {
-        HelperFunction.showMessage(context, loginResponse!.message!, type: 3);
+        HelperFunction.showMessage(context, "Username or password cannot be null",
+            type: 3);
       }
       setState(() {
         isLoading = false;

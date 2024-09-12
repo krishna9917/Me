@@ -92,7 +92,7 @@
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
-                                    .copyWith(color: goldencolor),
+                                    .copyWith(color: Colors.red),
                               ),
                             ),
                           );

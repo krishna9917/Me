@@ -171,61 +171,6 @@ class ApiInterface {
         AlertBox.showLoader(context);
       }
 
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      final deviceInfoPlugin = DeviceInfoPlugin();
-
-      // Initialize device info with null checks
-      String deviceName = 'Unknown Device';
-      if (!kIsWeb) {
-        try {
-          final deviceInfo = await deviceInfoPlugin.androidInfo;
-          deviceName = "${deviceInfo.display ?? 'Unknown Display'} ${deviceInfo.model ?? 'Unknown Model'}";
-        } catch (e) {
-          print('Error fetching device info: $e');
-        }
-      }
-
-      String? token = await FirebaseMessaging.instance.getToken();
-
-      requestParams ??= {};
-      requestParams.addAll({
-        "userID": sharedPreferences.getString(Strings.USER_ID) ?? 'Unknown UserID',
-        "fcm_id": token ?? 'Unknown FCM Token',
-        "deviceName": deviceName,
-      });
-
-      try {
-        final uri = Uri.parse(BASE_URL + endPoint).replace(queryParameters: requestParams);
-        final response = await httpClient.get(uri, headers: await getHeader());
-
-        if (showLoading) {
-          AlertBox.dismissLoader(context);
-        }
-
-        return (
-        (response.statusCode == 200 && response.body.isNotEmpty),
-        response
-        );
-      } catch (e) {
-        print('Error making GET request: $e');
-        if (showLoading) {
-          AlertBox.dismissLoader(context);
-        }
-        return (false, null);
-      }
-    } else {
-      return (false, null);
-    }
-  }
-
-  static Future<(bool status, Response? response)> _postApiCall(
-      BuildContext context, String endPoint, bool showLoading,
-      {Map<String, dynamic>? requestParams}) async {
-    if (await HelperFunction.isInternetConnected(context)) {
-      if (showLoading) {
-        AlertBox.showLoader(context);
-      }
-
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       final deviceInfoPlugin = DeviceInfoPlugin();
@@ -253,10 +198,80 @@ class ApiInterface {
       });
 
       try {
+        final uri = Uri.parse(BASE_URL + endPoint)
+            .replace(queryParameters: requestParams);
+        final response = await httpClient.get(uri, headers: await getHeader());
+
+        if (showLoading) {
+          AlertBox.dismissLoader(context);
+        }
+
+        return (
+          (response.statusCode == 200 && response.body.isNotEmpty),
+          response
+        );
+      } catch (e) {
+        print('Error making GET request: $e');
+        if (showLoading) {
+          AlertBox.dismissLoader(context);
+        }
+        return (false, null);
+      }
+    } else {
+      return (false, null);
+    }
+  }
+
+  static Future<(bool status, Response? response)> _postApiCall(
+      BuildContext context, String endPoint, bool showLoading,
+      {Map<String, dynamic>? requestParams}) async {
+    if (await HelperFunction.isInternetConnected(context)) {
+      if (showLoading) {
+        AlertBox.showLoader(context);
+      }
+
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      final deviceInfoPlugin = DeviceInfoPlugin();
+
+      // Initialize device info with null checks
+      String deviceName = 'Unknown Device';
+      String deviceId = 'Unknown Device ID';
+      if (kIsWeb) {
+        try {
+          final deviceInfo = await deviceInfoPlugin.webBrowserInfo;
+          deviceName = deviceInfo.userAgent ?? 'Unknown User Agent';
+        } catch (e) {
+          print('Error fetching web device info: $e');
+        }
+      } else {
+        try {
+          if (defaultTargetPlatform == TargetPlatform.iOS) {
+            final deviceInfo = await deviceInfoPlugin.iosInfo;
+            deviceId = deviceInfo.identifierForVendor ?? 'Unknown Device ID';
+          } else if (defaultTargetPlatform == TargetPlatform.android) {
+            final deviceInfo = await deviceInfoPlugin.androidInfo;
+            deviceId = deviceInfo.id ?? 'Unknown Device ID';
+          }
+        } catch (e) {
+          print('Error fetching device info: $e');
+        }
+      }
+
+      String token = ""; // await FirebaseMessaging.instance.getToken();
+      requestParams ??= {};
+      requestParams.addAll({
+        "userID":
+            sharedPreferences.getString(Strings.USER_ID) ?? 'Unknown UserID',
+        "fcm_id": token ?? 'Unknown FCM Token',
+        "deviceName": deviceName,
+      });
+
+      try {
         final response = await httpClient.post(
           Uri.parse(BASE_URL + endPoint),
           headers: await getHeader(),
-          body: requestParams,
+          body: jsonEncode(requestParams),
         );
 
         if (showLoading) {
@@ -279,15 +294,42 @@ class ApiInterface {
     }
   }
 
-  static getHeader() async {
+  static Future<Map<String, String>> getHeader() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final deviceInfoPlugin = DeviceInfoPlugin();
-    final deviceInfo = await deviceInfoPlugin.androidInfo;
+
+    var deviceInfo;
+    String deviceId = 'Unknown Device ID';
+
+    if (kIsWeb) {
+      try {
+        deviceInfo = await deviceInfoPlugin.webBrowserInfo;
+        deviceId = deviceInfo.userAgent ?? 'Unknown User Agent';
+      } catch (e) {
+        print('Error fetching web device info: $e');
+      }
+    } else {
+      try {
+        if (defaultTargetPlatform == TargetPlatform.iOS) {
+          deviceInfo = await deviceInfoPlugin.iosInfo;
+          deviceId = deviceInfo.identifierForVendor ?? 'Unknown Device ID';
+        } else if (defaultTargetPlatform == TargetPlatform.android) {
+          deviceInfo = await deviceInfoPlugin.androidInfo;
+          deviceId = deviceInfo.id ?? 'Unknown Device ID';
+        }
+      } catch (e) {
+        print('Error fetching device info: $e');
+      }
+    }
+
+    String accessToken =
+        sharedPreferences.getString(Strings.ACCESS_TOKEN) ?? 'Unknown Token';
+
     return {
-      "Deviceid": deviceInfo.id.toString(),
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Deviceid": deviceId,
+      'Content-Type': 'application/json; charset=UTF-8',
       "Accept": "application/json",
-      "Token": sharedPreferences.getString(Strings.ACCESS_TOKEN).toString()
+      "Token": accessToken,
     };
   }
 

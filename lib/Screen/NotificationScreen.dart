@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:me_app/ApiService/ApiInterface.dart';
+import 'package:nb_utils/nb_utils.dart';
 import '../Providerr/NotificationProvider.dart';
 import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
@@ -41,24 +43,24 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                         return Card(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                            child: Row(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: Text(
-                                    notificationState
-                                        .notifications!.data![index].message
-                                        .toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge,
-                                  ),
+                                Text(
+                                  notificationState
+                                      .notifications!.data![index].message
+                                      .toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge,
                                 ),
+                                10.height,
                                 Text(
                                   notificationState
                                       .notifications!.data![index].created
                                       .toString(),
                                   style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                  Theme.of(context).textTheme.titleMedium,
                                 )
                               ],
                             ),
