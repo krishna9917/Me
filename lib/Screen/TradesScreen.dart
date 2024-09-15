@@ -132,7 +132,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                     Expanded(
                                       child: Padding(
                                         padding:
-                                        const EdgeInsets.all(8.0),
+                                        const EdgeInsets.all(0),
                                         child: Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -147,6 +147,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     .of(context)
                                                     .textTheme
                                                     .titleMedium),
+                                            8.height,
                                             Wrap(
                                               crossAxisAlignment:
                                               WrapCrossAlignment
@@ -157,8 +158,8 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     Theme
                                                         .of(context)
                                                         .textTheme
-                                                        .titleMedium),
-                                                const SizedBox(width: 8),
+                                                        .titleMedium?.copyWith(fontSize: 11)),
+                                                const SizedBox(width: 5),
                                                 Container(
                                                   decoration:
                                                   BoxDecoration(
@@ -174,9 +175,8 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     padding:
                                                     const EdgeInsets
                                                         .symmetric(
-                                                        vertical: 3,
                                                         horizontal:
-                                                        6),
+                                                        2),
                                                     child: Text(
                                                         '${trade.bidPrice}',
                                                         style: Theme
@@ -186,7 +186,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                             .titleMedium!
                                                             .copyWith(
                                                             color: Colors
-                                                                .red)),
+                                                                .red, fontSize: 11)),
                                                   ),
                                                 ),
                                               ],
@@ -202,8 +202,8 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                         .of(
                                                         context)
                                                         .textTheme
-                                                        .titleMedium!),
-                                                const SizedBox(width: 8),
+                                                        .titleMedium?.copyWith(fontSize: 11)),
+                                                const SizedBox(width: 5),
                                                 Container(
                                                   decoration:
                                                   BoxDecoration(
@@ -224,9 +224,8 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     padding:
                                                     const EdgeInsets
                                                         .symmetric(
-                                                        vertical: 3,
                                                         horizontal:
-                                                        6),
+                                                        2),
                                                     child: Text(
                                                         trade.orderType!
                                                             .contains(
@@ -267,7 +266,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                                 .orderType!
                                                                 .contains("1")
                                                                 ? Colors.green
-                                                                : Colors.red)),
+                                                                : Colors.red,fontSize: 11)),
                                                   ),
                                                 )
                                               ],
@@ -279,7 +278,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                     Expanded(
                                       child: Padding(
                                         padding:
-                                        const EdgeInsets.all(8.0),
+                                        const EdgeInsets.all(0),
                                         child: Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.end,
@@ -307,9 +306,9 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     padding:
                                                     const EdgeInsets
                                                         .symmetric(
-                                                        vertical: 3,
+                                                        vertical: 2,
                                                         horizontal:
-                                                        6),
+                                                        4),
                                                     child: Text(
                                                         '${trade
                                                             .totalProfit}/${trade
@@ -349,9 +348,9 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     padding:
                                                     const EdgeInsets
                                                         .symmetric(
-                                                        vertical: 3,
+                                                        vertical: 2,
                                                         horizontal:
-                                                        6),
+                                                        4),
                                                     child: Text(
                                                         'QTY:${trade.lot}',
                                                         style: Theme
@@ -371,17 +370,16 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                 ),
                                               ],
                                             ),
-                                            const SizedBox(height: 4),
+                                            const SizedBox(height: 20),
                                             Wrap(
-                                              alignment:
-                                              WrapAlignment.end,
+                                              alignment: WrapAlignment.end,
                                               children: [
                                                 Text('Brought By Trader',
                                                     style:
                                                     Theme
                                                         .of(context)
                                                         .textTheme
-                                                        .titleMedium),
+                                                        .titleMedium?.copyWith(fontSize: 11)),
                                                 const SizedBox(width: 8),
                                                 Container(
                                                   decoration:
@@ -398,16 +396,15 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     padding:
                                                     const EdgeInsets
                                                         .symmetric(
-                                                        vertical: 3,
                                                         horizontal:
-                                                        6),
+                                                        2),
                                                     child: Text(
                                                         '${trade.sellPrice}',
                                                         style: Theme
                                                             .of(
                                                             context)
                                                             .textTheme
-                                                            .titleMedium!
+                                                            .titleMedium!.copyWith(fontSize: 11)
                                                             .copyWith(
                                                             color: Colors
                                                                 .green)),
@@ -430,8 +427,8 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     style: Theme
                                                         .of(context)
                                                         .textTheme
-                                                        .titleLarge),
-                                                const SizedBox(width: 8),
+                                                        .titleMedium?.copyWith(fontSize: 11)),
+                                                const SizedBox(width: 5),
                                                 Container(
                                                   decoration:
                                                   BoxDecoration(
@@ -452,9 +449,8 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                     padding:
                                                     const EdgeInsets
                                                         .symmetric(
-                                                        vertical: 3,
                                                         horizontal:
-                                                        6),
+                                                        2),
                                                     child: Text(
                                                         trade.closeOrderType!
                                                             .contains(
@@ -496,7 +492,7 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                                             .of(context)
                                                             .textTheme
                                                             .titleMedium!
-                                                            .copyWith(
+                                                            .copyWith(fontSize: 11,
                                                             color: trade
                                                                 .closeOrderType!
                                                                 .contains("1")

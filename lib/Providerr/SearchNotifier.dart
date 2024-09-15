@@ -54,18 +54,18 @@ class SearchNotifier extends StateNotifier<SearchState> {
         lastTradePrice: matchingLiveRate.lastTradePrice,
         high: matchingLiveRate.high,
         priceChangeColor: matchingLiveRate.priceChangePercentage! > 0
-            ? Colors.green.shade900
-            : Colors.red.shade900,
+            ? Colors.green.shade700
+            : Colors.red.shade700,
         buyPriceColor: item.buyPrice! < matchingLiveRate.buyPrice!
-            ? Colors.green.shade900
+            ? Colors.green.shade700
             : item.buyPrice! == matchingLiveRate.buyPrice!
                 ? Colors.transparent
-                : Colors.red.shade900,
+                : Colors.red.shade700,
         salePriceColor: item.salePrice! < matchingLiveRate.sellPrice!
-            ? Colors.green.shade900
+            ? Colors.green.shade700
             : item.salePrice! == matchingLiveRate.sellPrice!
                 ? Colors.transparent
-                : Colors.red.shade900,
+                : Colors.red.shade700,
         priceChangePercentage: matchingLiveRate.priceChangePercentage,
         buyPrice: matchingLiveRate.buyPrice,
         salePrice: matchingLiveRate.sellPrice,

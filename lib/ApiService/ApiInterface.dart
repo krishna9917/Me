@@ -23,7 +23,7 @@ import '../Utils/HelperFunction.dart';
 
 class ApiInterface {
   static String BASE_URL =
-      "https://www.onlinetradelearn.com/mcx/authController/";
+      "http://www.onlinetradelearn.com/mcx/authController/";
 
   static HttpWithMiddleware httpClient = HttpWithMiddleware.build(middlewares: [
     HttpLogger(logLevel: LogLevel.BODY),
@@ -242,13 +242,13 @@ class ApiInterface {
         }
       }
 
-      String? token = await FirebaseMessaging.instance.getToken();
+      // String? token = await FirebaseMessaging.instance.getToken();
 
       requestParams ??= {};
       requestParams.addAll({
         "userID":
             sharedPreferences.getString(Strings.USER_ID) ?? 'Unknown UserID',
-        "fcm_id": token ?? 'Unknown FCM Token',
+        "fcm_id":  'Unknown FCM Token',
         "deviceName": deviceName,
       });
 
