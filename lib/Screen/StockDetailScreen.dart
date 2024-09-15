@@ -253,7 +253,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
               elevation: 6,
               color: appColors.color1,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(5),
                 child: Table(
                   columnWidths: const {
                     0: FlexColumnWidth(1),
@@ -452,7 +452,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
   TableCell _buildTableCell(String title, String value) {
     return TableCell(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(5),
         child: SizedBox(
           height: 35,
           child: Column(
@@ -465,7 +465,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                   child: Text(
                 value,
                 textAlign: TextAlign.end,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 15),
               )),
             ],
           ),

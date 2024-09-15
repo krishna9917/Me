@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,7 +11,10 @@ import 'Utils/Themeprovider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  // Ensure Firebase is initialized in the background message handler (for mobile platforms)
+  if (!kIsWeb) {
+    await Firebase.initializeApp();
+  }
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -17,7 +22,11 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (Firebase.apps.isEmpty) {
+  if (kIsWeb) {
+    // Web initialization is already done in index.html. No need to do it here.
+    // If you must initialize in Dart code, ensure FirebaseOptions are provided.
+  } else if (Platform.isIOS || Platform.isAndroid) {
+    // Initialize Firebase for mobile platforms
     await Firebase.initializeApp(
       name: 'MeOnlineTrade',
       options: const FirebaseOptions(
@@ -29,7 +38,11 @@ void main() async {
     );
   }
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // Set up background message handler only for mobile platforms
+  if (!kIsWeb) {
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  }
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

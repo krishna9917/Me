@@ -80,7 +80,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
-                                        .copyWith(color: appColors.color5),
+                                        .copyWith(
+                                            color: appColors.color5,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 19),
                                   ),
                                   Text(
                                     "${Strings.turnOver} ${Profiledata?.nseIntradayMargin}",
@@ -95,7 +98,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
-                                        .copyWith(color: appColors.color5),
+                                        .copyWith(
+                                            color: appColors.color5,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 19),
                                   ),
                                   Text(
                                     "${Strings.turnOver} ${Profiledata?.nseHoldingMargin}",
@@ -184,7 +190,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge!
-                                      .copyWith(color: appColors.color4),
+                                      .copyWith(color: appColors.color5),
                                 ),
                                 10.height,
                                 ListView.builder(
@@ -216,7 +222,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
-                                        .copyWith(color: appColors.color4)),
+                                        .copyWith(color: appColors.color5)),
                                 10.height,
                                 ListView.builder(
                                   shrinkWrap: true,

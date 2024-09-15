@@ -35,7 +35,7 @@ class _TradehistoryState extends State<Tradehistory> {
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Expanded(
                 child: Card(
-                  color: Colors.red,
+                  color: Colors.red.shade900,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -59,7 +59,7 @@ class _TradehistoryState extends State<Tradehistory> {
               ),
               Expanded(
                 child: Card(
-                  color: Colors.red,
+                  color: Colors.red.shade900,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -113,8 +113,8 @@ class _TradehistoryState extends State<Tradehistory> {
                                             border: Border.all(
                                               color:
                                                   trade.bidType!.contains("1")
-                                                      ? Colors.green
-                                                      : Colors.red,
+                                                      ? Colors.green.shade900
+                                                      : Colors.red.shade900,
                                               width: 2, // Border width
                                             ),
                                           ),
@@ -131,8 +131,10 @@ class _TradehistoryState extends State<Tradehistory> {
                                                   .copyWith(
                                                       color: trade.bidType!
                                                               .contains("1")
-                                                          ? Colors.green
-                                                          : Colors.red),
+                                                          ? Colors
+                                                              .green.shade900
+                                                          : Colors
+                                                              .red.shade900),
                                             ),
                                           ),
                                         ),
@@ -144,8 +146,8 @@ class _TradehistoryState extends State<Tradehistory> {
                                             border: Border.all(
                                               color:
                                                   trade.orderType!.contains("1")
-                                                      ? Colors.green
-                                                      : Colors.red,
+                                                      ? Colors.green.shade900
+                                                      : Colors.red.shade900,
                                               width: 2, // Border width
                                             ),
                                           ),
@@ -189,8 +191,8 @@ class _TradehistoryState extends State<Tradehistory> {
                                                           color: trade
                                                                   .orderType!
                                                                   .contains("1")
-                                                              ? Colors.green
-                                                              : Colors.red))),
+                                                              ? Colors.green.shade900
+                                                              : Colors.red.shade900))),
                                         ),
                                       ],
                                     ),
@@ -230,8 +232,8 @@ class _TradehistoryState extends State<Tradehistory> {
                                         borderRadius: BorderRadius.circular(6),
                                         border: Border.all(
                                           color: trade.bidType!.contains("1")
-                                              ? Colors.green
-                                              : Colors.red,
+                                              ? Colors.green.shade900
+                                              : Colors.red.shade900,
                                           width: 2, // Border width
                                         ),
                                       ),
@@ -245,13 +247,13 @@ class _TradehistoryState extends State<Tradehistory> {
                                                 .copyWith(
                                                     color: trade.bidType!
                                                             .contains("1")
-                                                        ? Colors.green
-                                                        : Colors.red)),
+                                                        ? Colors.green.shade900
+                                                        : Colors.red.shade900)),
                                       ),
                                     ),
                                     const SizedBox(height: 4),
                                     Card(
-                                      color: Colors.red,
+                                      color: Colors.red.shade900,
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 4, horizontal: 10),

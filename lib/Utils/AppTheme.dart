@@ -34,7 +34,7 @@ ThemeData getAppTheme(
         titleLarge:
             Styles.normalText(context: context, color: textColor, isBold: true),
         titleMedium: Styles.normalText(
-            context: context, color: textColor, fontSize: 12, isBold: true),
+            context: context, color: textColor, fontSize: 11, isBold: true),
         titleSmall: Styles.normalText(
             context: context, color: textColor, fontSize: 9, isBold: true),
         headlineLarge: Styles.normalText(context: context, color: textColor),
