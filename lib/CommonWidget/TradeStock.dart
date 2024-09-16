@@ -20,7 +20,7 @@ class _TradestockState extends State<Tradestock> {
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColors>()!;
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 8),
+      padding: const EdgeInsets.only(left: 5, right: 5),
       child: Column(
         children: [
           Row(
@@ -37,12 +37,11 @@ class _TradestockState extends State<Tradestock> {
                     widget.data.expireDate.toString(),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  5.height,
                   Wrap(
                     children: [
                       Text(
                         widget.showCheckUncheck
-                            ? "Lot Size: ${widget.data.quotationLot}"
+                            ? "Lot Size:${widget.data.quotationLot.toDouble()}"
                             : "Chg:${widget.data.priceChange}",
                         style: Theme.of(context)
                             .textTheme
@@ -88,7 +87,7 @@ class _TradestockState extends State<Tradestock> {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
-                      20.height,
+                      15.height,
                       Text(
                         "Low: ${widget.data.low}",
                         style: Theme.of(context).textTheme.titleMedium!,
@@ -110,7 +109,7 @@ class _TradestockState extends State<Tradestock> {
                         ),
                       ),
                       20.width,
-                      20.height,
+                      15.height,
                       Text(
                         "Ltp: ${widget.data.lastTradePrice}",
                         style: Theme.of(context).textTheme.titleMedium!,
