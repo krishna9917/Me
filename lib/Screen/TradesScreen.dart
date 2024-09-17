@@ -16,7 +16,7 @@ class TradesScreen extends ConsumerStatefulWidget {
 }
 
 class _TradesScreenState extends ConsumerState<TradesScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
   Timer? _refreshTimer;
 
@@ -24,29 +24,52 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _startPeriodicRefresh();
-  }
 
-  void _startPeriodicRefresh() {
-    _refreshTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
-      if (mounted) {
-        if (await HelperFunction.isInternetConnected(context)) {
-          ref
-              .read(tradesProvider.notifier)
-              .fetchTrades(context, _tabController.index + 1);
-        }
-      } else {
-        _refreshTimer?.cancel();
-      }
-    });
+    // Add observer to listen for app lifecycle changes
+    WidgetsBinding.instance.addObserver(this);
+
+    _startPeriodicRefresh();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _stopPeriodicRefresh();
     _tabController.dispose();
-    _refreshTimer?.cancel();
     super.dispose();
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        _stopPeriodicRefresh();
+        break;
+      case AppLifecycleState.resumed:
+        _startPeriodicRefresh();
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _startPeriodicRefresh() {
+    _refreshTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (await HelperFunction.isInternetConnected(context)) {
+        ref.read(tradesProvider.notifier).fetchTrades(context, _tabController.index + 1);
+      }
+    });
+  }
+
+  void _stopPeriodicRefresh() {
+    // Cancel and nullify the timer to stop it completely
+    _refreshTimer?.cancel();
+    _refreshTimer = null;
+  }
+
 
   @override
   Widget build(BuildContext context) {

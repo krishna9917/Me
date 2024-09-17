@@ -22,11 +22,37 @@ class WatchlistScreen extends ConsumerStatefulWidget {
 }
 
 class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
+  late final AppLifecycleListener lifecycleListener;
+
   @override
   void initState() {
+    lifecycleListener =
+        AppLifecycleListener(onStateChange: _onLifeCycleChanged);
     super.initState();
     Future.microtask(
         () => ref.read(watchlistProvider.notifier).fetchCategoryList(context));
+  }
+
+  @override
+  void dispose() {
+    lifecycleListener.dispose();
+    super.dispose();
+  }
+
+  void _onLifeCycleChanged(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        ref.read(watchlistProvider.notifier).stopPeriodicRefresh();
+        break;
+      case AppLifecycleState.resumed:
+        ref.read(watchlistProvider.notifier).startPeriodicRefresh(context);
+        break;
+      default:
+        break;
+    }
   }
 
   @override

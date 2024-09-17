@@ -20,7 +20,7 @@ class _TradestockState extends State<Tradestock> {
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColors>()!;
     return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5),
+      padding: const EdgeInsets.only(left: 5, right: 5,top: 3),
       child: Column(
         children: [
           Row(
@@ -29,49 +29,50 @@ class _TradestockState extends State<Tradestock> {
               Expanded(
                 flex: 2,
                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  Text(widget.data.title.toString(),
-                      style: Theme.of(context).textTheme.titleLarge),
-                  Text(
-                    widget.data.expireDate.toString(),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Wrap(
-                    children: [
+                      Text(widget.data.title.toString(),
+                          style: Theme.of(context).textTheme.titleLarge),
                       Text(
-                        widget.showCheckUncheck
-                            ? "Lot Size:${widget.data.quotationLot.toDouble()}"
-                            : "Chg:${widget.data.priceChange}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                            color: widget.showCheckUncheck
-                                ? widget.showCheckUncheck
-                                ? appColors.color2
-                                : Colors.black
-                                : widget.data.priceChangeColor!),
+                        widget.data.expireDate.toString(),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      Visibility(
-                        visible: !widget.showCheckUncheck,
-                        child: Text(
-                          "(${widget.data.priceChangePercentage}%)",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                              color: widget.data.priceChangeColor!),
-                        ),
+                      8.height,
+                      Wrap(
+                        children: [
+                          Text(
+                            widget.showCheckUncheck
+                                ? "Lot Size:${widget.data.quotationLot.toDouble()}"
+                                : "Chg: ${widget.data.priceChange}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                    color: widget.showCheckUncheck
+                                        ? widget.showCheckUncheck
+                                            ? appColors.color2
+                                            : Colors.black
+                                        : widget.data.priceChangeColor!),
+                          ),
+                          Visibility(
+                            visible: !widget.showCheckUncheck,
+                            child: Text(
+                              "(${widget.data.priceChangePercentage}%)",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      color: widget.data.priceChangeColor!),
+                            ),
+                          ),
+                          10.width,
+                          Text(
+                            "High: ${widget.data.high}",
+                            style: Theme.of(context).textTheme.titleMedium!,
+                          ),
+                        ],
                       ),
-                      5.width,
-                      Text(
-                        "High:${widget.data.high}",
-                        style: Theme.of(context).textTheme.titleMedium!,
-                      ),
-                    ],
-                  ),
-                ]),
+                    ]),
               ),
               Expanded(
                 child: Column(
@@ -80,8 +81,9 @@ class _TradestockState extends State<Tradestock> {
                       Container(
                         decoration: BoxDecoration(
                             color: widget.data.buyPriceColor,
-                            borderRadius: BorderRadius.circular(5)),
-                        padding: const EdgeInsets.only(left: 8, right: 8),
+                            borderRadius: BorderRadius.circular(3)),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
                         child: Text(
                           "${widget.data.buyPrice}",
                           style: Theme.of(context).textTheme.titleLarge,
@@ -99,10 +101,11 @@ class _TradestockState extends State<Tradestock> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
                         decoration: BoxDecoration(
                             color: widget.data.salePriceColor,
-                            borderRadius: BorderRadius.circular(5)),
+                            borderRadius: BorderRadius.circular(3)),
                         child: Text(
                           "${widget.data.salePrice}",
                           style: Theme.of(context).textTheme.titleLarge,
@@ -125,9 +128,11 @@ class _TradestockState extends State<Tradestock> {
             ],
           ),
           const Divider(
+            height: 1,
             thickness: 0.4,
             color: Colors.blueGrey,
           )
+
         ],
       ),
     );

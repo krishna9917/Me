@@ -20,14 +20,38 @@ class Searchscreen extends ConsumerStatefulWidget {
 class _SearchscreenState extends ConsumerState<Searchscreen> {
   final TextEditingController _searchController = TextEditingController();
   Timer? _refreshTimer;
+  late final AppLifecycleListener lifecycleListener;
+
+  void _onLifeCycleChanged(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+        _stopPeriodicRefresh();
+        break;
+      case AppLifecycleState.resumed:
+        _startPeriodicRefresh();
+        break;
+      case AppLifecycleState.detached:
+        _stopPeriodicRefresh();
+        break;
+      case AppLifecycleState.hidden:
+    }
+  }
 
   @override
   void initState() {
+    lifecycleListener =
+        AppLifecycleListener(onStateChange: _onLifeCycleChanged);
     super.initState();
     ref
         .read(searchNotifierProvider(widget.type).notifier)
         .fetchCategoryList(context);
     _startPeriodicRefresh();
+  }
+
+  void _stopPeriodicRefresh() {
+    _refreshTimer?.cancel();
+    _refreshTimer = null;
   }
 
   void _startPeriodicRefresh() {
@@ -46,6 +70,7 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
 
   @override
   void dispose() {
+    lifecycleListener.dispose();
     _refreshTimer?.cancel();
     _searchController.dispose();
     super.dispose();
@@ -60,7 +85,10 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
         title: TextField(
           controller: _searchController,
           onChanged: searchStock,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(color: Colors.white),
           decoration: InputDecoration(
             hintText: Strings.search,
             hintStyle: Styles.normalText(context: context, color: Colors.white),
@@ -71,8 +99,8 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
       ),
       body: searchState.list.isNotEmpty
           ? Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
                 itemCount: searchState.list.length,
                 itemBuilder: (context, index) {
                   final data = searchState.list[index];
@@ -87,7 +115,7 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
                   });
                 },
               ),
-          )
+            )
           : Center(
               child: Text(
                 Strings.dataNotAvailable,

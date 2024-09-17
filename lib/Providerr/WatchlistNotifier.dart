@@ -19,12 +19,13 @@ class WatchlistState {
 class WatchlistNotifier extends StateNotifier<WatchlistState> {
   WatchlistNotifier()
       : super(WatchlistState(
-          mcxList: [],
-          nseList: [],
-        ));
+    mcxList: [],
+    nseList: [],
+  ));
 
   Timer? _refreshTimer;
 
+  // Method to start periodic refresh
   void startPeriodicRefresh(BuildContext context) {
     _refreshTimer?.cancel();
     _refreshTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
@@ -34,9 +35,15 @@ class WatchlistNotifier extends StateNotifier<WatchlistState> {
     });
   }
 
+  // Method to stop periodic refresh
+  void stopPeriodicRefresh() {
+    _refreshTimer?.cancel();
+    _refreshTimer = null;
+  }
+
   Future<void> fetchCategoryList(BuildContext context) async {
     final response =
-        await ApiInterface.getStockList(context, showLoading: true);
+    await ApiInterface.getStockList(context, showLoading: true);
     if (response!.status == 1) {
       final List<StockData> initialData = response.data!;
       final mcxList = initialData.where((StockData data) {
@@ -55,7 +62,7 @@ class WatchlistNotifier extends StateNotifier<WatchlistState> {
     if (response != null && response.livedata != null) {
       final updatedMcxList = state.mcxList.map((item) {
         final matchingLiveRate = response.livedata!.firstWhere(
-          (liveRate) => liveRate.instrumentIdentifier == item.instrumentToken,
+              (liveRate) => liveRate.instrumentIdentifier == item.instrumentToken,
           orElse: () => Livedata(), // Handle no match found
         );
         return item.copyWith(
@@ -72,19 +79,19 @@ class WatchlistNotifier extends StateNotifier<WatchlistState> {
           buyPriceColor: item.buyPrice! < matchingLiveRate.buyPrice!
               ? Colors.green
               : item.buyPrice! == matchingLiveRate.buyPrice!
-                  ? Colors.transparent
-                  : Colors.red,
+              ? Colors.transparent
+              : Colors.red,
           salePriceColor: item.salePrice! < matchingLiveRate.sellPrice!
               ? Colors.green
               : item.salePrice! == matchingLiveRate.sellPrice!
-                  ? Colors.transparent
-                  : Colors.red,
+              ? Colors.transparent
+              : Colors.red,
         );
       }).toList();
 
       final updatedNseList = state.nseList.map((item) {
         final matchingLiveRate = response.livedata!.firstWhere(
-          (liveRate) => liveRate.instrumentIdentifier == item.instrumentToken,
+              (liveRate) => liveRate.instrumentIdentifier == item.instrumentToken,
           orElse: () => Livedata(), // Handle no match found
         );
         return item.copyWith(
@@ -101,13 +108,13 @@ class WatchlistNotifier extends StateNotifier<WatchlistState> {
           buyPriceColor: item.buyPrice! < matchingLiveRate.buyPrice!
               ? Colors.green
               : item.buyPrice! == matchingLiveRate.buyPrice!
-                  ? Colors.transparent
-                  : Colors.red,
+              ? Colors.transparent
+              : Colors.red,
           salePriceColor: item.salePrice! < matchingLiveRate.sellPrice!
               ? Colors.green
               : item.salePrice! == matchingLiveRate.sellPrice!
-                  ? Colors.transparent
-                  : Colors.red,
+              ? Colors.transparent
+              : Colors.red,
         );
       }).toList();
       state = WatchlistState(mcxList: updatedMcxList, nseList: updatedNseList);
@@ -116,12 +123,12 @@ class WatchlistNotifier extends StateNotifier<WatchlistState> {
 
   @override
   void dispose() {
-    _refreshTimer?.cancel();
+    stopPeriodicRefresh();
     super.dispose();
   }
 }
 
 final watchlistProvider =
-    StateNotifierProvider<WatchlistNotifier, WatchlistState>(
-  (ref) => WatchlistNotifier(),
+StateNotifierProvider<WatchlistNotifier, WatchlistState>(
+      (ref) => WatchlistNotifier(),
 );
