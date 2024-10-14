@@ -87,8 +87,8 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
           onChanged: searchStock,
           style: Theme.of(context)
               .textTheme
-              .titleMedium!
-              .copyWith(color: Colors.white),
+              .headlineMedium!
+              .copyWith(color: Colors.white,fontSize: 19),
           decoration: InputDecoration(
             hintText: Strings.search,
             hintStyle: Styles.normalText(context: context, color: Colors.white),

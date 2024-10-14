@@ -73,247 +73,224 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  40.height,
-                  Center(
-                    child: Image.asset(ImagePaths.appLogo,
-                        height: 250, width: 250),
-                  ),
-                  0.height,
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 25.0, right: 25, top: 20, bottom: 20),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Stack(
-                            children: [
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  suffixIcon: _showErrorIcon &&
-                                          _formKey.currentState?.validate() !=
-                                              true
-                                      ? const Icon(Icons.error,
-                                          color: Colors.red)
-                                      : null,
-                                  contentPadding: const EdgeInsets.fromLTRB(
-                                      10.0, 20.0, 10.0, 20.0),
-                                  hintText: 'Enter your user id',
-                                  hintStyle: Styles.normalText(
-                                      context: context, color: Colors.white),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: _showErrorIcon &&
-                                              _formKey.currentState
-                                                      ?.validate() !=
-                                                  true
-                                          ? Colors.red
-                                          : Colors.white,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 2.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 1.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 2.0),
-                                  ),
-                                ),
-                                style: Styles.normalText(
-                                    context: context, color: Colors.white),
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return '';
-                                  }
-                                  if (value.trim().length < 3) {
-                                    return '';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  username = value;
-                                  if (_showErrorIcon) {
-                                    _formKey.currentState?.validate();
-                                  }
-                                },
-                              ),
-                              Positioned(
-                                left: 12,
-                                top: 4,
-                                child: Text(
-                                  Strings.userId,
-                                  style: Styles.normalText(
-                                    context: context,
-                                    color: Colors.amber,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          20.height,
-                          Stack(
-                            children: [
-                              TextFormField(
-                                obscureText: _isObscure,
-                                decoration: InputDecoration(
-                                  suffixIcon: _showErrorIcon &&
-                                          _formKey.currentState?.validate() !=
-                                              true
-                                      ? const Icon(Icons.error,
-                                          color: Colors.red)
-                                      : IconButton(
-                                          icon: Icon(
-                                            _isObscure
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                            color: Colors.white,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              _isObscure =
-                                                  !_isObscure; // Toggle visibility
-                                            });
-                                          },
-                                        ),
-                                  contentPadding: const EdgeInsets.fromLTRB(
-                                      10.0, 20.0, 10.0, 20.0),
-                                  hintText: Strings.enterYourPassword,
-                                  hintStyle: Styles.normalText(
-                                      context: context, color: Colors.white),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(
-                                      color: _showErrorIcon &&
-                                              _formKey.currentState
-                                                      ?.validate() !=
-                                                  true
-                                          ? Colors.red
-                                          : Colors.white,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 2.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 1.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 2.0),
-                                  ),
-                                ),
-                                style: Styles.normalText(
-                                    context: context, color: Colors.white),
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return Strings.pleaseEnterPassword;
-                                  }
-                                  if (value.trim().length < 3) {
-                                    return Strings.passwordMustBeValid;
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  pswd = value;
-                                  if (_showErrorIcon) {
-                                    _formKey.currentState?.validate();
-                                  }
-                                },
-                              ),
-                              Positioned(
-                                left: 12,
-                                top: 4,
-                                child: Text(
-                                  Strings.password,
-                                  style: Styles.normalText(
-                                    context: context,
-                                    color: Colors.amber,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          40.height,
-                          Center(
-                            child: SizedBox(
-                              height: 45,
-                              width: 500,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  login();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: goldenn,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: isLoading
-                                    ? const CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.white))
-                                    : Text(
-                                        Strings.login,
-                                        style: Styles.normalText(
-                                            context: context,
-                                            isBold: true,
-                                            color: Colors.white),
-                                      ),
-                              ),
-                            ),
-                          ),
-                          20.height,
-                          Text(
-                            Strings.termsConditions,
-                            style: Styles.normalText(
-                                context: context,
-                                isBold: true,
-                                color: Colors.white,
-                                fontSize: 11),
-                          ),
-                        ],
+        physics: const BouncingScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: IntrinsicHeight(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 40),
+                    Center(
+                      child: Image.asset(
+                        ImagePaths.appLogo,
+                        height: 250,
+                        width: 250,
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25.0, vertical: 20.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // User ID input field
+                            Stack(
+                              children: [
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    suffixIcon: _showErrorIcon &&
+                                        _formKey.currentState?.validate() !=
+                                            true
+                                        ? const Icon(Icons.error,
+                                        color: Colors.red)
+                                        : null,
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+                                    hintText: 'Enter your user id',
+                                    hintStyle: Styles.normalText(
+                                        context: context, color: Colors.white),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: BorderSide(
+                                        color: _showErrorIcon &&
+                                            _formKey.currentState
+                                                ?.validate() !=
+                                                true
+                                            ? Colors.red
+                                            : Colors.white,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                    ),
+                                  ),
+                                  style: Styles.normalText(
+                                      context: context, color: Colors.white),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Please enter your user ID';
+                                    }
+                                    if (value.trim().length < 3) {
+                                      return 'User ID must be at least 3 characters long';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    username = value;
+                                    if (_showErrorIcon) {
+                                      _formKey.currentState?.validate();
+                                    }
+                                  },
+                                ),
+                                Positioned(
+                                  left: 12,
+                                  top: 4,
+                                  child: Text(
+                                    Strings.userId,
+                                    style: Styles.normalText(
+                                      context: context,
+                                      color: Colors.amber,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            // Password input field
+                            Stack(
+                              children: [
+                                TextFormField(
+                                  obscureText: _isObscure,
+                                  decoration: InputDecoration(
+                                    suffixIcon: _showErrorIcon &&
+                                        _formKey.currentState?.validate() !=
+                                            true
+                                        ? const Icon(Icons.error,
+                                        color: Colors.red)
+                                        : IconButton(
+                                      icon: Icon(
+                                        _isObscure
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObscure = !_isObscure;
+                                        });
+                                      },
+                                    ),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        10.0, 20.0, 10.0, 20.0),
+                                    hintText: Strings.enterYourPassword,
+                                    hintStyle: Styles.normalText(
+                                        context: context, color: Colors.white),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: BorderSide(
+                                        color: _showErrorIcon &&
+                                            _formKey.currentState
+                                                ?.validate() !=
+                                                true
+                                            ? Colors.red
+                                            : Colors.white,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                  ),
+                                  style: Styles.normalText(
+                                      context: context, color: Colors.white),
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return Strings.pleaseEnterPassword;
+                                    }
+                                    if (value.trim().length < 3) {
+                                      return Strings.passwordMustBeValid;
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    pswd = value;
+                                    if (_showErrorIcon) {
+                                      _formKey.currentState?.validate();
+                                    }
+                                  },
+                                ),
+                                Positioned(
+                                  left: 12,
+                                  top: 4,
+                                  child: Text(
+                                    Strings.password,
+                                    style: Styles.normalText(
+                                      context: context,
+                                      color: Colors.amber,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 40),
+                            Center(
+                              child: SizedBox(
+                                height: 45,
+                                width: 500,
+                                child: ElevatedButton(
+                                  onPressed: login,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: goldenn,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  child: isLoading
+                                      ? const CircularProgressIndicator(
+                                      valueColor:
+                                      AlwaysStoppedAnimation<Color>(
+                                          Colors.white))
+                                      : Text(
+                                    Strings.login,
+                                    style: Styles.normalText(
+                                        context: context,
+                                        isBold: true,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              Strings.termsConditions,
+                              style: Styles.normalText(
+                                  context: context,
+                                  isBold: true,
+                                  color: Colors.white,
+                                  fontSize: 11),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
