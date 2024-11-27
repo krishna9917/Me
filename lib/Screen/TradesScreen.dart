@@ -227,8 +227,9 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                               children: [
                                                 Text(
                                                     HelperFunction
-                                                        .formattedDate(trade
-                                                        .orderDateTime!),
+                                                        .formattedDate( trade.bidType!
+                                                        .contains("1")? trade
+                                                        .orderUpdateDateTime! : trade.orderDateTime! ),
                                                     style:
                                                     Theme
                                                         .of(context)
@@ -475,8 +476,9 @@ class _TradesScreenState extends ConsumerState<TradesScreen>
                                               children: [
                                                 Text(
                                                     HelperFunction
-                                                        .formattedDate(trade
-                                                        .orderUpdateDateTime!),
+                                                        .formattedDate( trade.bidType!
+                                                        .contains("1")? trade
+                                                        .orderDateTime! : trade.orderUpdateDateTime! ),
                                                     style:
                                                     Theme
                                                         .of(context)

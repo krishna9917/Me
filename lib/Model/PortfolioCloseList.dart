@@ -10,10 +10,10 @@ class PortfolioCloseList {
   int? status;
   String? message;
   String? totalLedgerBalance;
-  int? totalMarginBalance;
-  int? totalPlBalance;
-  int? totalBrokerage;
-  int? netProfitLoss;
+  String? totalMarginBalance;
+  String? totalPlBalance;
+  String? totalBrokerage;
+  String? netProfitLoss;
   List<Datum>? data;
 
   PortfolioCloseList({
@@ -31,11 +31,11 @@ class PortfolioCloseList {
       PortfolioCloseList(
         status: json["status"],
         message: json["message"],
-        totalLedgerBalance: json["totalLedgerBalance"],
-        totalMarginBalance: json["totalMarginBalance"],
-        totalPlBalance: json["totalPLBalance"],
-        totalBrokerage: json["totalBrokerage"],
-        netProfitLoss: json["netProfitLoss"],
+        totalLedgerBalance: json["totalLedgerBalance"].toString(),
+        totalMarginBalance: json["totalMarginBalance"].toString(),
+        totalPlBalance: json["totalPLBalance"].toString(),
+        totalBrokerage: json["totalBrokerage"].toString(),
+        netProfitLoss: json["netProfitLoss"].toString(),
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 

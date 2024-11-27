@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:marqueer/marqueer.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../ApiService/ApiInterface.dart';
 import '../Dialogs/AlertBox.dart';
 import '../Model/GetPortfolioList.dart';
 import '../Model/PortfolioCloseList.dart';
 import '../Providerr/NotificationProvider.dart';
 import '../Providerr/PortfolioProvider.dart';
+import '../Providerr/WatchlistNotifier.dart';
 import '../Resources/Strings.dart';
 import '../Resources/Styles.dart';
 import '../Utils/AppBar.dart';
@@ -348,16 +350,14 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                     const Divider()
                   ],
                 ).onTap(() {
-                  StockDetailScreen(
-                    stockData: StockData(
-                        instrumentToken: data.instrumentToken,
-                        categoryId: data.categoryId,
-                        title: data.instrumentToken,
-                        expireDate: data.expireDate,
-                        salePrice: data.bidPrice,
-                        buyPrice: data.bidPrice,
-                        quotationLot: data.lot),
-                  ).launch(context);
+                  gotoDetailPage( StockData(
+                      instrumentToken: data.instrumentToken,
+                      categoryId: data.categoryId,
+                      title: data.instrumentToken,
+                      expireDate: data.expireDate,
+                      salePrice: data.bidPrice,
+                      buyPrice: data.bidPrice,
+                      quotationLot: data.lot));
                 });
               },
             ),
@@ -366,6 +366,19 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
       ),
     );
   }
+
+  Future<void> gotoDetailPage(StockData data) async {
+    final response = await ApiInterface.getLiveRate(context,
+        token: data.instrumentToken.toString(), showLoading: true);
+    StockDetailScreen(stockData: data,data: response!.livedata!.first,)
+        .launch(context)
+        .then((b) {
+      Future.microtask(() => ref
+          .read(watchlistProvider.notifier)
+          .fetchCategoryList(context));
+    });
+  }
+
 
   Widget getCloseUi(PortfolioCloseList portfolioCloseList) {
     final appColors = Theme.of(context).extension<AppColors>()!;
@@ -525,5 +538,6 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
       });
       marqueController.start();
     });
+
   }
 }

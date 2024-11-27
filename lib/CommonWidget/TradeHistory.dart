@@ -206,8 +206,8 @@ class _TradehistoryState extends State<Tradehistory> {
                                     5.height,
                                     Text(
                                       trade.bidType!.contains("1")
-                                          ? "Bought By nul"
-                                          : "Sold by null",
+                                          ? "Bought by ${trade.byUser??"Trader"}"
+                                          : "Sold by ${trade.byUser??"Trader"}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium!,

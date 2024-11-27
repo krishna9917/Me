@@ -103,6 +103,7 @@ class Data {
     String? closeOrderType,
     String? orderDateTime,
     String? orderUpdateDateTime,
+    String? byUser
   }) {
     _orderID = orderID;
     _categoryId = categoryId;
@@ -126,6 +127,7 @@ class Data {
     _closeOrderType = closeOrderType;
     _orderDateTime = orderDateTime;
     _orderUpdateDateTime = orderUpdateDateTime;
+    _byUser = _byUser;
   }
 
   Data.fromJson(dynamic json) {
@@ -151,6 +153,8 @@ class Data {
     _closeOrderType = json['close_order_type'];
     _orderDateTime = json['orderDateTime'];
     _orderUpdateDateTime = json['orderUpdateDateTime'];
+    _bidPrice = json['bid_price'];
+    _byUser =  json["by_user"];
   }
 
   String? _orderID;
@@ -175,6 +179,7 @@ class Data {
   String? _closeOrderType;
   String? _orderDateTime;
   String? _orderUpdateDateTime;
+  String? _byUser;
 
   Data copyWith({
     String? orderID,
@@ -199,6 +204,7 @@ class Data {
     String? closeOrderType,
     String? orderDateTime,
     String? orderUpdateDateTime,
+    String? byUser
   }) =>
       Data(
         orderID: orderID ?? _orderID,
@@ -223,6 +229,7 @@ class Data {
         closeOrderType: closeOrderType ?? _closeOrderType,
         orderDateTime: orderDateTime ?? _orderDateTime,
         orderUpdateDateTime: orderUpdateDateTime ?? _orderUpdateDateTime,
+        byUser: byUser??_byUser
       );
 
   String? get orderID => _orderID;
@@ -269,6 +276,8 @@ class Data {
 
   String? get orderUpdateDateTime => _orderUpdateDateTime;
 
+  String? get byUser => _byUser;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['orderID'] = _orderID;
@@ -293,6 +302,7 @@ class Data {
     map['close_order_type'] = _closeOrderType;
     map['orderDateTime'] = _orderDateTime;
     map['orderUpdateDateTime'] = _orderUpdateDateTime;
+    map['by_user'] = _byUser;
     return map;
   }
 }
