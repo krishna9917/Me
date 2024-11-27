@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:marqueer/marqueer.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../Dialogs/AlertBox.dart';
 import '../Model/GetPortfolioList.dart';
 import '../Model/PortfolioCloseList.dart';
 import '../Providerr/NotificationProvider.dart';
 import '../Providerr/PortfolioProvider.dart';
 import '../Resources/Strings.dart';
+import '../Resources/Styles.dart';
 import '../Utils/AppBar.dart';
 import '../Utils/AppTheme.dart';
 import '../Utils/Colors.dart';
@@ -231,7 +233,10 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                         style: Theme.of(context).textTheme.titleLarge,
                       )),
                       Text(
-                        portfolioList.totalPlBalance.toString(),
+                        portfolioList.data!
+                            .map((item) => item.holdingMargin)
+                            .fold(0.0, (sum, value) => sum + value!)
+                            .toString(),
                         style: Theme.of(context).textTheme.titleLarge!,
                       )
                     ],
@@ -314,10 +319,27 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                 ),
                               ),
                             ).onTap(() {
-                              ref
-                                  .read(portfolioProvider.notifier)
-                                  .updateTradeStatus(
-                                      context, data.categoryId.toString(), "3");
+                              AlertBox.showAlert(
+                                  context,
+                                 Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                   Text(
+                                     Strings.confirmCloseTrade,
+                                     style: Styles.normalText(
+                                         context: context, isBold: true,fontSize: 18),
+                                   ),
+                                   SizedBox(height: 10,),
+                                   Text(
+                                     Strings.confirmCloseTradeMsg,
+                                     style: Styles.normalText(context: context),
+                                   )
+                                 ],), () {
+                                ref
+                                    .read(portfolioProvider.notifier)
+                                    .updateTradeStatus(context,
+                                        data.categoryId.toString(), "3");
+                              });
                             }),
                           ],
                         ),

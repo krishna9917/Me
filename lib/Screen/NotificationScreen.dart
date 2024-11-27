@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:me_app/ApiService/ApiInterface.dart';
+import 'package:me_app/Utils/AppTheme.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Providerr/NotificationProvider.dart';
 import '../Resources/Strings.dart';
@@ -21,6 +22,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     final notificationState = ref.watch(notificationProvider);
+    final appColors = Theme.of(context).extension<AppColors>()!;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -41,6 +43,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                           notificationState.notifications?.data?.length ?? 0,
                       itemBuilder: (context, index) {
                         return Card(
+                          color: appColors.color1,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                             child: Column(

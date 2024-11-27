@@ -48,8 +48,7 @@ class Strings {
   static const String lightTheme = "Light Theme";
   static const String darkTheme = "Dark Theme";
   static const String goldenTheme = "Golden Theme";
-  static const String areYouSureToClose =
-      "Are you surely to close the application?";
+  static const String areYouSureToClose = "Are you surely to close the application?";
   static const String enterLotSize = "Enter the Lots you want to buy : ";
   static const String enterPrice = "Enter the price you want to buy : ";
   static const String bid = "Bid";
@@ -102,7 +101,10 @@ class Strings {
   static const String password = "Password";
   static const String userId = "User Id";
   static const String orderCancelled = "Order already Cancelled";
+  static const String logout = "Logout!!";
   static const String logoutWarning = "Are you surely to logout?";
+  static const String confirmCloseTrade = "Confirm Close Trade";
+  static const String confirmCloseTradeMsg = "Confirm and close the selected trade";
 
   //sharedPreferences key
   static const String ACCESS_TOKEN = "access_token";

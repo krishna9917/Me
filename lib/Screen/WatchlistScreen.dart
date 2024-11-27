@@ -8,6 +8,7 @@ import 'package:me_app/Resources/Styles.dart';
 import 'package:me_app/Screen/SearchScreen.dart';
 import 'package:me_app/Screen/StockDetailScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../ApiService/ApiInterface.dart';
 import '../Dialogs/AlertBox.dart';
 import '../Model/GetMCXModel.dart';
 import '../Providerr/WatchlistNotifier.dart';
@@ -128,16 +129,11 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
               child: list.isNotEmpty
                   ? ListView.builder(
                       itemCount: list.length,
+                      padding: EdgeInsets.only(bottom: 40),
                       itemBuilder: (context, index) {
                         final data = list[index];
                         return Tradestock(data: data).onTap(() {
-                          StockDetailScreen(stockData: data)
-                              .launch(context)
-                              .then((b) {
-                            Future.microtask(() => ref
-                                .read(watchlistProvider.notifier)
-                                .fetchCategoryList(context));
-                          });
+                          gotoDetailPage(data);
                         });
                       },
                     )
@@ -192,5 +188,17 @@ class _WatchlistScreenState extends ConsumerState<WatchlistScreen> {
         ),
       ],
     );
+  }
+
+  Future<void> gotoDetailPage(StockData data) async {
+    final response = await ApiInterface.getLiveRate(context,
+        token: data.instrumentToken.toString(), showLoading: true);
+    StockDetailScreen(stockData: data,data: response!.livedata!.first,)
+        .launch(context)
+        .then((b) {
+      Future.microtask(() => ref
+          .read(watchlistProvider.notifier)
+          .fetchCategoryList(context));
+    });
   }
 }

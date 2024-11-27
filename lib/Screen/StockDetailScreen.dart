@@ -16,8 +16,9 @@ import '../Utils/HelperFunction.dart';
 
 class StockDetailScreen extends ConsumerStatefulWidget {
   StockData stockData;
+  Livedata? data;
 
-  StockDetailScreen({super.key, required this.stockData});
+  StockDetailScreen({super.key, required this.stockData, this.data});
 
   @override
   _StockDetailScreenState createState() => _StockDetailScreenState();
@@ -30,7 +31,6 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
   String lotSize = '1';
   bool _isTextFieldValid = true;
   Timer? _refreshTimer;
-  Livedata? data;
 
   void _startPeriodicRefresh() {
     _refreshTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
@@ -54,8 +54,8 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
         _tabController.index > 0
             ? _textEditingController.text.toString()
             : isSellType && _tabController.index == 0
-                ? data!.sellPrice.toString()
-                : data!.buyPrice.toString(),
+                ? widget.data!.sellPrice.toString()
+                : widget.data!.buyPrice.toString(),
         lotSize);
     AlertBox.showStatus(context, response!.message!, response.status == 0);
   }
@@ -195,7 +195,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                 ),
                                 Text(
                                     _textEditingController.text.isEmpty
-                                        ? "${data != null ? data?.buyPrice : widget.stockData.buyPrice}"
+                                        ? "${widget.data != null ? widget.data?.buyPrice : widget.stockData.buyPrice}"
                                         : _textEditingController.text,
                                     style: Theme.of(context)
                                         .textTheme
@@ -231,7 +231,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                                 ),
                                 Text(
                                   _textEditingController.text.isEmpty
-                                      ? "${data != null ? data?.sellPrice : widget.stockData.salePrice}"
+                                      ? "${widget.data != null ? widget.data?.sellPrice : widget.stockData.salePrice}"
                                       : _textEditingController.text,
                                   style: Theme.of(context)
                                       .textTheme
@@ -263,103 +263,103 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                     TableRow(children: [
                       _buildTableCell(
                           Strings.bid,
-                          data?.buyPrice != null
-                              ? data!.buyPrice.toString()
+                          widget.data?.buyPrice != null
+                              ? widget.data!.buyPrice.toString()
                               : widget.stockData.buyPrice.toString()),
                       _buildTableCell(
                           Strings.ask,
-                          data?.sellPrice != null
-                              ? data!.sellPrice.toString()
+                          widget.data?.sellPrice != null
+                              ? widget.data!.sellPrice.toString()
                               : widget.stockData.salePrice.toString()),
                       _buildTableCell(
                           Strings.lastP,
-                          data?.lastTradePrice != null
-                              ? data!.lastTradePrice.toString()
+                          widget.data?.lastTradePrice != null
+                              ? widget.data!.lastTradePrice.toString()
                               : widget.stockData.lastTradePrice.toString())
                     ]),
                     TableRow(children: [
                       _buildTableCell(
                           Strings.open,
-                          data?.open != null
-                              ? data!.open.toString()
+                          widget.data?.open != null
+                              ? widget.data!.open.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.close,
-                          data?.close != null
-                              ? data!.close.toString()
+                          widget.data?.close != null
+                              ? widget.data!.close.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.volume,
-                          data?.totalQtyTraded != null
-                              ? data!.totalQtyTraded.toString()
+                          widget.data?.totalQtyTraded != null
+                              ? widget.data!.totalQtyTraded.toString()
                               : Strings.na)
                     ]),
                     TableRow(children: [
                       _buildTableCell(
                           Strings.high,
-                          data?.high != null
-                              ? data!.high.toString()
+                          widget.data?.high != null
+                              ? widget.data!.high.toString()
                               : widget.stockData.high.toString()),
                       _buildTableCell(
                           Strings.low,
-                          data?.low != null
-                              ? data!.low.toString()
+                          widget.data?.low != null
+                              ? widget.data!.low.toString()
                               : widget.stockData.low.toString()),
                       _buildTableCell(
                           Strings.change,
-                          data?.priceChange != null
-                              ? data!.priceChange.toString()
+                          widget.data?.priceChange != null
+                              ? widget.data!.priceChange.toString()
                               : widget.stockData.priceChange.toString())
                     ]),
                     TableRow(children: [
                       _buildTableCell(
                           Strings.buyers,
-                          data?.buyQty != null
-                              ? data!.buyQty.toString()
+                          widget.data?.buyQty != null
+                              ? widget.data!.buyQty.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.sellers,
-                          data?.sellQty != null
-                              ? data!.sellQty.toString()
+                          widget.data?.sellQty != null
+                              ? widget.data!.sellQty.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.openInterest,
-                          data?.openInterest != null
-                              ? data!.openInterest.toString()
+                          widget.data?.openInterest != null
+                              ? widget.data!.openInterest.toString()
                               : Strings.na)
                     ]),
                     TableRow(children: [
                       _buildTableCell(
                           Strings.upperCkt,
-                          data?.upperCircuit != null
-                              ? data!.upperCircuit.toString()
+                          widget.data?.upperCircuit != null
+                              ? widget.data!.upperCircuit.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.lowerCkt,
-                          data?.lowerCircuit != null
-                              ? data!.lowerCircuit.toString()
+                          widget.data?.lowerCircuit != null
+                              ? widget.data!.lowerCircuit.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.atp,
-                          data?.averageTradedPrice != null
-                              ? data!.averageTradedPrice.toString()
+                          widget.data?.averageTradedPrice != null
+                              ? widget.data!.averageTradedPrice.toString()
                               : Strings.na)
                     ]),
                     TableRow(children: [
                       _buildTableCell(
                           Strings.lastBuy,
-                          data?.buyQty != null
-                              ? data!.buyQty.toString()
+                          widget.data?.buyQty != null
+                              ? widget.data!.buyQty.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.lastSell,
-                          data?.sellQty != null
-                              ? data!.sellQty.toString()
+                          widget.data?.sellQty != null
+                              ? widget.data!.sellQty.toString()
                               : Strings.na),
                       _buildTableCell(
                           Strings.lotSize,
-                          data?.quotationLot != null
-                              ? data!.quotationLot.toString()
+                          widget.data?.quotationLot != null
+                              ? widget.data!.quotationLot.toString()
                               : widget.stockData.quotationLot.toString())
                     ])
                   ],
@@ -465,7 +465,10 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
                   child: Text(
                 value,
                 textAlign: TextAlign.end,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 15),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontSize: 15),
               )),
             ],
           ),
@@ -477,7 +480,7 @@ class _StockDetailScreenState extends ConsumerState<StockDetailScreen>
   Future<void> fetchData() async {
     final response = await ApiInterface.getLiveRate(context,
         token: widget.stockData.instrumentToken.toString(), showLoading: false);
-    data = response!.livedata!.first;
+    widget.data = response!.livedata!.first;
     setState(() {});
   }
 }

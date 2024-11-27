@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../Model/GetMCXModel.dart';
@@ -20,7 +21,7 @@ class _TradestockState extends State<Tradestock> {
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColors>()!;
     return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5,top: 3),
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 3),
       child: Column(
         children: [
           Row(
@@ -84,9 +85,14 @@ class _TradestockState extends State<Tradestock> {
                             borderRadius: BorderRadius.circular(3)),
                         padding: const EdgeInsets.symmetric(
                             vertical: 5, horizontal: 10),
-                        child: Text(
+                        child: AutoSizeText(
                           "${widget.data.buyPrice}",
                           style: Theme.of(context).textTheme.titleLarge,
+                          maxLines: 1,
+                          minFontSize: 12,
+                          // Optional: Sets the minimum font size
+                          overflow: TextOverflow
+                              .ellipsis, // Optional: Adds ellipsis if text overflows
                         ),
                       ),
                       15.height,
@@ -106,9 +112,14 @@ class _TradestockState extends State<Tradestock> {
                         decoration: BoxDecoration(
                             color: widget.data.salePriceColor,
                             borderRadius: BorderRadius.circular(3)),
-                        child: Text(
+                        child:AutoSizeText(
                           "${widget.data.salePrice}",
                           style: Theme.of(context).textTheme.titleLarge,
+                          maxLines: 1,
+                          minFontSize: 12,
+                          // Optional: Sets the minimum font size
+                          overflow: TextOverflow
+                              .ellipsis, // Optional: Adds ellipsis if text overflows
                         ),
                       ),
                       20.width,
@@ -132,7 +143,6 @@ class _TradestockState extends State<Tradestock> {
             thickness: 0.4,
             color: Colors.blueGrey,
           )
-
         ],
       ),
     );
