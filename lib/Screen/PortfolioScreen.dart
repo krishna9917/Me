@@ -81,29 +81,33 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
             ),
             notificationState.notifications?.data != null
                 ? Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: 40,
-                    color: Colors.black,
-                    child: Marqueer.builder(
-                      controller: marqueController,
-                      itemCount: notificationState.notifications?.data!.length,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              notificationState
-                                  .notifications!.data![index].message!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(color: Colors.red),
-                            ),
-                          ),
-                        );
-                      },
+              width: MediaQuery.of(context).size.width, // Ensure full width for scrolling
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              height: 40,
+              color: Colors.black,
+              child: Marqueer.builder(
+                key: ValueKey(notificationState.notifications?.data),
+                controller: marqueController,
+                interaction: false, // Disable interaction if not needed
+                scrollablePointerIgnoring: true,
+                itemCount: notificationState.notifications?.data!.length ?? 0,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      child: Text(
+                        notificationState.notifications!.data![index].message!,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: Colors.red),
+                        maxLines: 1,  // Prevent line breaks
+                      ),
                     ),
-                  )
+                  );
+                },
+              ),
+            )
                 : const SizedBox(),
             Expanded(
               child: TabBarView(
@@ -237,7 +241,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                       Text(
                         portfolioList.data!
                             .map((item) => item.holdingMargin)
-                            .fold(0.0, (sum, value) => sum + value!)
+                            .fold(0.0, (sum, value) => sum + value.toDouble())
                             .toString(),
                         style: Theme.of(context).textTheme.titleLarge!,
                       )
@@ -410,11 +414,11 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                 TableRow(children: [
                   _buildTableCell(
                       Strings.totalBrokerage,
-                      portfolioCloseList.totalBrokerage?.toString() ??
+                      portfolioCloseList.totalBrokerage.toDouble().toStringAsFixed(2) ??
                           Strings.na),
                   _buildTableCell(
                     Strings.netProfitLoss,
-                    portfolioCloseList.netProfitLoss?.toString() ?? Strings.na,
+                    portfolioCloseList.netProfitLoss.toDouble().toStringAsFixed(2) ?? Strings.na,
                   ),
                 ]),
               ],
@@ -493,7 +497,7 @@ class _PortfolioScreenState extends ConsumerState<PortfolioScreen>
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium),
-                                  Text(data.brokerage.toString(),
+                                  Text(data.brokerage.toDouble().toStringAsFixed(2),
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium!

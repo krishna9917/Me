@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:me_app/Utils/HelperFunction.dart';
 import 'package:nb_utils/nb_utils.dart';
+import '../ApiService/ApiInterface.dart';
 import '../Dialogs/AlertBox.dart';
 import '../Model/GetMCXModel.dart';
 import '../Model/TradeData.dart';
+import '../Providerr/WatchlistNotifier.dart';
 import '../Resources/Strings.dart';
 import '../Screen/StockDetailScreen.dart';
 
@@ -301,17 +303,15 @@ class _TradehistoryState extends State<Tradehistory> {
                           )
                         ],
                       ).onTap(() async {
-                        StockDetailScreen(
-                          stockData: StockData(
-                            instrumentToken: trade.token,
-                            categoryId: trade.categoryId,
-                            title: trade.token,
-                            expireDate: trade.expireDate,
-                            salePrice: trade.bidPrice.toDouble(),
-                            buyPrice: trade.bidPrice.toDouble(),
-                            quotationLot: trade.lot,
-                          ),
-                        ).launch(context);
+
+                        gotoDetailPage( StockData(
+                          instrumentToken: trade.token,
+                          categoryId: trade.categoryId,
+                          title: trade.token,
+                          expireDate: trade.expireDate,
+                          salePrice: trade.bidPrice.toDouble(),
+                          buyPrice: trade.bidPrice.toDouble(),
+                          quotationLot: trade.lot,));
                       });
                     },
                   ),
@@ -326,4 +326,14 @@ class _TradehistoryState extends State<Tradehistory> {
       ],
     );
   }
+
+  Future<void> gotoDetailPage(StockData data) async {
+    final response = await ApiInterface.getLiveRate(context,
+        token: data.instrumentToken.toString(), showLoading: true);
+    StockDetailScreen(stockData: data,data: response!.livedata!.first,)
+        .launch(context)
+        .then((b) {
+    });
+  }
+
 }

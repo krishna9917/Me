@@ -62,8 +62,8 @@ class Datum {
   String? orderType;
   String? bidType;
   String? lot;
-  int? intradayMargin;
-  int? holdingMargin;
+  String? intradayMargin;
+  String? holdingMargin;
   String? totalReqHoldingMargin;
   int? lotSize;
   double? bidPrice;
@@ -109,8 +109,8 @@ class Datum {
         orderType: json["order_type"],
         bidType: json["bid_type"],
         lot: json["lot"],
-        intradayMargin: json["intradayMargin"],
-        holdingMargin: json["holdingMargin"],
+        intradayMargin: json["intradayMargin"].toString(),
+        holdingMargin: json["holdingMargin"].toString(),
         totalReqHoldingMargin: json["totalReqHoldingMargin"],
         lotSize: json["lotSize"],
         bidPrice: json["bid_price"].toString().toDouble(),
